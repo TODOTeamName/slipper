@@ -7,9 +7,7 @@ import (
 	"net/http"
 )
 
-type Config struct {
-	Host string
-}
+var Settings Config
 
 func main() {
 	// Read Config
@@ -19,15 +17,14 @@ func main() {
 	}
 
 	// Parse Config JSON into struct
-	var config Config
-	err = json.Unmarshal(configBytes, &config)
+	err = json.Unmarshal(configBytes, &Config)
 	if err != nil {
 		log.Fatal("Error while parsing config: ", err)
 	}
 
 	// Start HTTP Server :)
 	http.HandleFunc("/", handler)
-	log.Fatal(http.ListenAndServe(config.Host, nil))
+	log.Fatal(http.ListenAndServe(Config.Host, nil))
 }
 
 // Handler function to handle HTTP Requests
