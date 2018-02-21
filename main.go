@@ -35,7 +35,7 @@ func main() {
 			Config.Host,
 			https.Cert,
 			https.Key,
-			nil
+			nil,
 		))
 	} else {
 		log.Fatal(http.ListenAndServe(Config.Host, nil))
