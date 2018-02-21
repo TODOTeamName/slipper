@@ -24,7 +24,21 @@ func main() {
 
 	// Start HTTP Server :)
 	http.HandleFunc("/", handler)
-	log.Fatal(http.ListenAndServe(Config.Host, nil))
+	if (Config.Https != nil) {
+		https := Config.Https
+		if (https.Cert == nil || https.Key == nil) {
+			log.Fatal("Cert/Key cannot be null!");
+		}
+
+		log.Fatal(http.ListenAndServeTLS(
+			Config.Host,
+			https.Cert,
+			https.Key,
+			nil
+		))
+	} else {
+		log.Fatal(http.ListenAndServe(Config.Host, nil))
+	}
 }
 
 // Handler function to handle HTTP Requests
