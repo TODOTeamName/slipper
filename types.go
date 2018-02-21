@@ -9,6 +9,10 @@ type Config struct {
 	// Recommended: "templates/"
 	Root string
 
+	// Authentication Key used for Cookie Session Storage. Should
+	// be either 32 or 64 bytes long (encoded in UTF8)
+	CookieKey string
+
 	// The https info for the website.
 	// To use http instead of https (not recommended) put null here.
 	Https struct {

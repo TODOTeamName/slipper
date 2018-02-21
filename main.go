@@ -23,7 +23,8 @@ func main() {
 	}
 
 	// Start HTTP Server :)
-	http.HandleFunc("/", handler)
+	http.HandleFunc("/api/", apiHandler)
+	http.HandleFunc("/", defHandler);
 	if (Config.Https != nil) {
 		https := Config.Https
 		if (https.Cert == nil || https.Key == nil) {
@@ -39,9 +40,4 @@ func main() {
 	} else {
 		log.Fatal(http.ListenAndServe(Config.Host, nil))
 	}
-}
-
-// Handler function to handle HTTP Requests
-func handler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "<body>lol</body>")
 }
