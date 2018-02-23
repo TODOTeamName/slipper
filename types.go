@@ -6,7 +6,7 @@ type Config struct {
 	Host string
 
 	// The root of where the web files are stored.
-	// Recommended: "templates/"
+	// Recommended: "web/"
 	Root string
 
 	// Authentication Key used for Cookie Session Storage. Should

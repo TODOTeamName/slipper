@@ -25,12 +25,12 @@ func defHandler(w http.ResponseWriter, r *http.Request) {
 	tmpl, err := template.ParseFiles(tmplPath)
 	if (err != nil) {
 		w.WriteHeader(404)
-		fmt.Fprintf(w, "Error 404: File Not Found\n")
-		fmt.Fprintf(w, "Specific error: ", err)
+		fmt.Fprintln(w, "Error 404: File Not Found")
+		fmt.Fprintln(w, "Specific error: ", err)
 	}
 
 	sess, err := store.Get(r, "data")
-	username := sess.Get("user").(string)
+	username := sess.Values["user"].(string)
 
 	err = tmpl.Execute(w, username)
 }
