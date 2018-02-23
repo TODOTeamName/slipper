@@ -1,10 +1,10 @@
 package main
 
 import (
-	"encoding/json"
-	"html/template"
 	"log"
 	"net/http"
+	"io/ioutil"
+	"encoding/json"
 )
 
 var Settings Config
@@ -17,7 +17,7 @@ func main() {
 	}
 
 	// Parse Config JSON into struct
-	err = json.Unmarshal(configBytes, &Config)
+	err = json.Unmarshal(configBytes, &Settings)
 	if err != nil {
 		log.Fatal("Error while parsing config: ", err)
 	}
