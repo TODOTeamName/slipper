@@ -22,6 +22,8 @@ func main() {
 		log.Fatal("Error while parsing config: ", err)
 	}
 
+	initCookieStore()
+
 	// Start HTTP Server :)
 	http.HandleFunc("/api/", apiHandler)
 	http.HandleFunc("/", defHandler);
