@@ -8,6 +8,6 @@ a {
 }
 
 a:hover {
-	color:#5F5F5F;
+	text-shadow:2px 2px #FFD700;
 	text-decoration:underline;
 }
