@@ -4,6 +4,22 @@
 		<link rel = "stylesheet" type = "text/css" href = "style.css">
 	</head>
 	<body>
-		<a href="{{.Login}}">Login</a>
+		<!--REQUIRED:
+				appid=integer
+				back=url
+				globalname=string
+			OPTIONAL
+				backname=string
+				crosscheck=string
+				delport=0|1
+				globalsecure=0|1
+				globalttl=integer
+				httpsonly=0|1
+				seconds=integer
+			-->
+		<form action = "{{.SubmitActionLogin}}">
+			Log in using MTU ISO:
+			<input type = "submit" value = "Log In">
+		</form>
 	</body>
 </html>
