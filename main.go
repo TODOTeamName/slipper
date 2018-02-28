@@ -1,10 +1,10 @@
 package main
 
 import (
+	"encoding/json"
+	"io/ioutil"
 	"log"
 	"net/http"
-	"io/ioutil"
-	"encoding/json"
 )
 
 var Settings Config
@@ -26,11 +26,11 @@ func main() {
 
 	// Start HTTP Server :)
 	http.HandleFunc("/api/", apiHandler)
-	http.HandleFunc("/", defHandler);
-	if (Config.Https != nil) {
+	http.HandleFunc("/", defHandler)
+	if Config.Https != nil {
 		https := Config.Https
-		if (https.Cert == nil || https.Key == nil) {
-			log.Fatal("Cert/Key cannot be null!");
+		if https.Cert == nil || https.Key == nil {
+			log.Fatal("Cert/Key cannot be null!")
 		}
 
 		log.Fatal(http.ListenAndServeTLS(
