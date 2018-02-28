@@ -1,13 +1,20 @@
 body {
-	background-color:#F0F0F0;
+	background-color: #F0F0F0;
 }
 
 a {
-	color:#000000;
-	text-decoration:none;
+	color: #000000;
+	text-decoration: none;
 }
 
 a:hover {
-	text-shadow:0px 0px 2px #FFD700;
-	text-decoration:underline;
+	text-shadow: 0px 0px 2px #FFD700;
+	text-decoration: underline;
+}
+
+img
+{
+  max-width: 45%;
+  max-height: 45%;
+  margin: auto;
 }
