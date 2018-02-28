@@ -11,7 +11,7 @@ import (
 var store *sessions.CookieStore
 
 func initCookieStore() {
-	store = sessions.NewCookieStore(*Settings.CookieKey)
+	store = sessions.NewCookieStore([]byte(*Settings.CookieKey))
 }
 
 // Function called when someone uses the /api/* endpoint
