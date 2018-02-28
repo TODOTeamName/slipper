@@ -32,5 +32,6 @@ func defHandler(w http.ResponseWriter, r *http.Request) {
 	sess, err := store.Get(r, "data")
 	username := sess.Values["user"].(string)
 
+	//TODO: Replace `username` with proper replacing struct
 	err = tmpl.Execute(w, username)
 }
