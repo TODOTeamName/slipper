@@ -7,10 +7,11 @@ import (
 )
 import "log"
 
-var db, err = nil
+var db *sql.DB
+var err error
 
 func Connect() {
-	db, err := sql.Open("sqlite3", "file:packages.db")
+	db, err = sql.Open("sqlite3", "file:packages.db")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -25,7 +26,7 @@ func AddPackage(name string, building string, room string, package_type string) 
 	if err != nil {
 		log.Fatal(err)
 	}
-	res, err := stmt.Exec(name, building, room, package_type)
+	_, err = stmt.Exec(name, building, room, package_type)
 	if err != nil {
 		log.Fatal(err)
 	}
