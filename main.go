@@ -35,12 +35,12 @@ func main() {
 		}
 
 		log.Fatal(http.ListenAndServeTLS(
-			Settings.Host,
-			https.Cert,
-			https.Key,
+			*Settings.Host,
+			*https.Cert,
+			*https.Key,
 			nil,
 		))
 	} else {
-		log.Fatal(http.ListenAndServe(Settings.Host, nil))
+		log.Fatal(http.ListenAndServe(*Settings.Host, nil))
 	}
 }

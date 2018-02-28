@@ -11,7 +11,7 @@ import (
 var store *sessions.CookieStore
 
 func initCookieStore() {
-	store = sessions.NewCookieStore(Config.CookieKey)
+	store = sessions.NewCookieStore(*Settings.CookieKey)
 }
 
 // Function called when someone uses the /api/* endpoint
@@ -21,7 +21,7 @@ func apiHandler(w http.ResponseWriter, r *http.Request) {
 
 // Default function called when someone makes a request to the webserver
 func defHandler(w http.ResponseWriter, r *http.Request) {
-	tmplPath := path.Join(Config.Root, r.URL.Path)
+	tmplPath := path.Join(*Settings.Root, r.URL.Path)
 	tmpl, err := template.ParseFiles(tmplPath)
 	if (err != nil) {
 		w.WriteHeader(404)
