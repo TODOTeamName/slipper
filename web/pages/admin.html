@@ -1,5 +1,5 @@
-<!-- Need to check for permissions -->
 <html>
+	<!-- Form handles the addition/removal of users from the database -->
 	<head>
 		<title>Slipper|Admin</title> <!-- Rename applicable? -->
 		<link rel = "stylesheet" type = "text/css" href = "../style.css">
@@ -7,7 +7,7 @@
 	<body>
 		<a href = "main.html">Go Back</a>
 		<form action = "{{.SubmitActionAddUser}}">
-			<!-- Name, MTU ID, ? -->
+			<!-- Req: Name, MTU ID, ? -->
 			Name:<br />
 			<input type = "text" name = "name"><br />
 			MTU ID:<br />
@@ -15,7 +15,7 @@
 			<input type = "submit" value = "Add User">
 		</form>
 		<form action = "{{.SubmitActionRemoveUser}}">
-			<!-- Name, MTU ID, ? -->
+			<!-- Req: Name, MTU ID, ? -->
 			Name:<br />
 			<input type = "text" name = "name"><br />
 			MTU ID:<br />
