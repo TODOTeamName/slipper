@@ -5,8 +5,6 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
-	"fmt"
-	"os"
 )
 
 var Settings Config

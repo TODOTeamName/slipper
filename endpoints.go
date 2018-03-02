@@ -6,6 +6,7 @@ import (
 	"html/template"
 	"net/http"
 	"path"
+	"log"
 )
 
 var store *sessions.CookieStore
@@ -16,11 +17,14 @@ func initCookieStore() {
 
 // Function called when someone uses the /api/* endpoint
 func apiHandler(w http.ResponseWriter, r *http.Request) {
+	log.Println("API Call:", r.RemoteAddr, r.URL.Path)
 	fmt.Fprintf(w, "<body>Hello, %s!</body>\n", r.URL.Path)
 }
 
 // Default function called when someone makes a request to the webserver
 func defHandler(w http.ResponseWriter, r *http.Request) {
+	log.Println("Default Handler:", r.RemoteAddr, r.URL.Path)
+	
 	tmplPath := path.Join(*Settings.Root, r.URL.Path)
 	tmpl, err := template.ParseFiles(tmplPath)
 	if err != nil {
