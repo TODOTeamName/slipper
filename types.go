@@ -1,5 +1,6 @@
 package main
 
+// A struct to represent a configuration file
 type Config struct {
 	// Host of the application.
 	// Recommended: ":8080"

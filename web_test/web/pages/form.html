@@ -1,5 +1,4 @@
 <html>
-	<!-- Form handles the addition of packages from the database -->
 	<head>
 		<title>Slipper|Add Package</title> <!-- Rename applicable? -->
 		<link rel = "stylesheet" type = "text/css" href = "../style.css">
@@ -7,8 +6,8 @@
 	<body>
 		<a href = "main.html">Go Back</a>
 		<div id = "add">
-			<form action = "{{.SubmitActionAdd}}">
-				<!-- Req: Name, Building Name, Room Num, Package Type-->
+			<form action = "form.html">
+				<!-- Name, Building Name, Room Num, Package Type-->
 				Name:<br />
 				<input type = "text" name = "name"><br />
 				Building Name:<br />
@@ -21,6 +20,16 @@
 				<input type = "text" name = "room"><br />
 				Package Type:<br />
 				<input type = "text" name = "type"><br /><br />
+				<input type = "submit" value = "Submit">
+			</form>
+		</div>
+		<div id = "rem">
+			<form action = "{{.SubmitActionRemove}}">
+				<!-- Name, Sorting Number -->
+				Name:<br />
+				<input type = "text" name = "name"><br />
+				Sorting Number:<br />
+				<input type = "text" name = "number"><br /><br />
 				<input type = "submit" value = "Submit">
 			</form>
 		</div>
