@@ -1,0 +1,6 @@
+{
+	"Host": ":80",
+	"Root": "web/",
+	"CookieKey": "fwbyJX2ImrXZuVJm9Cxd0wHcvWC2hpQj",
+	"Https": null
+}
