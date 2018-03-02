@@ -5,13 +5,15 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"fmt"
+	"os"
 )
 
 var Settings Config
 
 func main() {
-
 	log.Println("Loading config...")
+	
 	// Read Config
 	configBytes, err := ioutil.ReadFile("./config.json")
 	if err != nil {
@@ -33,9 +35,9 @@ func main() {
 	http.HandleFunc("/", defHandler)
 
 	log.Println("Starting server...")
-	if (Settings.Https != nil) {
+	if Settings.Https != nil {
 		https := Settings.Https
-		if (https.Cert == nil || https.Key == nil) {
+		if https.Cert == nil || https.Key == nil {
 			log.Fatal("Cert/Key cannot be null!")
 		}
 
