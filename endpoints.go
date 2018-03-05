@@ -26,8 +26,8 @@ func defHandler(w http.ResponseWriter, r *http.Request) {
 	log.Println("Default Handler:", r.RemoteAddr, r.URL.Path)
 	
 	fPath := path.Join(*Settings.Root, r.URL.Path)
-	if fPath == "web" {
-		fPath = "web/index.html"
+	if r.URL.Path == "" || r.URL.Path == "/" {
+		fPath = path.Join(*Settings.Root, "index.html")
 	}
 	bytes, err := ioutil.ReadFile(fPath)
 	if err != nil {
@@ -35,7 +35,7 @@ func defHandler(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintln(w, "Error 404: File not found!")
 		fmt.Fprintln(w, "Specific error: ", err)
 	}
-	w.Write(bytes);
+	w.Write(bytes)
 	/*
 	tmpl, err := template.ParseFiles(fPath)
 	if err != nil {
