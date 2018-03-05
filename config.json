@@ -1,6 +1,6 @@
 {
 	"Host": ":80",
-	"Root": "web/",
+	"Root": "/srv/slipper/web",
 	"CookieKey": "fwbyJX2ImrXZuVJm9Cxd0wHcvWC2hpQj",
 	"Https": null
 }
