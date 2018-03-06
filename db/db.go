@@ -15,6 +15,16 @@ func Init(path string) {
 		log.Fatal(err)
 	}
 	db = con
+
+	db.Exec("CREATE TABLE IF NOT EXISTS Users(username VARCHAR(50) PRIMARY KEY, api_key())")
+	db.Exec(`CREATE TABLE IF NOT EXISTS Package(
+	sorting_number INT PRIMARY KEY,
+	date_recieved TIMESTAMP,
+	name VARCHAR(255),
+	building ENUM(DHH, Wadsworth, McNair, Hillside),
+	room CHAR(4),
+	package_type ENUM(UPS, USPS, FedEx),
+	printed_at TIMESTAMP)`)
 }
 
 func Close() {

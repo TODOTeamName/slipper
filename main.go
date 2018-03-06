@@ -1,6 +1,7 @@
 package main
 
 import (
+	"./db"
 	"encoding/json"
 	"io/ioutil"
 	"log"
@@ -31,6 +32,12 @@ func main() {
 	if err != nil {
 		log.Fatalln("Error while parsing config: ", err)
 	}
+
+	if !path.IsAbs(*Settings.Root) {
+		log.Fatalln("Root in config should be an absolute path!")
+	}
+
+	db.Init(ex)
 
 	log.Println("Initializing cookie store...")
 	initCookieStore()
