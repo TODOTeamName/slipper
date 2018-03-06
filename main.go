@@ -19,7 +19,7 @@ func main() {
 		log.Println("Can't find executable location, defaulting to /srv/slipper/slipper")
 		ex = "/srv/slipper/slipper"
 	}
-	
+
 	// Read Config
 	configBytes, err := ioutil.ReadFile(path.Join(path.Dir(ex), "config.json"))
 	if err != nil {
@@ -36,9 +36,8 @@ func main() {
 	initCookieStore()
 
 	// Start HTTP Server :)
-	http.HandleFunc("/api/", apiHandler)
-
 	http.HandleFunc("/", defHandler)
+	http.HandleFunc("/addpackage", handlePackageAdd)
 
 	log.Println("Starting server...")
 	if Settings.Https != nil {
