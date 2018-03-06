@@ -5,15 +5,23 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"os"
+	"path"
 )
 
 var Settings Config
 
 func main() {
 	log.Println("Loading config...")
+
+	ex, err := os.Executable()
+	if err != nil {
+		log.Println("Can't find executable location, defaulting to /srv/slipper/slipper")
+		ex = "/srv/slipper/slipper"
+	}
 	
 	// Read Config
-	configBytes, err := ioutil.ReadFile("./config.json")
+	configBytes, err := ioutil.ReadFile(path.Join(path.Dir(ex), "config.json"))
 	if err != nil {
 		log.Fatalln("Error while reading config: ", err)
 	}
