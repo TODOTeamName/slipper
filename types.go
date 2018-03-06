@@ -24,10 +24,3 @@ type Config struct {
 		Key *string
 	}
 }
-
-type PackageAdd struct {
-	Name     string
-	Building string
-	Room     string
-	Carrier  string
-}

@@ -36,8 +36,9 @@ func main() {
 	initCookieStore()
 
 	// Start HTTP Server :)
-	http.HandleFunc("/", defHandler)
+	http.Handle("/", http.FileServer(http.Dir(*Settings.Root)))
 	http.HandleFunc("/addpackage", handlePackageAdd)
+	http.HandleFunc("/removepackage", handlePackageRemove)
 
 	log.Println("Starting server...")
 	if Settings.Https != nil {

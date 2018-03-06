@@ -1,13 +1,10 @@
 package main
 
 import (
+	"./db"
 	"fmt"
 	"github.com/gorilla/sessions"
-	"io/ioutil"
-	"log"
 	"net/http"
-	"path"
-	"strings"
 )
 
 var store *sessions.CookieStore
@@ -18,32 +15,28 @@ func initCookieStore() {
 
 func handlePackageAdd(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
-	r.PostForm.Get("name")
+	form := r.Form
+
+	err := db.AddPackage(form.Get("name"), form.Get("building"), form.Get("room"), form.Get("type"))
+	if err != nil {
+		w.WriteHeader(400)
+		fmt.Fprintln(w, "Error 400: Bad Request. Database call went wrong.")
+		fmt.Fprintln(w, "Precise error:", err)
+		fmt.Fprintln(w, "Click <a href=\"/\">here</a> to go to the home page")
+		return
+	}
 }
 
-// Default function called when someone makes a request to the webserver
-func defHandler(w http.ResponseWriter, r *http.Request) {
-	log.Println("Default Handler:", r.RemoteAddr, r.URL.Path)
+func handlePackageRemove(w http.ResponseWriter, r *http.Request) {
+	r.ParseForm()
+	form := r.Form
 
-	if strings.Contains(r.URL.Path, "..") {
-		w.WriteHeader(404)
-		fmt.Fprintln(w, "Error 404: File not found!")
-		fmt.Fprintln(w, "Specific error: Do not use `..` in a URL path!")
-	}
-
-	fPath := path.Join(*Settings.Root, r.URL.Path)
-	if r.URL.Path == "" || r.URL.Path == "/" {
-		fPath = path.Join(*Settings.Root, "index.html")
-	}
-	bytes, err := ioutil.ReadFile(fPath)
+	err := db.RemovePackage(form.Get("number"))
 	if err != nil {
-		w.WriteHeader(404)
-		fmt.Fprintln(w, "Error 404: File not found!")
-		fmt.Fprintln(w, "Specific error: ", err)
-	}
-	w.Write(bytes)
-
-	if err != nil {
-		log.Println("Error:", err)
+		w.WriteHeader(400)
+		fmt.Fprintln(w, "Error 400: Bad Request. Database call went wrong.")
+		fmt.Fprintln(w, "Precise error:", err)
+		fmt.Fprintln(w, "Click <a href=\"/\">here</a> to go to the home page")
+		return
 	}
 }
