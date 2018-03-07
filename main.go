@@ -5,15 +5,23 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"os"
+	"path"
 )
 
 var Settings Config
 
 func main() {
 	log.Println("Loading config...")
-	
+
+	ex, err := os.Executable()
+	if err != nil {
+		log.Println("Can't find executable location, defaulting to /srv/slipper/slipper")
+		ex = "/srv/slipper/slipper"
+	}
+
 	// Read Config
-	configBytes, err := ioutil.ReadFile("./config.json")
+	configBytes, err := ioutil.ReadFile(path.Join(path.Dir(ex), "config.json"))
 	if err != nil {
 		log.Fatalln("Error while reading config: ", err)
 	}
@@ -28,9 +36,9 @@ func main() {
 	initCookieStore()
 
 	// Start HTTP Server :)
-	http.HandleFunc("/api/", apiHandler)
-
-	http.HandleFunc("/", defHandler)
+	http.Handle("/", http.FileServer(http.Dir(*Settings.Root)))
+	http.HandleFunc("/addpackage", handlePackageAdd)
+	http.HandleFunc("/removepackage", handlePackageRemove)
 
 	log.Println("Starting server...")
 	if Settings.Https != nil {
