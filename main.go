@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"os"
 	"path"
+	"github.com/todoteamname/slipper/db"
 )
 
 var Settings Config
@@ -31,6 +32,8 @@ func main() {
 	if err != nil {
 		log.Fatalln("Error while parsing config: ", err)
 	}
+
+	db.Init(path.Join(path.Dir(ex), "database.sqlite3"))
 
 	log.Println("Initializing cookie store...")
 	initCookieStore()
