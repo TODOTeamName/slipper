@@ -1,6 +1,7 @@
 package main
 
 import (
+	"./db"
 	"fmt"
 	"github.com/gorilla/sessions"
 	"html/template"
@@ -11,26 +12,34 @@ import (
 var store *sessions.CookieStore
 
 func initCookieStore() {
-	store = sessions.NewCookieStore(Config.CookieKey)
+	store = sessions.NewCookieStore([]byte(*Settings.CookieKey))
 }
 
-// Function called when someone uses the /api/* endpoint
-func apiHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "<body>Hello, %s!</body>\n", r.URL.Path)
-}
+func handlePackageAdd(w http.ResponseWriter, r *http.Request) {
+	r.ParseForm()
+	form := r.Form
 
-// Default function called when someone makes a request to the webserver
-func defHandler(w http.ResponseWriter, r *http.Request) {
-	tmplPath := path.Join(Config.Root, r.URL.Path)
-	tmpl, err := template.ParseFiles(tmplPath)
+	err := db.AddPackage(form.Get("name"), form.Get("building"), form.Get("room"), form.Get("type"))
 	if err != nil {
-		w.WriteHeader(404)
-		fmt.Fprintln(w, "Error 404: File Not Found")
-		fmt.Fprintln(w, "Specific error: ", err)
+		w.WriteHeader(400)
+		fmt.Fprintln(w, "Error 400: Bad Request. Database call went wrong.")
+		fmt.Fprintln(w, "Precise error:", err)
+		fmt.Fprintln(w, "Click <a href=\"/\">here</a> to go to the home page")
+		return
+
 	}
+}
 
-	sess, err := store.Get(r, "data")
-	username := sess.Values["user"].(string)
+func handlePackageRemove(w http.ResponseWriter, r *http.Request) {
+	r.ParseForm()
+	form := r.Form
 
-	err = tmpl.Execute(w, username)
+	err := db.RemovePackage(form.Get("number"))
+	if err != nil {
+		w.WriteHeader(400)
+		fmt.Fprintln(w, "Error 400: Bad Request. Database call went wrong.")
+		fmt.Fprintln(w, "Precise error:", err)
+		fmt.Fprintln(w, "Click <a href=\"/\">here</a> to go to the home page")
+		return
+	}
 }

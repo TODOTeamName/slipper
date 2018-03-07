@@ -1,0 +1,6 @@
+{
+	"Host": ":80",
+	"Root": "/srv/go/src/github.com/todoteamname/slipper/web",
+	"CookieKey": "fwbyJX2ImrXZuVJm9Cxd0wHcvWC2hpQj",
+	"Https": null
+}
