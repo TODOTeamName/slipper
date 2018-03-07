@@ -4,7 +4,9 @@ import (
 	"github.com/todoteamname/slipper/db"
 	"fmt"
 	"github.com/gorilla/sessions"
+	"html/template"
 	"net/http"
+	"path"
 )
 
 var store *sessions.CookieStore
