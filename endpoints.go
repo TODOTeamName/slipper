@@ -1,11 +1,11 @@
-package main;
+package main
 
 import (
 	"fmt"
-	"path"
-	"net/http"
-	"html/template"
 	"github.com/gorilla/sessions"
+	"html/template"
+	"net/http"
+	"path"
 )
 
 var store *sessions.CookieStore
@@ -23,7 +23,7 @@ func apiHandler(w http.ResponseWriter, r *http.Request) {
 func defHandler(w http.ResponseWriter, r *http.Request) {
 	tmplPath := path.Join(Config.Root, r.URL.Path)
 	tmpl, err := template.ParseFiles(tmplPath)
-	if (err != nil) {
+	if err != nil {
 		w.WriteHeader(404)
 		fmt.Fprintln(w, "Error 404: File Not Found")
 		fmt.Fprintln(w, "Specific error: ", err)
