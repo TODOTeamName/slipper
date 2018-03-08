@@ -30,6 +30,7 @@ func GetPackage(sortingNumber string) (Package, error) {
 		SELECT (sorting_number, name, building, room, package_type)
 		FROM Packages
  		WHERE sorting_number = ?`)
+	defer stmt.Close()
 	if err != nil {
 		log.Println("Error occured while preparing statement:", err)
 		return Package{}, err
@@ -37,6 +38,7 @@ func GetPackage(sortingNumber string) (Package, error) {
 
 	// Run the query
 	res, err := stmt.Query(sortingNumber)
+	defer res.Close()
 
 	// If there is a result...
 	if res.Next() {
