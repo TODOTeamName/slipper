@@ -70,7 +70,7 @@ func AddPackage(name string, building string, room string, packageType string) e
 		return err
 	}
 
-	_, err = stmt.Exec(sortingNumber, name, building, room, packageType)
+	_, err = stmt.Exec(sortingNumber.String(), name, building, room, packageType)
 	if err != nil {
 		log.Println("Error occured while executing statement:", err)
 		return err
