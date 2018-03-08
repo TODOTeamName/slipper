@@ -2,12 +2,12 @@ package main
 
 import (
 	"encoding/json"
+	"github.com/todoteamname/slipper/db"
 	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
 	"path"
-	"github.com/todoteamname/slipper/db"
 )
 
 var Settings Config

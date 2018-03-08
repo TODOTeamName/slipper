@@ -1,9 +1,9 @@
 package main
 
 import (
-	"github.com/todoteamname/slipper/db"
 	"fmt"
 	"github.com/gorilla/sessions"
+	"github.com/todoteamname/slipper/db"
 	"net/http"
 )
 
