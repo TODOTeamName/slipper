@@ -1,7 +1,7 @@
 package main
 
 import (
-	"./db"
+	"github.com/todoteamname/slipper/db"
 	"fmt"
 	"github.com/gorilla/sessions"
 	"net/http"
@@ -24,7 +24,10 @@ func handlePackageAdd(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintln(w, "Precise error:", err)
 		fmt.Fprintln(w, "Click <a href=\"/\">here</a> to go to the home page")
 		return
+
 	}
+
+	fmt.Fprintln(w, "Lol it worked")
 }
 
 func handlePackageRemove(w http.ResponseWriter, r *http.Request) {
@@ -39,4 +42,6 @@ func handlePackageRemove(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintln(w, "Click <a href=\"/\">here</a> to go to the home page")
 		return
 	}
+
+	fmt.Fprintln(w, "Lol it worked")
 }

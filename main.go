@@ -1,13 +1,13 @@
 package main
 
 import (
-	"./db"
 	"encoding/json"
 	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
 	"path"
+	"github.com/todoteamname/slipper/db"
 )
 
 var Settings Config
@@ -33,11 +33,11 @@ func main() {
 		log.Fatalln("Error while parsing config: ", err)
 	}
 
+	db.Init(path.Join(path.Dir(ex), "database.sqlite3"))
+
 	if !path.IsAbs(*Settings.Root) {
 		log.Fatalln("Root in config should be an absolute path!")
 	}
-
-	db.Init(ex)
 
 	log.Println("Initializing cookie store...")
 	initCookieStore()

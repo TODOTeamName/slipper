@@ -1,6 +1,0 @@
-main.html			{{.Logout}}						Replace with Logout process
-form_remove.html	{{.SubmitActionRemove}}			Replace with package removal
-form_add.html		{{.SubmitActionAdd}}			Replace with package addition
-admin.html			{{.SubmitActionAddUser}}		Replace with user addition
-admin.html			{{.SubmitActionRemoverUser}}	Replace with user removal
-index.html			{{.SubmitActionLogin}}			Replace with login
