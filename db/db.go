@@ -30,14 +30,18 @@ func GetPackage(sortingNumber string) (Package, error) {
 		SELECT (sorting_number, name, building, room, package_type)
 		FROM Packages
  		WHERE sorting_number = ?`)
-	defer stmt.Close()
 	if err != nil {
 		log.Println("Error occured while preparing statement:", err)
 		return Package{}, err
 	}
+	defer stmt.Close()
 
 	// Run the query
 	res, err := stmt.Query(sortingNumber)
+	if err != nil {
+		log.Println("Error occured while executing query:", err)
+		return Package{}, err
+	}
 	defer res.Close()
 
 	// If there is a result...
@@ -58,11 +62,11 @@ func AddPackage(name string, building string, room string, packageType string) e
 	stmt, err := db.Prepare(`
 		INSERT INTO Packages(sorting_number, name, building, room, package_type)
 		VALUES(?, ?, ?, ?, ?)`)
-	defer stmt.Close()
 	if err != nil {
 		log.Println("Error occured while preparing statement:", err)
 		return err
 	}
+	defer stmt.Close()
 
 	sortingNumber, err := getNextSortingNumber()
 	if err != nil {
@@ -83,12 +87,13 @@ func RemovePackage(sortingNumber string) error {
 
 	// TODO add a package archive where we store all packages
 	stmt, err := db.Prepare("DELETE FROM Packages WHERE sorting_number=?")
-	defer stmt.Close()
 
 	if err != nil {
 		log.Println("Error occured while preparing statement:", err)
 		return err
 	}
+	defer stmt.Close()
+
 	_, err = stmt.Exec(sortingNumber)
 	if err != nil {
 		log.Println("Error occured while executing statement:", err)
