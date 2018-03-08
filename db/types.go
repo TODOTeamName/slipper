@@ -39,9 +39,7 @@ func getNextSortingNumber() (SortingNumber, error) {
 		num := SortingNumber{}
 		num.Letter = letter
 		res.Scan(&num.Number)
-		log.Println(num)
 		num.Number++
-		log.Println(num)
 		return num, nil
 	}
 
