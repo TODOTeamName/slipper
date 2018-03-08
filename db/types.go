@@ -27,7 +27,7 @@ func getNextSortingNumber() (SortingNumber, error) {
 	letter := []rune(letters)[days%len(letters)]
 
 	res, err := db.Query(`
-		SELECT CAST(MAX(SUBSTR(sorting_number, 2, 3)) AS INTEGER) FROM Packages
+		SELECT CAST(MAX(SUBSTR(sorting_number, 2, 4)) AS INTEGER) FROM Packages
 		WHERE SUBSTR(sorting_number, 1, 1) = ?`, letter)
 	defer res.Close()
 	if err != nil {
