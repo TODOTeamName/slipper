@@ -40,6 +40,7 @@ func getNextSortingNumber() (SortingNumber, error) {
 		num.Letter = letter
 		res.Scan(&num.Number)
 		num.Number++
+		log.Println(num)
 		return num, nil
 	}
 
