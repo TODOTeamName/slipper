@@ -52,25 +52,6 @@ func GetPackage(sortingNumber string) (Package, error) {
 	return Package{}, ErrNoPackageFound
 }
 
-func IsSortingNumberUsed(sortingNumber string) (bool, error) {
-	stmt, err := db.Prepare("SELECT * FROM Packages WHERE sorting_number = ?")
-	defer stmt.Close()
-
-	if err != nil {
-		log.Println("Error occured while preparing statement:", err)
-		return false, err
-	}
-
-	res, err := stmt.Query(sortingNumber)
-	defer res.Close()
-
-	if res.Next() {
-		return false, nil
-	}
-
-	return true, nil
-}
-
 func AddPackage(name string, building string, room string, packageType string) error {
 	stmt, err := db.Prepare("INSERT INTO Packages(name, building, room, package_type) VALUES(?,?,?,?)")
 	defer stmt.Close()
