@@ -29,11 +29,11 @@ func getNextSortingNumber() (SortingNumber, error) {
 	res, err := db.Query(`
 		SELECT MAX(CAST(SUBSTR(sorting_number, 2, 4) AS INTEGER)) FROM Packages
 		WHERE SUBSTR(sorting_number, 1, 1) = ?`, letter)
-	defer res.Close()
 	if err != nil {
 		log.Println("Error while running query:", err)
 		return SortingNumber{}, err
 	}
+	defer res.Close()
 
 	if res.Next() {
 		num := SortingNumber{}
