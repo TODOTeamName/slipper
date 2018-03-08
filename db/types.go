@@ -47,5 +47,5 @@ func getNextSortingNumber() (SortingNumber, error) {
 }
 
 func (s SortingNumber) String() string {
-	return fmt.Sprintf("%c%4d", s.Letter, s.Number)
+	return fmt.Sprintf("%c%04d", s.Letter, s.Number)
 }
