@@ -3,11 +3,13 @@ package db
 
 import (
 	"database/sql"
+	"errors"
 	_ "github.com/mattn/go-sqlite3"
 	"log"
 )
 
 var db *sql.DB
+var ErrNoPackageFound = errors.New("no package found")
 
 func Init(path string) {
 	con, err := sql.Open("sqlite3", "file:"+path)
@@ -19,6 +21,35 @@ func Init(path string) {
 
 func Close() {
 	db.Close()
+}
+
+func GetPackage(sortingNumber string) (Package, error) {
+
+	// Prepare a statement which gets a package
+	stmt, err := db.Prepare(`
+		SELECT (sorting_number, name, building, room, package_type)
+		FROM Packages
+ 		WHERE sorting_number = ?`)
+	if err != nil {
+		log.Println("Error occured while preparing statement:", err)
+		return Package{}, err
+	}
+
+	// Run the query
+	res, err := stmt.Query(sortingNumber)
+
+	// If there is a result...
+	if res.Next() {
+
+		// Store the found row into a variable p
+		var p Package
+		res.Scan(&p.SortingNumber, &p.Name, &p.Building, &p.Room, &p.PackageType)
+
+		return p, nil
+	}
+
+	// Otherwise, return an empty package, and the error indicating that no package was found
+	return Package{}, ErrNoPackageFound
 }
 
 func IsSortingNumberUsed(sortingNumber string) (bool, error) {
