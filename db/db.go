@@ -45,7 +45,7 @@ func GetPackage(sortingNumber string) (Package, error) {
 
 		// Store the found row into a variable p
 		var p Package
-		res.Scan(&p.SortingNumber, &p.Name, &p.Building, &p.Room, &p.PackageType)
+		res.Scan(&p.Number, &p.Name, &p.Building, &p.Room, &p.PackageType)
 
 		return p, nil
 	}
@@ -55,13 +55,22 @@ func GetPackage(sortingNumber string) (Package, error) {
 }
 
 func AddPackage(name string, building string, room string, packageType string) error {
-	stmt, err := db.Prepare("INSERT INTO Packages(name, building, room, package_type) VALUES(?,?,?,?)")
+	stmt, err := db.Prepare(`
+		INSERT INTO Packages(sorting_number, name, building, room, package_type)
+		VALUES(?, ?, ?, ?, ?)`)
 	defer stmt.Close()
 	if err != nil {
 		log.Println("Error occured while preparing statement:", err)
 		return err
 	}
-	_, err = stmt.Exec(name, building, room, packageType)
+
+	sortingNumber, err := getNextSortingNumber()
+	if err != nil {
+		log.Println("Error occured while getting sorting number:", err)
+		return err
+	}
+
+	_, err = stmt.Exec(sortingNumber, name, building, room, packageType)
 	if err != nil {
 		log.Println("Error occured while executing statement:", err)
 		return err
