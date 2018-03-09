@@ -62,7 +62,7 @@ func GetPackage(sortingNumber string) (Package, error) {
 func AddPackage(name string, building string, room string, packageType string) error {
 	stmt, err := db.Prepare(`
 		INSERT INTO Packages(sorting_number, date_received, name, building, room, package_type)
-		VALUES(?, DATETIME('now','localtime'), ?, ?, ?, ?)`)
+		VALUES(?, DATETIME('now'), ?, ?, ?, ?)`)
 	if err != nil {
 		log.Println("Error occured while preparing statement:", err)
 		return err
