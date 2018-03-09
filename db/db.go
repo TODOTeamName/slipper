@@ -80,7 +80,7 @@ func AddPackage(name string, building string, room string, packageType string) e
 		return err
 	}
 
-	return nil
+	return sortingNumber.String()
 }
 
 func RemovePackage(sortingNumber string) error {
