@@ -7,6 +7,7 @@ import (
 	_ "github.com/mattn/go-sqlite3"
 	"log"
 )
+import "time"
 
 var db *sql.DB
 var ErrNoPackageFound = errors.New("no package found")
@@ -60,8 +61,8 @@ func GetPackage(sortingNumber string) (Package, error) {
 
 func AddPackage(name string, building string, room string, packageType string) error {
 	stmt, err := db.Prepare(`
-		INSERT INTO Packages(sorting_number, name, building, room, package_type)
-		VALUES(?, ?, ?, ?, ?)`)
+		INSERT INTO Packages(sorting_number, date_received, name, building, room, package_type)
+		VALUES(?, DATETIME('now','localtime'), ?, ?, ?, ?)`)
 	if err != nil {
 		log.Println("Error occured while preparing statement:", err)
 		return err
