@@ -35,7 +35,7 @@ func handlePackageRemove(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
 	form := r.Form
 
-	err := db.RemovePackage(form.Get("number"))
+	err := db.Archive(form.Get("number"))
 	if err != nil {
 		w.WriteHeader(400)
 		fmt.Fprintln(w, "Error 400: Bad Request. Database call went wrong.")
