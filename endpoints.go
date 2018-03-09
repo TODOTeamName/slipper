@@ -17,7 +17,7 @@ func handlePackageAdd(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
 	form := r.Form
 
-	err := db.AddPackage(form.Get("name"), form.Get("building"), form.Get("room"), form.Get("type"))
+	_, err := db.AddPackage(form.Get("name"), form.Get("building"), form.Get("room"), form.Get("type"))
 	if err != nil {
 		w.WriteHeader(400)
 		fmt.Fprintln(w, "Error 400: Bad Request. Database call went wrong.")
