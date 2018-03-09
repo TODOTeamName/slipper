@@ -7,7 +7,6 @@ import (
 	_ "github.com/mattn/go-sqlite3"
 	"log"
 )
-import "time"
 
 var db *sql.DB
 var ErrNoPackageFound = errors.New("no package found")
