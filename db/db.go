@@ -58,29 +58,29 @@ func GetPackage(sortingNumber string) (Package, error) {
 	return Package{}, ErrNoPackageFound
 }
 
-func AddPackage(name string, building string, room string, packageType string) error {
+func AddPackage(name string, building string, room string, packageType string) (string, error) {
 	stmt, err := db.Prepare(`
 		INSERT INTO Packages(sorting_number, date_received, name, building, room, package_type)
 		VALUES(?, DATETIME('now','localtime'), ?, ?, ?, ?)`)
 	if err != nil {
 		log.Println("Error occured while preparing statement:", err)
-		return err
+		return "", err
 	}
 	defer stmt.Close()
 
 	sortingNumber, err := getNextSortingNumber()
 	if err != nil {
 		log.Println("Error occured while getting sorting number:", err)
-		return err
+		return "", err
 	}
 
 	_, err = stmt.Exec(sortingNumber.String(), name, building, room, packageType)
 	if err != nil {
 		log.Println("Error occured while executing statement:", err)
-		return err
+		return "", err
 	}
 
-	return sortingNumber.String()
+	return sortingNumber.String(), nil
 }
 
 func RemovePackage(sortingNumber string) error {
@@ -94,10 +94,15 @@ func RemovePackage(sortingNumber string) error {
 	}
 	defer stmt.Close()
 
-	_, err = stmt.Exec(sortingNumber)
+	num, err := stmt.Exec(sortingNumber)
 	if err != nil {
 		log.Println("Error occured while executing statement:", err)
 		return err
+	}
+
+	rows, _ := num.RowsAffected()
+	if rows == 0 {
+		return ErrNoPackageFound
 	}
 
 	return nil
