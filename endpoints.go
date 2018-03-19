@@ -27,8 +27,14 @@ func handlePackageAdd(w http.ResponseWriter, r *http.Request) {
 
 	}
 
-	fmt.Fprintln(w, "Lol it worked")
-	fmt.Fprintln(w, "Sorting number:", num)
+	http.ServeFile(w, r, "/pages/form_add.html")
+	fmt.Fprintf(w,
+		"<script>history.replaceState(%q, %q, %q);</script>",
+		"asdf",
+		"Slipper|Add Package",
+		"/pages/form_add.html",
+	)
+	fmt.Fprintf(w, "<script>alert(%q)</script>", fmt.Sprintf("The package number is %d", num))
 }
 
 func handlePackageRemove(w http.ResponseWriter, r *http.Request) {
@@ -44,5 +50,12 @@ func handlePackageRemove(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	http.ServeFile(w, r, "/pages/form_remove.html")
+	fmt.Fprintf(w,
+		"<script>history.replaceState(%q, %q, %q);</script>",
+		"asdf",
+		"Slipper|Remove Package",
+		"/pages/form_remove.html",
+	)
 	fmt.Fprintln(w, "Lol it worked")
 }
