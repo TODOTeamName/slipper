@@ -57,5 +57,4 @@ func handlePackageRemove(w http.ResponseWriter, r *http.Request) {
 		"Slipper|Remove Package",
 		"/pages/form_remove.html",
 	)
-	fmt.Fprintln(w, "Lol it worked")
 }
