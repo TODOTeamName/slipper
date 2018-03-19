@@ -5,6 +5,7 @@ import (
 	"github.com/gorilla/sessions"
 	"github.com/todoteamname/slipper/db"
 	"net/http"
+	"path"
 )
 
 var store *sessions.CookieStore
@@ -27,7 +28,7 @@ func handlePackageAdd(w http.ResponseWriter, r *http.Request) {
 
 	}
 
-	http.ServeFile(w, r, "/pages/form_add.html")
+	http.ServeFile(w, r, path.Join(*Settings.Root, "pages/form_add.html"))
 	fmt.Fprintf(w,
 		"<script>history.replaceState(%q, %q, %q);</script>",
 		"asdf",
@@ -50,7 +51,7 @@ func handlePackageRemove(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	http.ServeFile(w, r, "/pages/form_remove.html")
+	http.ServeFile(w, r, path.Join(*Settings.Root, "pages/form_remove.html"))
 	fmt.Fprintf(w,
 		"<script>history.replaceState(%q, %q, %q);</script>",
 		"asdf",
