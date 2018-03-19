@@ -34,7 +34,7 @@ func handlePackageAdd(w http.ResponseWriter, r *http.Request) {
 		"Slipper|Add Package",
 		"/pages/form_add.html",
 	)
-	fmt.Fprintf(w, "<script>alert(%q)</script>", fmt.Sprintf("The package number is %d", num))
+	fmt.Fprintf(w, "<script>alert(%q)</script>", fmt.Sprintf("The package number is %s", num))
 	http.ServeFile(w, r, path.Join(*Settings.Root, "pages/form_add.html"))
 }
 
