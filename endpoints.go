@@ -28,7 +28,6 @@ func handlePackageAdd(w http.ResponseWriter, r *http.Request) {
 
 	}
 
-	http.ServeFile(w, r, path.Join(*Settings.Root, "pages/form_add.html"))
 	fmt.Fprintf(w,
 		"<script>history.replaceState(%q, %q, %q);</script>",
 		"asdf",
@@ -36,6 +35,7 @@ func handlePackageAdd(w http.ResponseWriter, r *http.Request) {
 		"/pages/form_add.html",
 	)
 	fmt.Fprintf(w, "<script>alert(%q)</script>", fmt.Sprintf("The package number is %d", num))
+	http.ServeFile(w, r, path.Join(*Settings.Root, "pages/form_add.html"))
 }
 
 func handlePackageRemove(w http.ResponseWriter, r *http.Request) {
@@ -51,11 +51,11 @@ func handlePackageRemove(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	http.ServeFile(w, r, path.Join(*Settings.Root, "pages/form_remove.html"))
 	fmt.Fprintf(w,
 		"<script>history.replaceState(%q, %q, %q);</script>",
 		"asdf",
 		"Slipper|Remove Package",
 		"/pages/form_remove.html",
 	)
+	http.ServeFile(w, r, path.Join(*Settings.Root, "pages/form_remove.html"))
 }
