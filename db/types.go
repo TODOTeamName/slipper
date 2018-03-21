@@ -22,10 +22,6 @@ type SortingNumber struct {
 	Number uint16
 }
 
-func SortingNumber(str string) SortingNumber {
-	return SortingNumber{[]rune(str)[0], uint16(strconv.Atoi(str[1:]))}
-}
-
 func getNextSortingNumber() (SortingNumber, error) {
 	since := time.Since(time.Unix(0, 0))
 	days := int(since.Hours()) / 24
@@ -49,6 +45,17 @@ func getNextSortingNumber() (SortingNumber, error) {
 	}
 
 	return SortingNumber{letter, 0}, nil
+}
+
+func (s SortingNumber) Scan(src interface{}) error {
+	str, ok := src.(string)
+	if !ok {
+		return nil
+	}
+
+	s.Letter = []rune(str)[0]
+	s.Number = uint16(strconv.Atoi(str[1:]))
+	return nil
 }
 
 func (s SortingNumber) String() string {
