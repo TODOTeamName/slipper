@@ -55,7 +55,7 @@ func (s SortingNumber) Scan(src interface{}) error {
 
 	s.Letter = []rune(str)[0]
 	conv, _ := strconv.Atoi(str[1:])
-	s.Number = conv
+	s.Number = uint16(conv)
 	return nil
 }
 
