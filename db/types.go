@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"time"
+	"strconv"
 )
 
 const letters = "ABCDEFGHJKLMNPQRTUVWXY"
@@ -19,6 +20,10 @@ type Package struct {
 type SortingNumber struct {
 	Letter rune
 	Number uint16
+}
+
+func SortingNumber(str string) SortingNumber {
+	return SortingNumber{[]rune(str)[0], uint16(strconv.Atoi(str[1:]))}
 }
 
 func getNextSortingNumber() (SortingNumber, error) {
