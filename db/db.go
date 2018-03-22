@@ -6,6 +6,7 @@ import (
 	"errors"
 	_ "github.com/mattn/go-sqlite3"
 	"log"
+	"fmt"
 )
 
 var db *sql.DB
@@ -27,7 +28,7 @@ func GetPackage(sortingNumber string) (Package, error) {
 
 	// Prepare a statement which gets a package
 	stmt, err := db.Prepare(`
-		SELECT (sorting_number, name, building, room, package_type)
+		SELECT sorting_number, name, building, room, package_type
 		FROM Packages
  		WHERE sorting_number = ?`)
 	if err != nil {
@@ -50,6 +51,7 @@ func GetPackage(sortingNumber string) (Package, error) {
 		// Store the found row into a variable p
 		var p Package
 		res.Scan(&p.Number, &p.Name, &p.Building, &p.Room, &p.PackageType)
+		fmt.Printf("%s: %#v\n", sortingNumber, p)
 
 		return p, nil
 	}

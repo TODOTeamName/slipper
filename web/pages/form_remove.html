@@ -1,4 +1,3 @@
-<html>
 	<!-- Form handles the removal of packages from the database -->
 	<head>
 		<title>Slipper|Remove Package</title> <!-- Rename applicable? -->
@@ -10,9 +9,14 @@
 			<form action = "/removepackage" method = "post">
 				<!-- Req: Sorting Number -->
 				Sorting Number:<br />
-				<input type = "text" name = "number"><br /><br />
+				<input type = "text" name = "number"><br />
+				Signature:<br />
+				<a href = "signature.html">Sign Here</a><br />
+				<input type = "file" name = "sig" accept = "image/*">
+				<!-- For now, this will take the signature saved from "Sign Here" as the sig -->
+				<!-- TODO: Imbed the signature app in this page and carry the document to input instead of downloading it -->
+				<br /><br />
 				<input type = "submit" value = "Submit">
 			</form>
 		</div>
 	</body>
-</html>

@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"time"
+	"strconv"
 )
 
 const letters = "ABCDEFGHJKLMNPQRTUVWXY"
@@ -44,6 +45,18 @@ func getNextSortingNumber() (SortingNumber, error) {
 	}
 
 	return SortingNumber{letter, 0}, nil
+}
+
+func (s SortingNumber) Scan(src interface{}) error {
+	str, ok := src.(string)
+	if !ok {
+		return nil
+	}
+
+	s.Letter = []rune(str)[0]
+	conv, _ := strconv.Atoi(str[1:])
+	s.Number = uint16(conv)
+	return nil
 }
 
 func (s SortingNumber) String() string {

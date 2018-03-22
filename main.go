@@ -39,13 +39,11 @@ func main() {
 		log.Fatalln("Root in config should be an absolute path!")
 	}
 
-	log.Println("Initializing cookie store...")
-	initCookieStore()
-
 	// Start HTTP Server :)
 	http.Handle("/", http.FileServer(http.Dir(*Settings.Root)))
 	http.HandleFunc("/addpackage", handlePackageAdd)
 	http.HandleFunc("/removepackage", handlePackageRemove)
+	http.HandleFunc("/getpackage", handlePackageGet)
 
 	log.Println("Starting server...")
 	if Settings.Https != nil {
