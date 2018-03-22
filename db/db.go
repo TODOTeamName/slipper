@@ -52,7 +52,7 @@ func GetPackage(sortingNumber string) (Package, error) {
 		var p Package
 		p.Number = new(SortingNumber)
 		fmt.Println(p.Number)
-		res.Scan(&p.Number, &p.Name, &p.Building, &p.Room, &p.PackageType)
+		res.Scan(p.Number, &p.Name, &p.Building, &p.Room, &p.PackageType)
 		fmt.Println(p.Number)
 		fmt.Printf("%s: %+v\n", sortingNumber, p)
 
