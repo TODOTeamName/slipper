@@ -87,14 +87,25 @@ func AddPackage(name string, building string, room string, packageType string) (
 func Archive(sortingNumber string) error {
 
 	//Get package information for the archive
-	pickedUpPackage = GetPackage(sortingNumber)
+	pack, err := GetPackage(sortingNumber)
+	if err != nil {
+		log.Println("Error occured while getting package:", err)
+		return err
+	}
 	stmt, err := db.Prepare("INSERT INTO Picked_Up VALUES(?, ?, ?, ?, ?, ?, DATETIME('now','localtime'), NULL)")
 	if err != nil {
 		log.Println("Error occured while preparing statement:", err)
 		return err
 	}
 	defer stmt.Close()
-	num, err : = stmt.Exec(pickedUpPackage.Number.String(), pickedUpPackage.DateReceived, pickedUpPackage.Name, pickedUpPackage.Building, pickedUpPackage.Room, pickedUpPackage.PackageType)
+	num, err := stmt.Exec(
+		pack.Number.String(),
+		pack.DateReceived,
+		pack.Name,
+		pack.Building,
+		pack.Room,
+		pack.PackageType,
+	)
 	
 	if err != nil {
 		log.Println("Error occured while executing statement:", err)
@@ -107,23 +118,17 @@ func Archive(sortingNumber string) error {
 	}
 
 	// TODO add a package archive where we store all packages
-	stmt, err := db.Prepare("DELETE FROM Packages WHERE sorting_number=?")
-
+	delstmt, err := db.Prepare("DELETE FROM Packages WHERE sorting_number=?")
 	if err != nil {
 		log.Println("Error occured while preparing statement:", err)
 		return err
 	}
-	defer stmt.Close()
+	defer delstmt.Close()
 
-	num, err := stmt.Exec(sortingNumber)
+	_, err = delstmt.Exec(sortingNumber)
 	if err != nil {
 		log.Println("Error occured while executing statement:", err)
 		return err
-	}
-
-	rows, _ := num.RowsAffected()
-	if rows == 0 {
-		return ErrNoPackageFound
 	}
 
 	return nil
