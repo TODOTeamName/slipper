@@ -70,7 +70,7 @@ func handlePackageGet(w http.ResponseWriter, r *http.Request) {
 		"<script>history.replaceState(%q, %q, %q);</script>",
 		"asdf",
 		"Slipper|Update Package",
-		"/pages/form_remove.html",
+		"/pages/form_update.html",
 	)
 
 	fmt.Fprintf(w, "Package info: %#v<br><br>", pack)

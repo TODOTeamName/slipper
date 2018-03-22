@@ -10,7 +10,7 @@ import (
 const letters = "ABCDEFGHJKLMNPQRTUVWXY"
 
 type Package struct {
-	Number      SortingNumber
+	Number      *SortingNumber
 	Name        string
 	Building    string
 	Room        string
@@ -22,7 +22,7 @@ type SortingNumber struct {
 	Number uint16
 }
 
-func getNextSortingNumber() (SortingNumber, error) {
+func getNextSortingNumber() (*SortingNumber, error) {
 	since := time.Since(time.Unix(0, 0))
 	days := int(since.Hours()) / 24
 	letter := []rune(letters)[days%len(letters)]
@@ -47,7 +47,7 @@ func getNextSortingNumber() (SortingNumber, error) {
 	return SortingNumber{letter, 0}, nil
 }
 
-func (s SortingNumber) Scan(src interface{}) error {
+func (s *SortingNumber) Scan(src interface{}) error {
 	str, ok := src.(string)
 	if !ok {
 		return nil
@@ -59,6 +59,6 @@ func (s SortingNumber) Scan(src interface{}) error {
 	return nil
 }
 
-func (s SortingNumber) String() string {
+func (s *SortingNumber) String() string {
 	return fmt.Sprintf("%c%04d", s.Letter, s.Number)
 }
