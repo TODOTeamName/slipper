@@ -5,8 +5,6 @@ import (
 	"log"
 	"time"
 	"strconv"
-	"time"
-	"errors"
 )
 
 const letters = "ABCDEFGHJKLMNPQRTUVWXY"
