@@ -5,7 +5,6 @@ import (
 	"log"
 	"time"
 	"strconv"
-	"errors"
 )
 
 const letters = "ABCDEFGHJKLMNPQRTUVWXY"
@@ -33,7 +32,7 @@ func getNextSortingNumber() (SortingNumber, error) {
 		WHERE SUBSTR(sorting_number, 1, 1) = ?`, string(letter))
 	if err != nil {
 		log.Println("Error while running query:", err)
-		return nil, err
+		return SortingNumber{}, err
 	}
 	defer res.Close()
 
@@ -53,7 +52,7 @@ func Atosn(src string) SortingNumber {
 	val.Letter = []rune(src)[0]
 	conv, _ := strconv.Atoi(src[1:])
 	val.Number = uint16(conv)
-	return nil
+	return val
 }
 
 func (s SortingNumber) String() string {

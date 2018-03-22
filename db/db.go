@@ -6,7 +6,6 @@ import (
 	"errors"
 	_ "github.com/mattn/go-sqlite3"
 	"log"
-	"fmt"
 )
 
 var db *sql.DB
