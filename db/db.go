@@ -85,6 +85,8 @@ func AddPackage(name string, building string, room string, packageType string) (
 
 func Archive(sortingNumber string) error {
 
+	//Get package information for the archive
+
 	// TODO add a package archive where we store all packages
 	stmt, err := db.Prepare("DELETE FROM Packages WHERE sorting_number=?")
 
