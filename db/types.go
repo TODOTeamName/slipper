@@ -5,6 +5,7 @@ import (
 	"log"
 	"time"
 	"strconv"
+	"errors"
 )
 
 const letters = "ABCDEFGHJKLMNPQRTUVWXY"
@@ -51,7 +52,7 @@ func getNextSortingNumber() (*SortingNumber, error) {
 func (s *SortingNumber) Scan(src interface{}) error {
 	str, ok := src.(string)
 	if !ok {
-		return nil
+		return errors.New("uh oh")
 	}
 
 	s.Letter = []rune(str)[0]
