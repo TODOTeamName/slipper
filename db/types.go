@@ -5,12 +5,14 @@ import (
 	"log"
 	"time"
 	"strconv"
+	"time"
 )
 
 const letters = "ABCDEFGHJKLMNPQRTUVWXY"
 
 type Package struct {
 	Number      *SortingNumber
+	DateReceived time
 	Name        string
 	Building    string
 	Room        string
