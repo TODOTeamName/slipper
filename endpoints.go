@@ -73,6 +73,6 @@ func handlePackageGet(w http.ResponseWriter, r *http.Request) {
 		"/pages/form_update.html",
 	)
 
-	fmt.Fprintf(w, "Package info: %#v<br><br>", pack)
+	fmt.Fprintf(w, "Package info: %+v<br><br>", pack)
 	fmt.Fprintln(w, "This is a temporary page")
 }

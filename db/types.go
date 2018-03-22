@@ -5,7 +5,11 @@ import (
 	"log"
 	"time"
 	"strconv"
+<<<<<<< HEAD
 	"time"
+=======
+	"errors"
+>>>>>>> b7e18b4f5637b41bcd9d4830b302a41632677076
 )
 
 const letters = "ABCDEFGHJKLMNPQRTUVWXY"
@@ -34,30 +38,33 @@ func getNextSortingNumber() (*SortingNumber, error) {
 		WHERE SUBSTR(sorting_number, 1, 1) = ?`, string(letter))
 	if err != nil {
 		log.Println("Error while running query:", err)
-		return SortingNumber{}, err
+		return nil, err
 	}
 	defer res.Close()
 
 	if res.Next() {
-		num := SortingNumber{}
+		num := new(SortingNumber)
 		num.Letter = letter
 		res.Scan(&num.Number)
 		num.Number++
 		return num, nil
 	}
 
-	return SortingNumber{letter, 0}, nil
+	num := SortingNumber{letter, 0}
+	return &num, nil
 }
 
 func (s *SortingNumber) Scan(src interface{}) error {
 	str, ok := src.(string)
 	if !ok {
-		return nil
+		return errors.New("uh oh")
 	}
 
+	fmt.Println("Scan called with", src)
 	s.Letter = []rune(str)[0]
 	conv, _ := strconv.Atoi(str[1:])
 	s.Number = uint16(conv)
+	fmt.Println("Scan call mutates to", s)
 	return nil
 }
 

@@ -50,8 +50,16 @@ func GetPackage(sortingNumber string) (Package, error) {
 
 		// Store the found row into a variable p
 		var p Package
+<<<<<<< HEAD
 		res.Scan(&p.Number, &p.DateReceived &p.Name, &p.Building, &p.Room, &p.PackageType)
 		fmt.Printf("%s: %#v\n", sortingNumber, p)
+=======
+		p.Number = new(SortingNumber)
+		fmt.Println(p.Number)
+		res.Scan(p.Number, &p.Name, &p.Building, &p.Room, &p.PackageType)
+		fmt.Println(p.Number)
+		fmt.Printf("%s: %+v\n", sortingNumber, p)
+>>>>>>> b7e18b4f5637b41bcd9d4830b302a41632677076
 
 		return p, nil
 	}
