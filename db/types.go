@@ -11,7 +11,7 @@ const letters = "ABCDEFGHJKLMNPQRTUVWXY"
 
 type Package struct {
 	Number      SortingNumber  
-	DateReceived time
+	DateReceived time.Time
 	Name        string
 	Building    string
 	Room        string
