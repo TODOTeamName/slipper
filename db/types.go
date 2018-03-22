@@ -55,9 +55,11 @@ func (s *SortingNumber) Scan(src interface{}) error {
 		return errors.New("uh oh")
 	}
 
+	fmt.Println("Scan called with", src)
 	s.Letter = []rune(str)[0]
 	conv, _ := strconv.Atoi(str[1:])
 	s.Number = uint16(conv)
+	fmt.Println("Scan call mutates to", s)
 	return nil
 }
 
