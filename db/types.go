@@ -32,19 +32,20 @@ func getNextSortingNumber() (*SortingNumber, error) {
 		WHERE SUBSTR(sorting_number, 1, 1) = ?`, string(letter))
 	if err != nil {
 		log.Println("Error while running query:", err)
-		return SortingNumber{}, err
+		return nil, err
 	}
 	defer res.Close()
 
 	if res.Next() {
-		num := SortingNumber{}
+		num := new(SortingNumber)
 		num.Letter = letter
 		res.Scan(&num.Number)
 		num.Number++
 		return num, nil
 	}
 
-	return SortingNumber{letter, 0}, nil
+	num := SortingNumber{letter, 0}
+	return &num, nil
 }
 
 func (s *SortingNumber) Scan(src interface{}) error {
