@@ -40,14 +40,13 @@ resizeCanvas();
 function download(dataURL, filename) {
   var blob = dataURLToBlob(dataURL);
   var url = window.URL.createObjectURL(blob);
-
-  var a = document.createElement("a");
-  a.style = "display: none";
-  a.href = url;
-  a.download = filename;
-
-  document.body.appendChild(a);
-  a.click();
+  /*
+  document.getElementById("sig").value = blob;
+  */
+  
+  /*
+  document.getElementById("sig").setAttribute('value', blob);
+  */
 
   window.URL.revokeObjectURL(url);
 }
@@ -93,5 +92,5 @@ savePNGButton.addEventListener("click", function (event) {
 });
 
 backButton.addEventListener("click", function (event) {
-	window.location.replace("form_remove.html");
+	window.location.replace("main.html");
 });

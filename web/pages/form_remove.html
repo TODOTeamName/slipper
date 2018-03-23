@@ -4,17 +4,17 @@
 		<link rel = "stylesheet" type = "text/css" href = "../style.css">
 	</head>
 	<body>
-		<a href = "main.html">Go Back</a>
+		<div id = "return">
+			<a href = "main.html">Go Back</a><br />
+		</div>
 		<div id = "rem">
-			<form action = "/removepackage" method = "post">
+			<form action = "/removepackage" method = "post" >
 				<!-- Req: Sorting Number -->
 				Sorting Number:<br />
 				<input type = "text" name = "number"><br />
 				Signature:<br />
 				<a href = "signature.html">Sign Here</a><br />
-				<input type = "file" name = "sig" accept = "image/*">
-				<!-- For now, this will take the signature saved from "Sign Here" as the sig -->
-				<!-- TODO: Imbed the signature app in this page and carry the document to input instead of downloading it -->
+				<input type = "file" id = "sig" accept = "*" >
 				<br /><br />
 				<input type = "submit" value = "Submit">
 			</form>

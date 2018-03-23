@@ -14,16 +14,23 @@ a:hover {
 }
 
 /* Images max-width and height at 49% to allow 2x2 without overflowing lines */
-.linkimg
-{
+.linkimg {
   max-width: 49%;
   max-height: 49%;
   height: 45%;
   width: auto;
 }
 
-.logo
-{
+.logo {
 	width: auto;
-	height:10%;
+	height: 35%;
+}
+
+#return {
+	float:left;
+}
+
+#rem {
+	float:left;
+	width:100%;
 }
