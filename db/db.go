@@ -6,6 +6,7 @@ import (
 	"errors"
 	_ "github.com/mattn/go-sqlite3"
 	"log"
+	"time"
 )
 
 var db *sql.DB
@@ -27,7 +28,7 @@ func GetPackage(sortingNumber string) (Package, error) {
 
 	// Prepare a statement which gets a package
 	stmt, err := db.Prepare(`
-		SELECT sorting_number, date_received, name, building, room, package_type
+		SELECT sorting_number, date_received, name, building, room, package_type, is_printed
 		FROM Packages
  		WHERE sorting_number = ?`)
 	if err != nil {
@@ -50,13 +51,34 @@ func GetPackage(sortingNumber string) (Package, error) {
 		// Store the found row into a variable p
 		var p Package
 		var s string
-		res.Scan(&s, &p.DateReceived, &p.Name, &p.Building, &p.Room, &p.PackageType)
+		res.Scan(&s, &p.DateReceived, &p.Name, &p.Building, &p.Room, &p.PackageType, &p.IsPrinted)
 		p.Number = Atosn(s)
 		return p, nil
 	}
 
 	// Otherwise, return an empty package, and the error indicating that no package was found
 	return Package{}, ErrNoPackageFound
+}
+
+func UpdatePackage(sortingNumber string, dateReceived time.Time, name string, building string, room string, packageType string, isPrinted bool) error {
+	stmt, err := Prepare('
+		UPDATE Packages
+		SET sorting_number = ?, date_received = ?, name = ?, building = ?, room = ?, package_type = ?, is_printed = ?
+		WHERE sorting_number = ?
+		')
+	if err != nil {
+		log.Println("Error occured while preparing statement:", err)
+		return err
+	}
+	defer stmt.Close()
+
+	_, err = stmt.Exec(dateReceived, name, building, room, packageType, isPrinted, sortingNumber)
+	if err != nil {
+		log.Println("Error occured while executing statement:", err)
+		return err
+	}
+
+	return nil
 }
 
 func AddPackage(name string, building string, room string, packageType string) (string, error) {
