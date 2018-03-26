@@ -106,7 +106,7 @@ func AddPackage(name string, building string, room string, packageType string) (
 	return sortingNumber.String(), nil
 }
 
-func Archive(sortingNumber string) error {
+func Archive(sortingNumber string, signature []byte) error {
 
 	//Get package information for the archive
 	pack, err := GetPackage(sortingNumber)
@@ -114,7 +114,9 @@ func Archive(sortingNumber string) error {
 		log.Println("Error occured while getting package:", err)
 		return err
 	}
-	stmt, err := db.Prepare("INSERT INTO Picked_Up VALUES(?, ?, ?, ?, ?, ?, DATETIME('now','localtime'), NULL)")
+
+	//Archive package
+	stmt, err := db.Prepare("INSERT INTO Picked_Up VALUES(?, ?, ?, ?, ?, ?, DATETIME('now','localtime'), ?)")
 	if err != nil {
 		log.Println("Error occured while preparing statement:", err)
 		return err
@@ -127,6 +129,7 @@ func Archive(sortingNumber string) error {
 		pack.Building,
 		pack.Room,
 		pack.PackageType,
+		signature
 	)
 	
 	if err != nil {
@@ -139,7 +142,7 @@ func Archive(sortingNumber string) error {
 		return ErrNoPackageFound
 	}
 
-	// TODO add a package archive where we store all packages
+	// Remove archived package from current package table
 	delstmt, err := db.Prepare("DELETE FROM Packages WHERE sorting_number=?")
 	if err != nil {
 		log.Println("Error occured while preparing statement:", err)
