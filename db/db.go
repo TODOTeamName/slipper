@@ -51,7 +51,7 @@ func GetPackage(sortingNumber string) (Package, error) {
 		// Store the found row into a variable p
 		var p Package
 		var s string
-		res.Scan(&s, &p.DateReceived, &p.Name, &p.Building, &p.Room, &p.PackageType, &p.Printed)
+		res.Scan(&s, &p.DateReceived, &p.Name, &p.Building, &p.Room, &p.Carrier, &p.Printed)
 		p.Number = Atosn(s)
 		return p, nil
 	}
@@ -81,7 +81,7 @@ func UpdatePackage(sortingNumber string, dateReceived time.Time, name string, bu
 	return nil
 }
 
-func AddPackage(name string, building string, room string, packageType string) (string, error) {
+func AddPackage(name string, building string, room string, carrier string) (string, error) {
 	stmt, err := db.Prepare(`
 		INSERT INTO Packages(sorting_number, date_received, name, building, room, package_type)
 		VALUES(?, DATETIME('now','localtime'), ?, ?, ?, ?)`)
@@ -97,7 +97,7 @@ func AddPackage(name string, building string, room string, packageType string) (
 		return "", err
 	}
 
-	_, err = stmt.Exec(sortingNumber.String(), name, building, room, packageType)
+	_, err = stmt.Exec(sortingNumber.String(), name, building, room, carrier)
 	if err != nil {
 		log.Println("Error occured while executing statement:", err)
 		return "", err
@@ -128,8 +128,8 @@ func Archive(sortingNumber string, signature []byte) error {
 		pack.Name,
 		pack.Building,
 		pack.Room,
-		pack.PackageType,
-		signature
+		signature,
+		pack.Carrier,
 	)
 	
 	if err != nil {

@@ -2,14 +2,14 @@
 	<head>
 		<title>Slipper|Remove Package</title> <!-- Rename applicable? -->
 		<link rel="stylesheet" href="css/signature-pad.css">
-		<link rel = "stylesheet" type = "text/css" href = "../style.css">
+		<link rel = "stylesheet" type = "text/css" href = "css/style.css">
 	</head>
 	<body>
 		<div id = "return">
 			<a href = "main.html">Go Back</a><br />
 		</div>
 		<div id = "rem">
-			<form action = "{{/removepackage}}" >
+			<form action = "/removepackage" method = "post"	>
 				<!-- Req: Sorting Number -->
 				Sorting Number:<br />
 				<input type = "text" name = "number"><br />

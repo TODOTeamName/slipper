@@ -83,7 +83,4 @@ func handlePackageGet(w http.ResponseWriter, r *http.Request) {
 	}
 
 	t.Execute(w, pack)
-
-	fmt.Fprintf(w, "Package info: %+v<br><br>", pack)
-	fmt.Fprintln(w, "This is a temporary page")
 }
