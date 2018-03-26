@@ -10,7 +10,7 @@ import (
 const letters = "ABCDEFGHJKLMNPQRTUVWXY"
 
 type Package struct {
-	Number      SortingNumber
+	Number      SortingNumber  
 	DateReceived time.Time
 	Name        string
 	Building    string

@@ -2,7 +2,6 @@ var wrapper = document.getElementById("signature-pad");
 var clearButton = wrapper.querySelector("[data-action=clear]");
 var undoButton = wrapper.querySelector("[data-action=undo]");
 var savePNGButton = wrapper.querySelector("[data-action=save-png]");
-var backButton = wrapper.querySelector("[data-action=back]");
 var canvas = wrapper.querySelector("canvas");
 var signaturePad = new SignaturePad(canvas, {
   // It's Necessary to use an opaque color when saving image as JPEG;
@@ -40,14 +39,7 @@ resizeCanvas();
 function download(dataURL, filename) {
   var blob = dataURLToBlob(dataURL);
   var url = window.URL.createObjectURL(blob);
-
-  var a = document.createElement("a");
-  a.style = "display: none";
-  a.href = url;
-  a.download = filename;
-
-  document.body.appendChild(a);
-  a.click();
+  document.getElementById("sig").value = url;
 
   window.URL.revokeObjectURL(url);
 }
@@ -89,9 +81,6 @@ savePNGButton.addEventListener("click", function (event) {
   } else {
     var dataURL = signaturePad.toDataURL();
     download(dataURL, "signature.png");
+	document.getElementById("submit").disabled = false;
   }
-});
-
-backButton.addEventListener("click", function (event) {
-	window.location.replace("form_remove.html");
 });
