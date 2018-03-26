@@ -5,6 +5,7 @@ import (
 	"github.com/todoteamname/slipper/db"
 	"net/http"
 	"path"
+	"text/template"
 )
 
 func handlePackageAdd(w http.ResponseWriter, r *http.Request) {
@@ -72,6 +73,16 @@ func handlePackageGet(w http.ResponseWriter, r *http.Request) {
 		"Slipper|Update Package",
 		"/pages/form_update.html",
 	)
+
+	t, err := template.ParseFiles(path.Join(*Settings.Root, "pages/form_update.html"))
+	if err != nil {
+		w.WriteHeader(400)
+		fmt.Fprintln(w, "Error 400: Bad Request. Database call went wrong.")
+		fmt.Fprintln(w, "Precise error:", err)
+		fmt.Fprintln(w, "Click <a href=\"/\">here</a> to go to the home page")
+	}
+
+	t.Execute(w, pack)
 
 	fmt.Fprintf(w, "Package info: %+v<br><br>", pack)
 	fmt.Fprintln(w, "This is a temporary page")

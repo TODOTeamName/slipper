@@ -16,7 +16,8 @@ type Package struct {
 	Building    string
 	Room        string
 	PackageType string
-	IsPrinted	bool
+	Carrier     string
+	Printed     bool
 }
 
 type SortingNumber struct {
