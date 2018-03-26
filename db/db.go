@@ -128,8 +128,8 @@ func Archive(sortingNumber string, signature []byte) error {
 		pack.Name,
 		pack.Building,
 		pack.Room,
-		signature,
 		pack.Carrier,
+		signature,
 	)
 	
 	if err != nil {
