@@ -51,7 +51,7 @@ func GetPackage(sortingNumber string) (Package, error) {
 		// Store the found row into a variable p
 		var p Package
 		var s string
-		res.Scan(&s, &p.DateReceived, &p.Name, &p.Building, &p.Room, &p.PackageType, &p.IsPrinted)
+		res.Scan(&s, &p.DateReceived, &p.Name, &p.Building, &p.Room, &p.PackageType, &p.Printed)
 		p.Number = Atosn(s)
 		return p, nil
 	}
@@ -61,11 +61,11 @@ func GetPackage(sortingNumber string) (Package, error) {
 }
 
 func UpdatePackage(sortingNumber string, dateReceived time.Time, name string, building string, room string, packageType string, isPrinted bool) error {
-	stmt, err := Prepare('
+	stmt, err := db.Prepare(`
 		UPDATE Packages
 		SET sorting_number = ?, date_received = ?, name = ?, building = ?, room = ?, package_type = ?, is_printed = ?
 		WHERE sorting_number = ?
-		')
+		`)
 	if err != nil {
 		log.Println("Error occured while preparing statement:", err)
 		return err
