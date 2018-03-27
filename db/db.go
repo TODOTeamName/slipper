@@ -51,7 +51,7 @@ func GetPackage(sortingNumber string) (Package, error) {
 		// Store the found row into a variable p
 		var p Package
 		var s string
-		res.Scan(&s, &p.DateReceived, &p.Name, &p.Building, &p.Room, &p.Carrier, &p.Printed)
+		res.Scan(&s, &p.DateReceived, &p.Name, &p.Building, &p.Room, &p.Carrier, &p.PackageType &p.Printed)
 		p.Number = Atosn(s)
 		return p, nil
 	}
@@ -62,8 +62,28 @@ func GetPackage(sortingNumber string) (Package, error) {
 
 func GetToBePrinted(building string) (Package[], error){
 	// Prepare getting the number of packages to be printed
+	stmt, err := db.Prepare(`
+		SELECT COUNT(*)
+		FROM Packages
+ 		WHERE isPrinted = 0 AND building = ?`)
+	if err != nil {
+		log.Println("Error occured while preparing statement:", err)
+		return Package{}, err
+	}
+	defer stmt.Close()
 
 	// Execute getting the number of packages to be printed
+	res, err := stmt.Query(building)
+	if err != nil {
+		log.Println("Error occured while executing query:", err)
+		return Package{}, err
+	}
+	defer res.Close()
+
+	var count int
+	if(res.Next()){
+		res.Scan(&count)
+	}
 
 	// Prepare getting the package info from the database
 	stmt, err := db.Prepare(`
@@ -84,7 +104,21 @@ func GetToBePrinted(building string) (Package[], error){
 	}
 	defer res.Close()
 
+	//Create array of packages
+	var toBePrinted [count]Packages
+	for i := 0; i < count; i++ {
+		if(res.Next()){
+			var p Package
+			var s string
+			res.Scan(&s, &p.DateReceived, &p.Name, &p.Building, &p.Room, &p.Carrier, &p.PackageType, &p.Printed)
+			p.Number = Atosn(s)
+			toBePrinted[i] = p
+		}else{
+			return toBePrinted, ErrNoPackageFound
+		}
+	}
 
+	return toBePrinted, nil
 }
 
 func UpdatePackage(sortingNumber string, dateReceived time.Time, name string, building string, room string, carrier string, packageType string, isPrinted bool) error {
