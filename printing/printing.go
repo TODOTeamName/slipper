@@ -1,3 +1,5 @@
+// Test code dump from local testing
+
 package printing
 
 import (
@@ -5,7 +7,7 @@ import (
 	"github.com/desertbit/fillpdf"
 )
 
-func createSlips() err{
+func createSlips(building string) err{
 	// Get packages to be printed
 
 	// Add package info to the form field
@@ -33,4 +35,6 @@ func createSlips() err{
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	// Mark the packages as printed in the db
 }
