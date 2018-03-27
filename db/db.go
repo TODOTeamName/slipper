@@ -177,7 +177,7 @@ func Archive(sortingNumber string, signature []byte) error {
 	}
 
 	// Archive package -> Put in the Picked_Up table
-	stmt, err := db.Prepare("INSERT INTO Picked_Up VALUES(?, ?, ?, ?, ?, ?, DATETIME('now','localtime'), ?)")
+	stmt, err := db.Prepare("INSERT INTO Picked_Up VALUES(?, ?, ?, ?, ?, ?, ?, DATETIME('now','localtime'), ?)")
 	if err != nil {
 		log.Println("Error occured while preparing statement:", err)
 		return err
@@ -190,6 +190,7 @@ func Archive(sortingNumber string, signature []byte) error {
 		pack.Building,
 		pack.Room,
 		pack.Carrier,
+		pack.PackageType,
 		signature,
 	)
 	
