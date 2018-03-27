@@ -10,8 +10,12 @@ import (
 	"github.com/mattn/go-sqlite3"
 )
 
+var PackageSlipsPdf string
+
+// Generate the pdf file contanining the slips to be printed
 func createSlips(building string) err{
 	// Get packages to be printed
+	Package packagesToBePrinted[] = db.GetToBePrinted(building)
 
 	// Add package info to the form field
 	form := fillpdf.Form{
@@ -40,4 +44,9 @@ func createSlips(building string) err{
 	}
 
 	// Mark the packages as printed in the db
+}
+
+func printSlips() {
+
+}
 }

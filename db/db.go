@@ -60,7 +60,34 @@ func GetPackage(sortingNumber string) (Package, error) {
 	return Package{}, ErrNoPackageFound
 }
 
-func UpdatePackage(sortingNumber string, dateReceived time.Time, name string, building string, room string, packageType string, isPrinted bool) error {
+func GetToBePrinted(building string) (Package[], error){
+	// Prepare getting the number of packages to be printed
+
+	// Execute getting the number of packages to be printed
+
+	// Prepare getting the package info from the database
+	stmt, err := db.Prepare(`
+		SELECT sorting_number, date_received, name, room, carrier, package_type
+		FROM Packages
+ 		WHERE isPrinted = 0 AND building = ?`)
+	if err != nil {
+		log.Println("Error occured while preparing statement:", err)
+		return Package{}, err
+	}
+	defer stmt.Close()
+
+	// Execute getting the package info from the database
+	res, err := stmt.Query(building)
+	if err != nil {
+		log.Println("Error occured while executing query:", err)
+		return Package{}, err
+	}
+	defer res.Close()
+
+
+}
+
+func UpdatePackage(sortingNumber string, dateReceived time.Time, name string, building string, room string, carrier string, packageType string, isPrinted bool) error {
 	stmt, err := db.Prepare(`
 		UPDATE Packages
 		SET sorting_number = ?, date_received = ?, name = ?, building = ?, room = ?, package_type = ?, is_printed = ?
@@ -108,14 +135,14 @@ func AddPackage(name string, building string, room string, carrier string) (stri
 
 func Archive(sortingNumber string, signature []byte) error {
 
-	//Get package information for the archive
+	// Get package information for the archive
 	pack, err := GetPackage(sortingNumber)
 	if err != nil {
 		log.Println("Error occured while getting package:", err)
 		return err
 	}
 
-	//Archive package
+	// Archive package -> Put in the Picked_Up table
 	stmt, err := db.Prepare("INSERT INTO Picked_Up VALUES(?, ?, ?, ?, ?, ?, DATETIME('now','localtime'), ?)")
 	if err != nil {
 		log.Println("Error occured while preparing statement:", err)

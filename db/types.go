@@ -16,6 +16,7 @@ type Package struct {
 	Building     string
 	Room         string
 	Carrier      string
+	PackageType  string
 	Printed      bool
 }
 
