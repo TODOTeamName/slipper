@@ -5,6 +5,9 @@ package printing
 import (
 	"log"
 	"github.com/desertbit/fillpdf"
+	"database/sql"
+	"errors"
+	"github.com/mattn/go-sqlite3"
 )
 
 func createSlips(building string) err{
@@ -31,7 +34,7 @@ func createSlips(building string) err{
 	}
 
 	// Fill the form PDF with our values.
-	err := fillpdf.Fill(form, "PackageSlipTemplateFillable.pdf", "FilledPackageSlip.pdf", true)
+	err := fillpdf.Fill(form, "PackageSlipTemplate.pdf", "FilledPackageSlip.pdf", true)
 	if err != nil {
 		log.Fatal(err)
 	}
