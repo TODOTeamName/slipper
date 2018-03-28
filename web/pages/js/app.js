@@ -37,11 +37,15 @@ window.onresize = resizeCanvas;
 resizeCanvas();
 
 function download(dataURL, filename) {
+	/*
   var blob = dataURLToBlob(dataURL);
   var url = window.URL.createObjectURL(blob);
-  document.getElementById("sig").value = url;
+  */
+  document.getElementById("sig").value = dataURL;
 
+  /*
   window.URL.revokeObjectURL(url);
+  */
 }
 
 // One could simply use Canvas#toBlob method instead, but it's just to show
