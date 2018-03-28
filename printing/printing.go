@@ -6,12 +6,13 @@ import (
 	"log"
 	"github.com/desertbit/fillpdf"
 	"github.com/todoteamname/slipper/db"
+	"path"
 )
 
 var PackageSlipsPdf string
 
 // Generate the pdf file contanining the slips to be printed
-func createSlips(building string) error {
+func CreateSlips(building string, root string) error {
 	// Get packages to be printed
 	packagesToBePrinted, err := db.GetToBePrinted(building)
 	if err != nil {
@@ -76,7 +77,7 @@ func createSlips(building string) error {
 	}
 
 	// Fill the form PDF with our values.
-	err = fillpdf.Fill(form, "PackageSlipTemplate.pdf", "FilledPackageSlip.pdf", true)
+	err = fillpdf.Fill(form, path.Join(root, "../printing/FilledPackageSlip.pdf"), path.Join(root, "FilledPackageSlip.pdf"), true)
 	if err != nil {
 		log.Fatal(err)
 	}

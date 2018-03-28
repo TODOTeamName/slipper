@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"path"
 	"text/template"
+	"github.com/todoteamname/slipper/printing"
 )
 
 func handlePackageAdd(w http.ResponseWriter, r *http.Request) {
@@ -67,6 +68,15 @@ func handlePackageGet(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	t, err := template.ParseFiles(path.Join(*Settings.Root, "pages/form_update.html"))
+	if err != nil {
+		w.WriteHeader(400)
+		fmt.Fprintln(w, "Error 400: Bad Request. Database call went wrong.")
+		fmt.Fprintln(w, "Precise error:", err)
+		fmt.Fprintln(w, "Click <a href=\"/\">here</a> to go to the home page")
+		return
+	}
+
 	fmt.Fprintf(w,
 		"<script>history.replaceState(%q, %q, %q);</script>",
 		"asdf",
@@ -74,13 +84,29 @@ func handlePackageGet(w http.ResponseWriter, r *http.Request) {
 		"/pages/form_update.html",
 	)
 
-	t, err := template.ParseFiles(path.Join(*Settings.Root, "pages/form_update.html"))
+	t.Execute(w, pack)
+}
+
+func handleCreateSlips(w http.ResponseWriter, r *http.Request) {
+	r.ParseForm()
+	form := r.Form
+
+	err := printing.CreateSlips(form.Get("building"), *Settings.Root)
 	if err != nil {
 		w.WriteHeader(400)
 		fmt.Fprintln(w, "Error 400: Bad Request. Database call went wrong.")
 		fmt.Fprintln(w, "Precise error:", err)
 		fmt.Fprintln(w, "Click <a href=\"/\">here</a> to go to the home page")
+		return
 	}
 
-	t.Execute(w, pack)
+	fmt.Fprintf(w,
+		"<script>history.replaceState(%q, %q, %q);</script>",
+		"asdf",
+		"Slipper|Update Package",
+		"/pages/form_update.html",
+	)
+
+	http.ServeFile(w, r, path.Join(*Settings.Root, "FilledPackageSlip.pdf"))
+
 }
