@@ -84,3 +84,27 @@ func handlePackageGet(w http.ResponseWriter, r *http.Request) {
 
 	t.Execute(w, pack)
 }
+
+func handleCreateSlips(w http.ResponseWriter, r *http.Request) {
+	r.ParseForm()
+	form := r.Form
+
+	err := printing.CreateSlips(form.Get("building"))
+	if err != nil {
+		w.WriteHeader(400)
+		fmt.Fprintln(w, "Error 400: Bad Request. Database call went wrong.")
+		fmt.Fprintln(w, "Precise error:", err)
+		fmt.Fprintln(w, "Click <a href=\"/\">here</a> to go to the home page")
+		return
+	}
+
+	fmt.Fprintf(w,
+		"<script>history.replaceState(%q, %q, %q);</script>",
+		"asdf",
+		"Slipper|Update Package",
+		"/pages/form_update.html",
+	)
+
+	http.ServeFile(w, r, path.Join(*Settings.Root, "FilledPackageSlip.pdf"))
+
+}

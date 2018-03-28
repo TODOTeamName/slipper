@@ -6,6 +6,7 @@ import (
 	"log"
 	"github.com/desertbit/fillpdf"
 	"github.com/todoteamname/slipper/db"
+	"path"
 )
 
 var PackageSlipsPdf string
@@ -76,7 +77,7 @@ func createSlips(building string) error {
 	}
 
 	// Fill the form PDF with our values.
-	err = fillpdf.Fill(form, "PackageSlipTemplate.pdf", "FilledPackageSlip.pdf", true)
+	err = fillpdf.Fill(form, path.Join(*Settings.Root, "../printing/FilledPackageSlip.pdf"), path.Join(*Settings.Root, "FilledPackageSlip.pdf"), true)
 	if err != nil {
 		log.Fatal(err)
 	}
