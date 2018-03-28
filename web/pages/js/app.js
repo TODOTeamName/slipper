@@ -37,7 +37,7 @@ window.onresize = resizeCanvas;
 resizeCanvas();
 
 function download(dataURL, filename) {
-	/**/
+  /**/
   var blob = dataURLToBlob(dataURL);
   /*
   var url = window.URL.createObjectURL(blob);
@@ -68,6 +68,7 @@ function dataURLToBlob(dataURL) {
 
 clearButton.addEventListener("click", function (event) {
   signaturePad.clear();
+	document.getElementById("submit").disabled = true;
 });
 
 undoButton.addEventListener("click", function (event) {
