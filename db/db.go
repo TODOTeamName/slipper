@@ -110,7 +110,7 @@ func GetToBePrinted(building string) ([]Package, error){
 		if(res.Next()){
 			var p Package
 			var s string
-			res.Scan(&s, &p.DateReceived, &p.Name, &p.Building, &p.Room, &p.Carrier, &p.PackageType, &p.Printed)
+			res.Scan(&s, &p.DateReceived, &p.Name, &p.Room, &p.Carrier, &p.PackageType)
 			p.Number = Atosn(s)
 			toBePrinted[i] = p
 		}else{
