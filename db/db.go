@@ -89,7 +89,7 @@ func GetToBePrinted(building string) ([]Package, error){
 	stmt, err = db.Prepare(`
 		SELECT sorting_number, date_received, name, room, carrier, package_type
 		FROM Packages
- 		WHERE isPrinted = 0 AND building = ?`)
+ 		WHERE is_printed = 0 AND building = ?`)
 	if err != nil {
 		log.Println("Error occured while preparing statement:", err)
 		return nil, err
