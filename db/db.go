@@ -60,6 +60,7 @@ func GetPackage(sortingNumber string) (Package, error) {
 	return Package{}, ErrNoPackageFound
 }
 
+/*
 func GetToBePrinted(building string) (Package[], error){
 	// Prepare getting the number of packages to be printed
 	stmt, err := db.Prepare(`
@@ -120,11 +121,12 @@ func GetToBePrinted(building string) (Package[], error){
 
 	return toBePrinted, nil
 }
+*/
 
 func UpdatePackage(sortingNumber string, dateReceived time.Time, name string, building string, room string, carrier string, packageType string, isPrinted bool) error {
 	stmt, err := db.Prepare(`
 		UPDATE Packages
-		SET sorting_number = ?, date_received = ?, name = ?, building = ?, room = ?, package_type = ?, is_printed = ?
+		SET sorting_number = ?, date_received = ?, name = ?, building = ?, room = ?, carrier = ?, package_type = ?, is_printed = ?
 		WHERE sorting_number = ?
 		`)
 	if err != nil {
@@ -133,7 +135,7 @@ func UpdatePackage(sortingNumber string, dateReceived time.Time, name string, bu
 	}
 	defer stmt.Close()
 
-	_, err = stmt.Exec(dateReceived, name, building, room, packageType, isPrinted, sortingNumber)
+	_, err = stmt.Exec(dateReceived, name, building, room, carrier, packageType, isPrinted, sortingNumber)
 	if err != nil {
 		log.Println("Error occured while executing statement:", err)
 		return err
