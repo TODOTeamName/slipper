@@ -144,7 +144,7 @@ func UpdatePackage(sortingNumber string, dateReceived time.Time, name string, bu
 
 func AddPackage(name string, building string, room string, carrier string, packageType string) (string, error) {
 	stmt, err := db.Prepare(`
-		INSERT INTO Packages(sorting_number, date_received, name, carrier, building, room, package_type)
+		INSERT INTO Packages(sorting_number, date_received, name, building, room, carrier, package_type)
 		VALUES(?, DATETIME('now','localtime'), ?, ?, ?, ?, ?)`)
 	if err != nil {
 		log.Println("Error occured while preparing statement:", err)
@@ -158,7 +158,7 @@ func AddPackage(name string, building string, room string, carrier string, packa
 		return "", err
 	}
 
-	_, err = stmt.Exec(sortingNumber.String(), name, building, room, carrier)
+	_, err = stmt.Exec(sortingNumber.String(), name, building, room, carrier, packageType)
 	if err != nil {
 		log.Println("Error occured while executing statement:", err)
 		return "", err
