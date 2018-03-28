@@ -51,7 +51,7 @@ func GetPackage(sortingNumber string) (Package, error) {
 		// Store the found row into a variable p
 		var p Package
 		var s string
-		res.Scan(&s, &p.DateReceived, &p.Name, &p.Building, &p.Room, &p.Carrier, &p.PackageType &p.Printed)
+		res.Scan(&s, &p.DateReceived, &p.Name, &p.Building, &p.Room, &p.Carrier, &p.PackageType, &p.Printed)
 		p.Number = Atosn(s)
 		return p, nil
 	}
