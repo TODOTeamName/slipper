@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"path"
 	"text/template"
+	"log"
 )
 
 func handlePackageAdd(w http.ResponseWriter, r *http.Request) {
@@ -13,6 +14,7 @@ func handlePackageAdd(w http.ResponseWriter, r *http.Request) {
 	form := r.Form
 
 	num, err := db.AddPackage(form.Get("name"), form.Get("building"), form.Get("room"), form.Get("carrier"), form.Get("type"))
+	log.Println(form.Get("carrier"))
 	if err != nil {
 		w.WriteHeader(400)
 		fmt.Fprintln(w, "Error 400: Bad Request. Database call went wrong.")
