@@ -60,8 +60,7 @@ func GetPackage(sortingNumber string) (Package, error) {
 	return Package{}, ErrNoPackageFound
 }
 
-/*
-func GetToBePrinted(building string) (Package[], error){
+func GetToBePrinted(building string) ([]Package, error){
 	// Prepare getting the number of packages to be printed
 	stmt, err := db.Prepare(`
 		SELECT COUNT(*)
@@ -87,7 +86,7 @@ func GetToBePrinted(building string) (Package[], error){
 	}
 
 	// Prepare getting the package info from the database
-	stmt, err := db.Prepare(`
+	stmt, err = db.Prepare(`
 		SELECT sorting_number, date_received, name, room, carrier, package_type
 		FROM Packages
  		WHERE isPrinted = 0 AND building = ?`)
@@ -98,7 +97,7 @@ func GetToBePrinted(building string) (Package[], error){
 	defer stmt.Close()
 
 	// Execute getting the package info from the database
-	res, err := stmt.Query(building)
+	res, err = stmt.Query(building)
 	if err != nil {
 		log.Println("Error occured while executing query:", err)
 		return Package{}, err
@@ -106,7 +105,7 @@ func GetToBePrinted(building string) (Package[], error){
 	defer res.Close()
 
 	//Create array of packages
-	var toBePrinted [count]Packages
+	toBePrinted := make([]Package, count)
 	for i := 0; i < count; i++ {
 		if(res.Next()){
 			var p Package
@@ -121,7 +120,6 @@ func GetToBePrinted(building string) (Package[], error){
 
 	return toBePrinted, nil
 }
-*/
 
 func UpdatePackage(sortingNumber string, dateReceived time.Time, name string, building string, room string, carrier string, packageType string, isPrinted bool) error {
 	stmt, err := db.Prepare(`

@@ -5,44 +5,45 @@ package printing
 import (
 	"log"
 	"github.com/desertbit/fillpdf"
-	"database/sql"
-	"errors"
-	"github.com/mattn/go-sqlite3"
+	"github.com/todoteamname/slipper/db"
 )
 
 var PackageSlipsPdf string
 
 // Generate the pdf file contanining the slips to be printed
-func createSlips(building string) err{
+func createSlips(building string) error {
 	// Get packages to be printed
-	Package packagesToBePrinted[] = db.GetToBePrinted(building)
+	packagesToBePrinted, err := db.GetToBePrinted(building)
+	if err != nil {
+		return err
+	}
 
 	// Set up the form values for the first 4 packages
 	roomNumber1 := packagesToBePrinted[0].Room
 	date1 := packagesToBePrinted[0].DateReceived
 	name1 := packagesToBePrinted[0].Name
-	sortingNumber1 := packagesToBePrinted[0].Number.toString()
+	sortingNumber1 := packagesToBePrinted[0].Number.String()
 	carrier1 := packagesToBePrinted[0].Carrier 
 	packageType1 := packagesToBePrinted[0].PackageType
 
 	roomNumber2 := packagesToBePrinted[1].Room
 	date2 := packagesToBePrinted[1].DateReceived
 	name2 := packagesToBePrinted[1].Name
-	sortingNumber2 := packagesToBePrinted[1].Number.toString()
+	sortingNumber2 := packagesToBePrinted[1].Number.String()
 	carrier2 := packagesToBePrinted[1].Carrier 
 	packageType2 := packagesToBePrinted[1].PackageType
 
 	roomNumber3 := packagesToBePrinted[2].Room
 	date3 := packagesToBePrinted[2].DateReceived
 	name3 := packagesToBePrinted[2].Name
-	sortingNumber3 := packagesToBePrinted[2].Number.toString()
+	sortingNumber3 := packagesToBePrinted[2].Number.String()
 	carrier3 := packagesToBePrinted[2].Carrier 
 	packageType3 := packagesToBePrinted[2].PackageType
 
 	roomNumber4 := packagesToBePrinted[3].Room
 	date4 := packagesToBePrinted[3].DateReceived
 	name4 := packagesToBePrinted[3].Name
-	sortingNumber4 := packagesToBePrinted[3].Number.toString()
+	sortingNumber4 := packagesToBePrinted[3].Number.String()
 	carrier4 := packagesToBePrinted[3].Carrier 
 	packageType4 := packagesToBePrinted[3].PackageType
 
@@ -75,12 +76,13 @@ func createSlips(building string) err{
 	}
 
 	// Fill the form PDF with our values.
-	err := fillpdf.Fill(form, "PackageSlipTemplate.pdf", "FilledPackageSlip.pdf", true)
+	err = fillpdf.Fill(form, "PackageSlipTemplate.pdf", "FilledPackageSlip.pdf", true)
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	// Mark the packages as printed in the db
+	return nil;
 }
 
 func printSlips() {
