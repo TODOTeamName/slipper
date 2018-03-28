@@ -169,7 +169,7 @@ func AddPackage(name string, building string, room string, carrier string, packa
 	return sortingNumber.String(), nil
 }
 
-func Archive(sortingNumber string, signature []byte) error {
+func Archive(sortingNumber string, signature string) error {
 
 	// Get package information for the archive
 	pack, err := GetPackage(sortingNumber)
