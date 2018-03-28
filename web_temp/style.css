@@ -26,19 +26,6 @@ a:hover {
 	height: 35%;
 }
 
-.container {
-	max-width: 640px;
-	margin: 20px auto;
-}
-
-img {
-	max-width: 100%;
-}
-
-.containerimg {
-	max-width: 100%;
-}
-
 #return {
 	float:left;
 }
