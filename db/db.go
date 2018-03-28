@@ -28,7 +28,7 @@ func GetPackage(sortingNumber string) (Package, error) {
 
 	// Prepare a statement which gets a package
 	stmt, err := db.Prepare(`
-		SELECT sorting_number, date_received, name, building, room, package_type, is_printed
+		SELECT sorting_number, date_received, name, building, room, carrier, package_type, is_printed
 		FROM Packages
  		WHERE sorting_number = ?`)
 	if err != nil {
