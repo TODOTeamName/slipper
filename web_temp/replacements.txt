@@ -1,6 +1,0 @@
-form.html			{{.SubmitActionTakePhoto}}		Replace with OCR scan
-form_remove.html	{{.SubmitActionRemove}}			Replace with package removal
-form_add.html		{{.SubmitActionAdd}}			Replace with package addition
-form_update.html	{{.SubmitActionUpdate}}			Replace with package updates
-logout.html			---								Handle logout
-login.html			---								Handle login
