@@ -89,7 +89,6 @@ func handlePackageGet(w http.ResponseWriter, r *http.Request) {
 }
 
 func handleCreateSlips(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintln(w, "Error 400: Bad Request. Database call went wrong.")
 	r.ParseForm()
 	form := r.Form
 
