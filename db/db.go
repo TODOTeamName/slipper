@@ -68,7 +68,7 @@ func GetToBePrinted(building string) ([]Package, error){
  		WHERE isPrinted = 0 AND building = ?`)
 	if err != nil {
 		log.Println("Error occured while preparing statement:", err)
-		return Package{}, err
+		return nil, err
 	}
 	defer stmt.Close()
 
@@ -76,7 +76,7 @@ func GetToBePrinted(building string) ([]Package, error){
 	res, err := stmt.Query(building)
 	if err != nil {
 		log.Println("Error occured while executing query:", err)
-		return Package{}, err
+		return nil, err
 	}
 	defer res.Close()
 
@@ -92,7 +92,7 @@ func GetToBePrinted(building string) ([]Package, error){
  		WHERE isPrinted = 0 AND building = ?`)
 	if err != nil {
 		log.Println("Error occured while preparing statement:", err)
-		return Package{}, err
+		return nil, err
 	}
 	defer stmt.Close()
 
@@ -100,7 +100,7 @@ func GetToBePrinted(building string) ([]Package, error){
 	res, err = stmt.Query(building)
 	if err != nil {
 		log.Println("Error occured while executing query:", err)
-		return Package{}, err
+		return nil, err
 	}
 	defer res.Close()
 
