@@ -37,11 +37,12 @@ window.onresize = resizeCanvas;
 resizeCanvas();
 
 function download(dataURL, filename) {
-	/*
+	/**/
   var blob = dataURLToBlob(dataURL);
+  /*
   var url = window.URL.createObjectURL(blob);
   */
-  document.getElementById("sig").value = dataURL;
+  document.getElementById("sig").value = blob;
 
   /*
   window.URL.revokeObjectURL(url);
