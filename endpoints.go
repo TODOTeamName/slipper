@@ -107,6 +107,11 @@ func handleCreateSlips(w http.ResponseWriter, r *http.Request) {
 		"/pages/form_update.html",
 	)
 
+	//copy the relevant headers. If you want to preserve the downloaded file name, extract it with go's url parser.
+	w.Header().Set("Content-Disposition", "attachment; filename=FilledPackageSlip.pdf")
+	w.Header().Set("Content-Type", r.Header.Get("Content-Type"))
+	w.Header().Set("Content-Length", r.Header.Get("Content-Length"))
+
 	http.ServeFile(w, r, path.Join(*Settings.Root, "FilledPackageSlip.pdf"))
 
 }
