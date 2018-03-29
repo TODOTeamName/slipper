@@ -107,6 +107,6 @@ func handleCreateSlips(w http.ResponseWriter, r *http.Request) {
 		"/pages/form_update.html",
 	)
 
-	http.ServeFile(w, r, path.Join(*Settings.Root, "FilledPackageSlip.pdf"))
+	http.ServeFile(w, r, path.Join(*Settings.Root, "EndPointPackageSlip.pdf"))
 
 }
