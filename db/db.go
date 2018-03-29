@@ -79,7 +79,6 @@ func GetToBePrinted(building string) ([]Package, error){
 		return nil, err
 	}
 	defer res.Close()
-	return nil
 
 	var count int
 	if(res.Next()){
