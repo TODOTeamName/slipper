@@ -3,10 +3,10 @@ package main
 import (
 	"fmt"
 	"github.com/todoteamname/slipper/db"
+	"github.com/todoteamname/slipper/printing"
 	"net/http"
 	"path"
 	"text/template"
-	"github.com/todoteamname/slipper/printing"
 )
 
 func handlePackageAdd(w http.ResponseWriter, r *http.Request) {
@@ -94,7 +94,7 @@ func handleCreateSlips(w http.ResponseWriter, r *http.Request) {
 	err := printing.CreateSlips(form.Get("building"), *Settings.Root)
 	if err != nil {
 		w.WriteHeader(400)
-		fmt.Fprintln(w, "Error 400: Bad Request. Database call went wrong.")
+		fmt.Fprintln(w, "Error 400: Bad Request. Assembling PDF went wrong.")
 		fmt.Fprintln(w, "Precise error:", err)
 		fmt.Fprintln(w, "Click <a href=\"/\">here</a> to go to the home page")
 		return
