@@ -60,7 +60,7 @@ func GetPackage(sortingNumber string) (Package, error) {
 	return Package{}, ErrNoPackageFound
 }
 
-func GetToBePrinted(building string) ([]Package, error){
+func GetToBePrinted(building string) ([]Package, error) {
 	// Prepare getting the number of packages to be printed
 	stmt, err := db.Prepare(`
 		SELECT COUNT(*)
@@ -81,7 +81,7 @@ func GetToBePrinted(building string) ([]Package, error){
 	defer res.Close()
 
 	var count int
-	if(res.Next()){
+	if res.Next() {
 		res.Scan(&count)
 	}
 
@@ -107,13 +107,13 @@ func GetToBePrinted(building string) ([]Package, error){
 	//Create array of packages
 	toBePrinted := make([]Package, count)
 	for i := 0; i < count; i++ {
-		if(res.Next()){
+		if res.Next() {
 			var p Package
 			var s string
 			res.Scan(&s, &p.DateReceived, &p.Name, &p.Room, &p.Carrier, &p.PackageType)
 			p.Number = Atosn(s)
 			toBePrinted[i] = p
-		}else{
+		} else {
 			return toBePrinted, ErrNoPackageFound
 		}
 	}
@@ -193,7 +193,7 @@ func Archive(sortingNumber string, signature string) error {
 		pack.PackageType,
 		signature,
 	)
-	
+
 	if err != nil {
 		log.Println("Error occured while executing statement:", err)
 		return err
