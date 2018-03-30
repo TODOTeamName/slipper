@@ -113,7 +113,7 @@ func handleCreateSlips(w http.ResponseWriter, r *http.Request) {
 
 	*/
 
-	f, err := os.Open(path.Join(*Settings.Root, "FilledPackageSlip.pdf"))
+	f, err := os.Open(path.Join(*Settings.Root, "PackageSlips.pdf"))
 	if err != nil {
 		fmt.Println(err)
 		w.WriteHeader(500)
