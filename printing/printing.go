@@ -223,7 +223,7 @@ func CreateSlips(building string, root string) error {
 	argNum++
 	args[argNum] = "output"
 	argNum++
-	args[argNum] = path.Join(root, "PackageSlips")
+	args[argNum] = path.Join(root, "PackageSlips.pdf")
 	
 	var stderr bytes.Buffer
 	cmd := exec.Command("pdftk", args...)
