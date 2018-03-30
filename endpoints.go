@@ -102,13 +102,6 @@ func handleCreateSlips(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	fmt.Fprintf(w,
-		"<script>history.replaceState(%q, %q, %q);</script>",
-		"asdf",
-		"Slipper|Update Package",
-		"/pages/form_update.html",
-	)
-
 	/*
 
 	//copy the relevant headers. If you want to preserve the downloaded file name, extract it with go's url parser.
@@ -120,21 +113,21 @@ func handleCreateSlips(w http.ResponseWriter, r *http.Request) {
 
 	*/
 
-	f, err := os.Open( path.Join(*Settings.Root, "FilledPackageSlip.pdf"))
-    if err != nil {
-        fmt.Println(err)
-        w.WriteHeader(500)
-        return
-    }
-    defer f.Close()
+	f, err := os.Open(path.Join(*Settings.Root, "FilledPackageSlip.pdf"))
+	if err != nil {
+		fmt.Println(err)
+		w.WriteHeader(500)
+		return
+	}
+	defer f.Close()
 
-    //Set header
-    w.Header().Set("Content-type", "application/pdf")
+	//Set header
+	w.Header().Add("Content-Type", "application/pdf")
 
-    //Stream to response
-    if _, err := io.Copy(w, f); err != nil {
-        fmt.Println(err)
-        w.WriteHeader(500)
-    }
+	//Stream to response
+	if _, err := io.Copy(w, f); err != nil {
+		fmt.Println(err)
+		w.WriteHeader(500)
+	}
 
 }
