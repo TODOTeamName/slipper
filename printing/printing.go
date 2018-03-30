@@ -210,11 +210,11 @@ func CreateSlips(building string, root string) error {
 		}
 
 		// Fill the form PDF with our values.
-		err = fillpdf.Fill(form, path.Join(root, "../printing/PackageSlipTemplate.pdf"), path.Join(root, fileName))
+		err = fillpdf.Fill(form, path.Join(root, "../printing/PackageSlipTemplate.pdf"), fileName)
 		if err != nil {
 			return err
 		}
-		pdfFiles[fileNum] = path.Join(root, fileName)
+		pdfFiles[fileNum] =fileName
 	}
 
 	/*
