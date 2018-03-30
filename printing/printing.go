@@ -76,76 +76,101 @@ func CreateSlips(building string, root string) error {
 	pdfFiles 	:= 	make([]string, numFiles)		// Slice containing all the pdf file names
 	packageNum 	:= 	0								// Counter to track which package is being processed
 
+	var roomNumber1
+	var date1
+	var name1
+	var sortingNumber1
+	var carrier1
+	var packageType1
+	var roomNumber2
+	var date2
+	var name2
+	var sortingNumber2
+	var carrier2
+	var packageType2
+	var roomNumber3
+	var date3
+	var name3
+	var sortingNumber3
+	var carrier3
+	var packageType3
+	var roomNumber4
+	var date4
+	var name4
+	var sortingNumber4
+	var carrier4
+	var packageType4
+
 	for fileNum := 0; fileNum < numFiles; fileNum++{
 		// Generate the pdf file name
 		fileName := fmt.Sprintf("packageSlip%d.pdf", fileNum)
 
 		// Popluate pacakge information into variables
 		if packageNum < numPackages{
-			roomNumber1 := packagesToBePrinted[packageNum].Room
-			date1 := packagesToBePrinted[packageNum].DateReceived
-			name1 := packagesToBePrinted[packageNum].Name
-			sortingNumber1 := packagesToBePrinted[packageNum].Number.String()
-			carrier1 := packagesToBePrinted[packageNum].Carrier
-			packageType1 := packagesToBePrinted[packageNum].PackageType
+			roomNumber1 = packagesToBePrinted[packageNum].Room
+			date1 = packagesToBePrinted[packageNum].DateReceived
+			name1 = packagesToBePrinted[packageNum].Name
+			sortingNumber1 = packagesToBePrinted[packageNum].Number.String()
+			carrier1 = packagesToBePrinted[packageNum].Carrier
+			packageType1 = packagesToBePrinted[packageNum].PackageType
 		}else{
-			roomNumber1 := ""
-			date1 := ""
-			name1 := ""
-			sortingNumber1 := ""
-			carrier1 := ""
-			packageType1 := ""
+			roomNumber1 = ""
+			date1 = ""
+			name1 = ""
+			sortingNumber1 = ""
+			carrier1 = ""
+			packageType1 = ""
 		}
 		packageNum++
 
 		if packageNum < numPackages{
-			roomNumber2 := packagesToBePrinted[packageNum].Room
-			date2 := packagesToBePrinted[packageNum].DateReceived
-			name2 := packagesToBePrinted[packageNum].Name
-			sortingNumber2 := packagesToBePrinted[packageNum].Number.String()
-			carrier2 := packagesToBePrinted[packageNum].Carrier
-			packageType2 := packagesToBePrinted[packageNum].PackageType
+			roomNumber2 = packagesToBePrinted[packageNum].Room
+			date2 = packagesToBePrinted[packageNum].DateReceived
+			name2 = packagesToBePrinted[packageNum].Name
+			sortingNumber2 = packagesToBePrinted[packageNum].Number.String()
+			carrier2 = packagesToBePrinted[packageNum].Carrier
+			packageType2 = packagesToBePrinted[packageNum].PackageType
 		}else{
-			roomNumber2 := ""
-			date2 := ""
-			name2 := ""
-			sortingNumber2 := ""
-			carrier2 := ""
-			packageType2 := ""
+			roomNumber2 = ""
+			date2 = ""
+			name2 = ""
+			sortingNumber2 = ""
+			carrier2 = ""
+			packageType2 = ""
 		}
 		packageNum++
 
 		if packageNum < numPackages{
-			roomNumber3 := packagesToBePrinted[packageNum].Room
-			date3 := packagesToBePrinted[packageNum].DateReceived
-			name3 := packagesToBePrinted[packageNum].Name
-			sortingNumber3 := packagesToBePrinted[packageNum].Number.String()
-			carrier3 := packagesToBePrinted[packageNum].Carrier
-			packageType3 := packagesToBePrinted[packageNum].PackageType
+			roomNumber3 = packagesToBePrinted[packageNum].Room
+			date3 = packagesToBePrinted[packageNum].DateReceived
+			name3 = packagesToBePrinted[packageNum].Name
+			sortingNumber3 = packagesToBePrinted[packageNum].Number.String()
+			carrier3 = packagesToBePrinted[packageNum].Carrier
+			packageType3 = packagesToBePrinted[packageNum].PackageType
 		}else{
-			roomNumber3 := ""
-			date3 := ""
-			name3 := ""
-			sortingNumber3 := ""
-			carrier3 := ""
-			packageType3 := ""
+			roomNumber3 = ""
+			date3 = ""
+			name3 = ""
+			sortingNumber3 = ""
+			carrier3 = ""
+			packageType3 = ""
 		}
 		packageNum++
 
 		if packageNum < numPackages{
-			roomNumber4 := packagesToBePrinted[packageNum].Room
-			date4 := packagesToBePrinted[packageNum].DateReceived
-			name4 := packagesToBePrinted[packageNum].Name
-			sortingNumber4 := packagesToBePrinted[packageNum].Number.String()
-			carrier4 := packagesToBePrinted[packageNum].Carrier
-			packageType4 := packagesToBePrinted[packageNum].PackageType
+			roomNumber4 = packagesToBePrinted[packageNum].Room
+			date4 = packagesToBePrinted[packageNum].DateReceived
+			name4 = packagesToBePrinted[packageNum].Name
+			sortingNumber4 = packagesToBePrinted[packageNum].Number.String()
+			carrier4 = packagesToBePrinted[packageNum].Carrier
+			packageType4 = packagesToBePrinted[packageNum].PackageType
 		}else{
-			roomNumber4 := ""
-			date4 := ""
-			name4 := ""
-			sortingNumber4 := ""
-			carrier4 := ""
-			packageType4 := ""
+			roomNumber4 = ""
+			date4 = ""
+			name4 = ""
+			sortingNumber4 = ""
+			carrier4 = ""
+			packageType4 = ""
 		}
 		packageNum++
 
@@ -202,7 +227,7 @@ func CreateSlips(building string, root string) error {
 	cmd.Dir = dir
 
 	// Start the command and wait for it to exit.
-	err := cmd.Run()
+	err = cmd.Run()
 	if err != nil {
 		return fmt.Errorf(strings.TrimSpace(stderr.String()))
 	}
