@@ -58,11 +58,13 @@ func CreateSlips(building string, root string) error {
 
 	*/
 
+	/*
 	// Create a temporary directory.
 	tmpDir, err := ioutil.TempDir(root, "packageSlips-")
 	if err != nil {
 		return fmt.Errorf("failed to create temporary directory: %v", err)
 	}
+	*/
 
 	/*
 	// Remove the temporary directory on defer again.
