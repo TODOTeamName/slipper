@@ -188,9 +188,11 @@ func CreateSlips(building string, root string) error {
 	for argNum := 0; argNum < numFiles; argNum++{
 		args[argNum] = pdfFiles[argNum]
 	}
-	args[argNum++] = "cat"
-	args[argNum++] = "output"
-	args[argNum++] = path.Join(root, "PackageSlips", true)
+	args[argNum] = "cat"
+	argNum++
+	args[argNum] = "output"
+	argNum++
+	args[argNum] = path.Join(root, "PackageSlips", true)
 	err = fillpdf.runCommandInPath(tmp, "pdftk", args...)
 	if err != nil {
 		return fmt.Errorf("pdftk error: %v", err)
