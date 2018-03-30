@@ -207,11 +207,11 @@ func CreateSlips(building string, root string) error {
 		}
 
 		// Fill the form PDF with our values.
-		err = fillpdf.Fill(form, path.Join(root, "../printing/PackageSlipTemplate.pdf"), path.Join(root, tmpDir, fileName, true))
+		err = fillpdf.Fill(form, path.Join(root, "../printing/PackageSlipTemplate.pdf"), path.Join(root, tmpDir, fileName))
 		if err != nil {
 			return err
 		}
-		pdfFiles[fileNum] = path.Join(root, tmpDir, fileName, true)
+		pdfFiles[fileNum] = path.Join(root, tmpDir, fileName)
 	}
 
 	// Collate all pdf files togethers
@@ -224,12 +224,12 @@ func CreateSlips(building string, root string) error {
 	argNum++
 	args[argNum] = "output"
 	argNum++
-	args[argNum] = path.Join(root, "PackageSlips", true)
+	args[argNum] = path.Join(root, "PackageSlips")
 	
 	var stderr bytes.Buffer
-	cmd := exec.Command(name, args...)
+	cmd := exec.Command("pdftk", args...)
 	cmd.Stderr = &stderr
-	cmd.Dir = dir
+	cmd.Dir = tmpDir
 
 	// Start the command and wait for it to exit.
 	err = cmd.Run()
