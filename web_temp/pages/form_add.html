@@ -1,72 +1,74 @@
 
 	<!-- Form handles the addition of packages from the database -->
 	<head>
-		<title>Slipper|Add Package</title> <!-- Rename applicable? -->
+		<title>Slipper|Add Package</title> <!-- TODO: Rename applicable? -->
 		<link rel = "stylesheet" type = "text/css" href = "css/style.css">
-		<script src = "dbreturn.js"></script>
 	</head>
 	<body>
 		<a href = "main.html">Go Back</a>
 		<div id = "add">
-			<form action = "{{.SubmitActionTakePhoto}}">
+			<form action = "{{.SubmitActionTakePhoto}}"> <!-- TODO: Update this to do the thing -->
 				<input type = "file" name = "photo" accept = "image/*" capture = "camera" id = "capture"><br /><br />
 				<button type = "button" class = "btn-upd" id = "updcanvas">Crop</button>
 				<div class="container">
-    <div>
-      <img class = "containerimg" id="image" src="" alt="Picture">
-    </div>
-	<div>
-		<button type = "button" class = "btn btn-primary" id = "crop">Generate</button>
-    </div>
-	<div id = "result" class = "result"></div>
+					<img class = "containerimg" id="imagec" src="" alt="Picture">
+				</div>
+				<div>
+					<button type = "button" class = "btn btn-primary" id = "crop">Generate</button>
+				</div>
+				<div id = "result" class = "result"></div>
 
-  <script src="dist/cropper.js"></script>
-  <script>
-    window.addEventListener('DOMContentLoaded', function () {
-      var image = document.querySelector('#image');
-      var cropper = new Cropper(image, {
-        dragMode: 'move',
-        aspectRatio: 16 / 9,
-        autoCropArea: 0.65,
-        restore: false,
-        guides: false,
-        center: false,
-        highlight: false,
-        cropBoxMovable: false,
-        cropBoxResizable: false,
-        toggleDragModeOnDblclick: false,
-      });
-	  document.getElementById('crop').addEventListener('click',function(){
-		var initialPackageURL;
-		var canvas;
-		
-		if(cropper){
-          canvas = cropper.getCroppedCanvas({
-            //width: 160,
-           // height: 160,
-          });
-		  initialPackageURL = image.src;
-		  image.src = canvas.toDataURL();
-		  //$progress.show();
-		  // Crop
-          //croppedCanvas = cropper.getCroppedCanvas();
+				<script src="dist/cropper.js"></script>
+				<script>
+					window.addEventListener('DOMContentLoaded', function () {
+						var image = document.querySelector('#image');
+						var cropper = new Cropper(image, {
+							dragMode: 'move',
+							aspectRatio: 16 / 9,
+							autoCropArea: 0.65,
+							restore: false,
+							guides: false,
+							center: false,
+							highlight: false,
+							cropBoxMovable: false,
+							cropBoxResizable: false,
+							toggleDragModeOnDblclick: false,
+						});
+						
+						document.getElementById('updcanvas').addEventListener('click', function() {
+							var img = document.getElementById('image');
+							var input = document.getElementById('capture').value;
+							
+							img.src = input;
+						});
 
-          // Mask
-          //maskedCanvas = getMaskedCanvas(croppedCanvas, image, cropper);
+						document.getElementById('crop').addEventListener('click',function(){
+							var initialPackageURL;
+							var canvas;
+								if(cropper){
+								canvas = cropper.getCroppedCanvas({
+									//width: 160,
+									// height: 160,
+								});
+								initialPackageURL = image.src;
+								image.src = canvas.toDataURL();
+								//$progress.show();
+								// Crop
+								//croppedCanvas = cropper.getCroppedCanvas();
 
-          // Show
-          maskedImage = document.createElement('img');
-          maskedImage.src = canvas.toDataURL();
-		  var result = document.getElementById('result');
-          result.innerHTML = '';
-          result.appendChild(maskedImage);
-		}
-	  });
-    });
-  </script>
-				
-				
-				
+								// Mask
+								//maskedCanvas = getMaskedCanvas(croppedCanvas, image, cropper);
+
+								// Show
+								maskedImage = document.createElement('img');
+								maskedImage.src = canvas.toDataURL();
+								var result = document.getElementById('result');
+								result.innerHTML = '';
+								result.appendChild(maskedImage);
+							}
+						});
+					});
+				</script>
 				<input type = "submit" value = "Submit">
 			</form>
 			<form action = "/addpackage" method = "post">
