@@ -112,7 +112,7 @@ func CreateSlips(building string, root string) error {
 		// Popluate pacakge information into variables
 		if packageNum < numPackages{
 			roomNumber1 = packagesToBePrinted[packageNum].Room
-			date1 = time.Format(packagesToBePrinted[packageNum].DateReceived)
+			date1 = (packagesToBePrinted[packageNum].DateReceived).Format("Mon Jan _2 3:04PM")
 			name1 = packagesToBePrinted[packageNum].Name
 			sortingNumber1 = packagesToBePrinted[packageNum].Number.String()
 			carrier1 = packagesToBePrinted[packageNum].Carrier
@@ -129,7 +129,7 @@ func CreateSlips(building string, root string) error {
 
 		if packageNum < numPackages{
 			roomNumber2 = packagesToBePrinted[packageNum].Room
-			date2 = time.Format(packagesToBePrinted[packageNum].DateReceived)
+			date2 = (packagesToBePrinted[packageNum].DateReceived).Format("Mon Jan _2 3:04PM")
 			name2 = packagesToBePrinted[packageNum].Name
 			sortingNumber2 = packagesToBePrinted[packageNum].Number.String()
 			carrier2 = packagesToBePrinted[packageNum].Carrier
@@ -146,7 +146,7 @@ func CreateSlips(building string, root string) error {
 
 		if packageNum < numPackages{
 			roomNumber3 = packagesToBePrinted[packageNum].Room
-			date3 = time.Format(packagesToBePrinted[packageNum].DateReceived)
+			date3 = (packagesToBePrinted[packageNum].DateReceived).Format("Mon Jan _2 3:04PM")
 			name3 = packagesToBePrinted[packageNum].Name
 			sortingNumber3 = packagesToBePrinted[packageNum].Number.String()
 			carrier3 = packagesToBePrinted[packageNum].Carrier
@@ -163,7 +163,7 @@ func CreateSlips(building string, root string) error {
 
 		if packageNum < numPackages{
 			roomNumber4 = packagesToBePrinted[packageNum].Room
-			date4 = time.Format(packagesToBePrinted[packageNum].DateReceived)
+			date4 = (packagesToBePrinted[packageNum].DateReceived).Format("Mon Jan _2 3:04PM")
 			name4 = packagesToBePrinted[packageNum].Name
 			sortingNumber4 = packagesToBePrinted[packageNum].Number.String()
 			carrier4 = packagesToBePrinted[packageNum].Carrier
