@@ -10,6 +10,7 @@ import (
 	"io/ioutil"
 	"log"
 	"os"
+	"time"
 )
 
 var PackageSlipsPdf string
@@ -77,25 +78,25 @@ func CreateSlips(building string, root string) error {
 	packageNum 	:= 	0								// Counter to track which package is being processed
 
 	var roomNumber1 string
-	var date1 string
+	var date1 time.Time
 	var name1 string
 	var sortingNumber1 string
 	var carrier1 string
 	var packageType1 string
 	var roomNumber2 string
-	var date2 string
+	var date2 time.Time
 	var name2 string
 	var sortingNumber2 string
 	var carrier2 string
 	var packageType2 string
 	var roomNumber3 string
-	var date3 string
+	var date3 time.Time
 	var name3 string
 	var sortingNumber3 string
 	var carrier3 string
 	var packageType3 string
 	var roomNumber4 string
-	var date4 string
+	var date4 time.Time
 	var name4 string
 	var sortingNumber4 string
 	var carrier4 string
@@ -212,7 +213,8 @@ func CreateSlips(building string, root string) error {
 
 	// Collate all pdf files togethers
 	args := make([]string, numFiles+3)
-	for argNum := 0; argNum < numFiles; argNum++{
+	var argNum int 
+	for argNum = 0; argNum < numFiles; argNum++{
 		args[argNum] = pdfFiles[argNum]
 	}
 	args[argNum] = "cat"
