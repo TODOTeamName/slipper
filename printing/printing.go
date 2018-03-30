@@ -76,30 +76,30 @@ func CreateSlips(building string, root string) error {
 	pdfFiles 	:= 	make([]string, numFiles)		// Slice containing all the pdf file names
 	packageNum 	:= 	0								// Counter to track which package is being processed
 
-	var roomNumber1
-	var date1
-	var name1
-	var sortingNumber1
-	var carrier1
-	var packageType1
-	var roomNumber2
-	var date2
-	var name2
-	var sortingNumber2
-	var carrier2
-	var packageType2
-	var roomNumber3
-	var date3
-	var name3
-	var sortingNumber3
-	var carrier3
-	var packageType3
-	var roomNumber4
-	var date4
-	var name4
-	var sortingNumber4
-	var carrier4
-	var packageType4
+	var roomNumber1 string
+	var date1 string
+	var name1 string
+	var sortingNumber1 string
+	var carrier1 string
+	var packageType1 string
+	var roomNumber2 string
+	var date2 string
+	var name2 string
+	var sortingNumber2 string
+	var carrier2 string
+	var packageType2 string
+	var roomNumber3 string
+	var date3 string
+	var name3 string
+	var sortingNumber3 string
+	var carrier3 string
+	var packageType3 string
+	var roomNumber4 string
+	var date4 string
+	var name4 string
+	var sortingNumber4 string
+	var carrier4 string
+	var packageType4 string
 
 	for fileNum := 0; fileNum < numFiles; fileNum++{
 		// Generate the pdf file name
