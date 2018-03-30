@@ -120,21 +120,21 @@ func handleCreateSlips(w http.ResponseWriter, r *http.Request) {
 
 	*/
 
-	f, err := os.Open( path.Join(*Settings.Root, "FilledPackageSlip.pdf"))
-    if err != nil {
-        fmt.Println(err)
-        w.WriteHeader(500)
-        return
-    }
-    defer f.Close()
+	f, err := os.Open(path.Join(*Settings.Root, "FilledPackageSlip.pdf"))
+	if err != nil {
+		fmt.Println(err)
+		w.WriteHeader(500)
+		return
+	}
+	defer f.Close()
 
-    //Set header
-    w.Header().Set("Content-Type", "application/pdf")
+	//Set header
+	w.Header().Set("Content-Type", "application/pdf")
 
-    //Stream to response
-    if _, err := io.Copy(w, f); err != nil {
-        fmt.Println(err)
-        w.WriteHeader(500)
-    }
+	//Stream to response
+	if _, err := io.Copy(w, f); err != nil {
+		fmt.Println(err)
+		w.WriteHeader(500)
+	}
 
 }
