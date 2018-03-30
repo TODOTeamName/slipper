@@ -129,6 +129,7 @@ func handleCreateSlips(w http.ResponseWriter, r *http.Request) {
     defer f.Close()
 
     //Set header
+    w.Header().Set("Content-Disposition", "attachment; filename=FilledPackageSlip.pdf")
     w.Header().Set("Content-type", "application/pdf")
 
     //Stream to response
