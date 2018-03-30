@@ -8,6 +8,8 @@ import (
 	"path"
 	"fmt"
 	"io/ioutil"
+	"log"
+	"os"
 )
 
 var PackageSlipsPdf string
@@ -193,9 +195,16 @@ func CreateSlips(building string, root string) error {
 	args[argNum] = "output"
 	argNum++
 	args[argNum] = path.Join(root, "PackageSlips", true)
-	err = fillpdf.runCommandInPath(tmp, "pdftk", args...)
+	
+	var stderr bytes.Buffer
+	cmd := exec.Command(name, args...)
+	cmd.Stderr = &stderr
+	cmd.Dir = dir
+
+	// Start the command and wait for it to exit.
+	err := cmd.Run()
 	if err != nil {
-		return fmt.Errorf("pdftk error: %v", err)
+		return fmt.Errorf(strings.TrimSpace(stderr.String()))
 	}
 
 	// Mark the packages as printed in the db
