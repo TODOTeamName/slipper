@@ -12,7 +12,7 @@ import (
 	"os"
 	"os/exec"
 	"bytes"
-	"strings"
+	"strings"*/
 )
 
 var PackageSlipsPdf string
