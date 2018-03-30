@@ -228,7 +228,7 @@ func CreateSlips(building string, root string) error {
 	args[argNum] = path.Join(root, "PackageSlips.pdf")
 	
 	var stderr bytes.Buffer
-	cmd := exec.Command("pdftk", args...)
+	//cmd := exec.Command("pdftk", args...)
 	cmd.Stderr = &stderr
 	cmd.Dir = tmpDir
 
