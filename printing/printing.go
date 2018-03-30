@@ -10,7 +10,10 @@ import (
 	"io/ioutil"
 	"log"
 	"os"
+	"os/exec"
 	"time"
+	"bytes"
+	"strings"
 )
 
 var PackageSlipsPdf string
@@ -78,25 +81,25 @@ func CreateSlips(building string, root string) error {
 	packageNum 	:= 	0								// Counter to track which package is being processed
 
 	var roomNumber1 string
-	var date1 time.Time
+	var date1 string
 	var name1 string
 	var sortingNumber1 string
 	var carrier1 string
 	var packageType1 string
 	var roomNumber2 string
-	var date2 time.Time
+	var date2 string
 	var name2 string
 	var sortingNumber2 string
 	var carrier2 string
 	var packageType2 string
 	var roomNumber3 string
-	var date3 time.Time
+	var date3 string
 	var name3 string
 	var sortingNumber3 string
 	var carrier3 string
 	var packageType3 string
 	var roomNumber4 string
-	var date4 time.Time
+	var date4 string
 	var name4 string
 	var sortingNumber4 string
 	var carrier4 string
@@ -109,7 +112,7 @@ func CreateSlips(building string, root string) error {
 		// Popluate pacakge information into variables
 		if packageNum < numPackages{
 			roomNumber1 = packagesToBePrinted[packageNum].Room
-			date1 = packagesToBePrinted[packageNum].DateReceived
+			date1 = time.Format(packagesToBePrinted[packageNum].DateReceived)
 			name1 = packagesToBePrinted[packageNum].Name
 			sortingNumber1 = packagesToBePrinted[packageNum].Number.String()
 			carrier1 = packagesToBePrinted[packageNum].Carrier
@@ -126,7 +129,7 @@ func CreateSlips(building string, root string) error {
 
 		if packageNum < numPackages{
 			roomNumber2 = packagesToBePrinted[packageNum].Room
-			date2 = packagesToBePrinted[packageNum].DateReceived
+			date2 = time.Format(packagesToBePrinted[packageNum].DateReceived)
 			name2 = packagesToBePrinted[packageNum].Name
 			sortingNumber2 = packagesToBePrinted[packageNum].Number.String()
 			carrier2 = packagesToBePrinted[packageNum].Carrier
@@ -143,7 +146,7 @@ func CreateSlips(building string, root string) error {
 
 		if packageNum < numPackages{
 			roomNumber3 = packagesToBePrinted[packageNum].Room
-			date3 = packagesToBePrinted[packageNum].DateReceived
+			date3 = time.Format(packagesToBePrinted[packageNum].DateReceived)
 			name3 = packagesToBePrinted[packageNum].Name
 			sortingNumber3 = packagesToBePrinted[packageNum].Number.String()
 			carrier3 = packagesToBePrinted[packageNum].Carrier
@@ -160,7 +163,7 @@ func CreateSlips(building string, root string) error {
 
 		if packageNum < numPackages{
 			roomNumber4 = packagesToBePrinted[packageNum].Room
-			date4 = packagesToBePrinted[packageNum].DateReceived
+			date4 = time.Format(packagesToBePrinted[packageNum].DateReceived)
 			name4 = packagesToBePrinted[packageNum].Name
 			sortingNumber4 = packagesToBePrinted[packageNum].Number.String()
 			carrier4 = packagesToBePrinted[packageNum].Carrier
