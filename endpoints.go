@@ -102,13 +102,6 @@ func handleCreateSlips(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	fmt.Fprintf(w,
-		"<script>history.replaceState(%q, %q, %q);</script>",
-		"asdf",
-		"Slipper|Update Package",
-		"/pages/form_update.html",
-	)
-
 	/*
 
 	//copy the relevant headers. If you want to preserve the downloaded file name, extract it with go's url parser.
