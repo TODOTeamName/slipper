@@ -9,8 +9,8 @@ import (
 	"fmt"
 	"io/ioutil"
 	/*"log"
-	"os"*/
-	"os/exec"
+	"os"
+	"os/exec"*/
 	"bytes"
 	"strings"
 )
@@ -215,6 +215,7 @@ func CreateSlips(building string, root string) error {
 		pdfFiles[fileNum] = path.Join(root, tmpDir, fileName)
 	}
 
+	/*
 	// Collate all pdf files togethers
 	args := make([]string, numFiles+3)
 	var argNum int 
@@ -237,6 +238,7 @@ func CreateSlips(building string, root string) error {
 	if err != nil {
 		return fmt.Errorf(strings.TrimSpace(stderr.String()))
 	}
+	*/
 
 	// Mark the packages as printed in the db
 	return nil
