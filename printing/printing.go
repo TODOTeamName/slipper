@@ -8,8 +8,8 @@ import (
 	"path"
 	"fmt"
 	"io/ioutil"
-	"log"
-	"os"
+	/*"log"
+	"os"*/
 	"os/exec"
 	"bytes"
 	"strings"
