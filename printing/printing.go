@@ -58,7 +58,7 @@ func CreateSlips(building string, root string) error {
 
 	*/
 
-
+	return nil
 	// Generate slips for all the packages (4 slips per pdf)
 	numPackages := 	len(packagesToBePrinted)		// Number of packages to be printed
 	numFiles 	:= 	((numPackages - 1) / 4) + 1		// Dean said this works
@@ -190,7 +190,7 @@ func CreateSlips(building string, root string) error {
 			"carrier4":       carrier4,
 			"packageType4":   packageType4,
 		}
-		return nil
+
 
 		// Fill the form PDF with our values.
 		err = fillpdf.Fill(form, path.Join(root, "../printing/PackageSlipTemplate.pdf"), path.Join(root, fileName))
