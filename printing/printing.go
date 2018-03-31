@@ -10,9 +10,9 @@ import (
 	"io/ioutil"
 	"log"
 	"os"
-	"os/exec"
+	/*"os/exec"
 	"bytes"
-	"strings"
+	"strings"*/
 )
 
 var PackageSlipsPdf string
