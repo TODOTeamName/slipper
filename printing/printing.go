@@ -7,12 +7,12 @@ import (
 	"github.com/todoteamname/slipper/db"
 	"path"
 	"fmt"
-	/*"io/ioutil"
+	"io/ioutil"
 	"log"
 	"os"
 	"os/exec"
 	"bytes"
-	"strings"*/
+	"strings"
 )
 
 var PackageSlipsPdf string
@@ -58,15 +58,15 @@ func CreateSlips(building string, root string) error {
 
 	*/
 
-	/*
+	
 	// Create a temporary directory.
 	tmpDir, err := ioutil.TempDir(root, "packageSlips-")
 	if err != nil {
 		return fmt.Errorf("failed to create temporary directory: %v", err)
 	}
-	*/
+	
 
-	/*
+	
 	// Remove the temporary directory on defer again.
 	defer func() {
 		errD := os.RemoveAll(tmpDir)
@@ -75,7 +75,7 @@ func CreateSlips(building string, root string) error {
 			log.Printf("fillpdf: failed to remove temporary directory '%s' again: %v", tmpDir, errD)
 		}
 	}()
-	*/
+	
 
 	// Generate slips for all the packages (4 slips per pdf)
 	numPackages := 	len(packagesToBePrinted)		// Number of packages to be printed
