@@ -10,9 +10,9 @@ import (
 	"io/ioutil"
 	"log"
 	"os"
-	/*"os/exec"
+	"os/exec"
 	"bytes"
-	"strings"*/
+	"strings"
 )
 
 var PackageSlipsPdf string
@@ -212,9 +212,9 @@ func CreateSlips(building string, root string) error {
 		}
 		pdfFiles[fileNum] = fileName
 	}
-	return nil
 
-	/*
+
+	
 	// Collate all pdf files togethers
 	args := make([]string, numFiles+3)
 	var argNum int 
@@ -237,7 +237,7 @@ func CreateSlips(building string, root string) error {
 	if err != nil {
 		return fmt.Errorf(strings.TrimSpace(stderr.String()))
 	}
-	*/
+	
 
 	// Mark the packages as printed in the db
 	return nil
