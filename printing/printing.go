@@ -58,14 +58,11 @@ func CreateSlips(building string, root string) error {
 
 	*/
 
-	
 	// Create a temporary directory.
 	tmpDir, err := ioutil.TempDir(root, "packageSlips-")
 	if err != nil {
 		return fmt.Errorf("failed to create temporary directory: %v", err)
 	}
-	
-
 	
 	// Remove the temporary directory on defer again.
 	defer func() {
@@ -75,7 +72,6 @@ func CreateSlips(building string, root string) error {
 			log.Printf("fillpdf: failed to remove temporary directory '%s' again: %v", tmpDir, errD)
 		}
 	}()
-	
 
 	// Generate slips for all the packages (4 slips per pdf)
 	numPackages := 	len(packagesToBePrinted)		// Number of packages to be printed
@@ -214,8 +210,9 @@ func CreateSlips(building string, root string) error {
 		if err != nil {
 			return err
 		}
-		pdfFiles[fileNum] =fileName
+		pdfFiles[fileNum] = fileName
 	}
+	return nil
 
 	/*
 	// Collate all pdf files togethers
