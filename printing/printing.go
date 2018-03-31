@@ -190,6 +190,7 @@ func CreateSlips(building string, root string) error {
 			"carrier4":       carrier4,
 			"packageType4":   packageType4,
 		}
+		return nil
 
 		// Fill the form PDF with our values.
 		err = fillpdf.Fill(form, path.Join(root, "../printing/PackageSlipTemplate.pdf"), path.Join(root, fileName))
