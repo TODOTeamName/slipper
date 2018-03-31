@@ -196,7 +196,7 @@ func CreateSlips(building string, root string) error {
 		if err != nil {
 			return err
 		}
-		pdfFiles[fileNum] = path.Join(root, fileName
+		pdfFiles[fileNum] = path.Join(root, fileName)
 	}
 
 /*
