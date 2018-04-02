@@ -7,9 +7,9 @@ import (
 	"github.com/todoteamname/slipper/db"
 	"path"
 	"fmt"
-	"io/ioutil"
+	/*"io/ioutil"
 	"log"
-	"os"
+	"os"*/
 	"os/exec"
 	"bytes"
 	"strings"
@@ -213,7 +213,7 @@ func CreateSlips(building string, root string) error {
 	var stderr bytes.Buffer
 	cmd := exec.Command("pdftk", args...)
 	cmd.Stderr = &stderr
-	cmd.Dir = tmpDir
+	cmd.Dir = root
 
 	// Start the command and wait for it to exit.
 	err = cmd.Run()
