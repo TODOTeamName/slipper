@@ -9,10 +9,10 @@ import (
 	"fmt"
 	/*"io/ioutil"
 	"log"
-	"os"
+	"os"*/
 	"os/exec"
 	"bytes"
-	"strings"*/
+	"strings"
 )
 
 var PackageSlipsPdf string
@@ -57,8 +57,7 @@ func CreateSlips(building string, root string) error {
 	packageType4 := packagesToBePrinted[3].PackageType
 
 	*/
-
-	return nil
+	
 	// Generate slips for all the packages (4 slips per pdf)
 	numPackages := 	len(packagesToBePrinted)		// Number of packages to be printed
 	numFiles 	:= 	((numPackages - 1) / 4) + 1		// Dean said this works
@@ -191,7 +190,6 @@ func CreateSlips(building string, root string) error {
 			"packageType4":   packageType4,
 		}
 
-
 		// Fill the form PDF with our values.
 		err = fillpdf.Fill(form, path.Join(root, "../printing/PackageSlipTemplate.pdf"), path.Join(root, fileName))
 		if err != nil {
@@ -199,8 +197,6 @@ func CreateSlips(building string, root string) error {
 		}
 		pdfFiles[fileNum] = path.Join(root, fileName)
 	}
-
-/*
 	
 	// Collate all pdf files togethers
 	args := make([]string, numFiles+3)
@@ -217,16 +213,13 @@ func CreateSlips(building string, root string) error {
 	var stderr bytes.Buffer
 	cmd := exec.Command("pdftk", args...)
 	cmd.Stderr = &stderr
-	cmd.Dir = tmpDir
+	cmd.Dir = root
 
 	// Start the command and wait for it to exit.
 	err = cmd.Run()
 	if err != nil {
 		return fmt.Errorf(strings.TrimSpace(stderr.String()))
-	}
-
-*/
-	
+	}	
 
 	// Mark the packages as printed in the db
 	return nil
