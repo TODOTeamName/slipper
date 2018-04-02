@@ -88,7 +88,7 @@ func CreateSlips(building string, root string) error {
 
 	for fileNum := 0; fileNum < numFiles; fileNum++{
 		// Generate the pdf file name
-		fileName := fmt.Sprintf("packageSlip%d.pdf", fileNum)
+		fileName := fmt.Sprintf("packageSlip%3d.pdf", fileNum)
 
 		// Popluate pacakge information into variables
 		if packageNum < numPackages{
@@ -215,8 +215,8 @@ func CreateSlips(building string, root string) error {
 	// Start the command and wait for it to exit.
 	err = cmd.Run()
 	if err != nil {
-		return fmt.Errorf(strings.TrimSpace(stderr.String()))
-	}	
+		return fmt.Errorf("%s", strings.TrimSpace(stderr.String()))
+	}
 
 	// Mark the packages as printed in the db
 	return nil
