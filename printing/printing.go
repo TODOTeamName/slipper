@@ -7,9 +7,6 @@ import (
 	"github.com/todoteamname/slipper/db"
 	"path"
 	"fmt"
-	/*"io/ioutil"
-	"log"
-	"os"*/
 	"os/exec"
 	"bytes"
 	"strings"
