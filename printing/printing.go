@@ -88,7 +88,7 @@ func CreateSlips(building string, root string) error {
 
 	for fileNum := 0; fileNum < numFiles; fileNum++{
 		// Generate the pdf file name
-		fileName := fmt.Sprintf("packageSlip%d.pdf", fileNum)
+		fileName := fmt.Sprintf("packageSlip%3d.pdf", fileNum)
 
 		// Popluate pacakge information into variables
 		if packageNum < numPackages{
