@@ -215,8 +215,8 @@ func CreateSlips(building string, root string) error {
 	// Start the command and wait for it to exit.
 	err = cmd.Run()
 	if err != nil {
-		return fmt.Errorf(strings.TrimSpace(stderr.String()))
-	}	
+		return fmt.Errorf("%s", strings.TrimSpace(stderr.String()))
+	}
 
 	// Mark the packages as printed in the db
 	return nil
