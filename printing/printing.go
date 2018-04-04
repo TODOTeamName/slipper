@@ -10,6 +10,8 @@ import (
 	"os/exec"
 	"path"
 	"strings"
+	"math"
+	"strconv"
 )
 
 var PackageSlipsPdf string
@@ -22,170 +24,44 @@ func CreateSlips(building string, root string) error {
 		return err
 	}
 
-	/*
-
-		// Set up the form values for the first 4 packages
-		roomNumber1 := packagesToBePrinted[0].Room
-		date1 := packagesToBePrinted[0].DateReceived
-		name1 := packagesToBePrinted[0].Name
-		sortingNumber1 := packagesToBePrinted[0].Number.String()
-		carrier1 := packagesToBePrinted[0].Carrier
-		packageType1 := packagesToBePrinted[0].PackageType
-
-		roomNumber2 := packagesToBePrinted[1].Room
-		date2 := packagesToBePrinted[1].DateReceived
-		name2 := packagesToBePrinted[1].Name
-		sortingNumber2 := packagesToBePrinted[1].Number.String()
-		carrier2 := packagesToBePrinted[1].Carrier
-		packageType2 := packagesToBePrinted[1].PackageType
-
-		roomNumber3 := packagesToBePrinted[2].Room
-		date3 := packagesToBePrinted[2].DateReceived
-		name3 := packagesToBePrinted[2].Name
-		sortingNumber3 := packagesToBePrinted[2].Number.String()
-		carrier3 := packagesToBePrinted[2].Carrier
-		packageType3 := packagesToBePrinted[2].PackageType
-
-		roomNumber4 := packagesToBePrinted[3].Room
-		date4 := packagesToBePrinted[3].DateReceived
-		name4 := packagesToBePrinted[3].Name
-		sortingNumber4 := packagesToBePrinted[3].Number.String()
-		carrier4 := packagesToBePrinted[3].Carrier
-		packageType4 := packagesToBePrinted[3].PackageType
-
-	*/
 
 	// Generate slips for all the packages (4 slips per pdf)
 	numPackages := len(packagesToBePrinted) // Number of packages to be printed
 	numFiles := ((numPackages - 1) / 4) + 1 // Dean said this works
 	pdfFiles := make([]string, numFiles)    // Slice containing all the pdf file names
-	packageNum := 0                         // Counter to track which package is being processed
-
-	var roomNumber1 string
-	var date1 string
-	var name1 string
-	var sortingNumber1 string
-	var carrier1 string
-	var packageType1 string
-	var roomNumber2 string
-	var date2 string
-	var name2 string
-	var sortingNumber2 string
-	var carrier2 string
-	var packageType2 string
-	var roomNumber3 string
-	var date3 string
-	var name3 string
-	var sortingNumber3 string
-	var carrier3 string
-	var packageType3 string
-	var roomNumber4 string
-	var date4 string
-	var name4 string
-	var sortingNumber4 string
-	var carrier4 string
-	var packageType4 string
+	packageNum := 0
 
 	for fileNum := 0; fileNum < numFiles; fileNum++ {
 		// Generate the pdf file name
 		fileName := fmt.Sprintf("packageSlip%03d.pdf", fileNum)
 
-		// Popluate pacakge information into variables
-		if packageNum < numPackages {
-			roomNumber1 = packagesToBePrinted[packageNum].Room
-			date1 = (packagesToBePrinted[packageNum].DateReceived).Format("Mon Jan _2 3:04PM")
-			name1 = packagesToBePrinted[packageNum].Name
-			sortingNumber1 = packagesToBePrinted[packageNum].Number.String()
-			carrier1 = packagesToBePrinted[packageNum].Carrier
-			packageType1 = packagesToBePrinted[packageNum].PackageType
-		} else {
-			roomNumber1 = ""
-			date1 = ""
-			name1 = ""
-			sortingNumber1 = ""
-			carrier1 = ""
-			packageType1 = ""
-		}
-		packageNum++
+		form := fillpdf.Form{}
 
-		if packageNum < numPackages {
-			roomNumber2 = packagesToBePrinted[packageNum].Room
-			date2 = (packagesToBePrinted[packageNum].DateReceived).Format("Mon Jan _2 3:04PM")
-			name2 = packagesToBePrinted[packageNum].Name
-			sortingNumber2 = packagesToBePrinted[packageNum].Number.String()
-			carrier2 = packagesToBePrinted[packageNum].Carrier
-			packageType2 = packagesToBePrinted[packageNum].PackageType
-		} else {
-			roomNumber2 = ""
-			date2 = ""
-			name2 = ""
-			sortingNumber2 = ""
-			carrier2 = ""
-			packageType2 = ""
-		}
-		packageNum++
+		for i := 0; i < 4; i++ {
+			iStr := strconv.Itoa(i)
 
-		if packageNum < numPackages {
-			roomNumber3 = packagesToBePrinted[packageNum].Room
-			date3 = (packagesToBePrinted[packageNum].DateReceived).Format("Mon Jan _2 3:04PM")
-			name3 = packagesToBePrinted[packageNum].Name
-			sortingNumber3 = packagesToBePrinted[packageNum].Number.String()
-			carrier3 = packagesToBePrinted[packageNum].Carrier
-			packageType3 = packagesToBePrinted[packageNum].PackageType
-		} else {
-			roomNumber3 = ""
-			date3 = ""
-			name3 = ""
-			sortingNumber3 = ""
-			carrier3 = ""
-			packageType3 = ""
-		}
-		packageNum++
+			if packageNum >= numPackages {
+				form["roomNumber" + iStr] = ""
+				form["date" + iStr] = ""
+				form["name" + iStr] = ""
+				form["sortingNumber" + iStr] = ""
+				form["carrier" + iStr] = ""
+				form["packageType" + iStr] = ""
 
-		if packageNum < numPackages {
-			roomNumber4 = packagesToBePrinted[packageNum].Room
-			date4 = (packagesToBePrinted[packageNum].DateReceived).Format("Mon Jan _2 3:04PM")
-			name4 = packagesToBePrinted[packageNum].Name
-			sortingNumber4 = packagesToBePrinted[packageNum].Number.String()
-			carrier4 = packagesToBePrinted[packageNum].Carrier
-			packageType4 = packagesToBePrinted[packageNum].PackageType
-		} else {
-			roomNumber4 = ""
-			date4 = ""
-			name4 = ""
-			sortingNumber4 = ""
-			carrier4 = ""
-			packageType4 = ""
-		}
-		packageNum++
+				packageNum++
+				continue
+			}
 
-		// Add package info to the form field
-		form := fillpdf.Form{
-			"roomNumber1":    roomNumber1,
-			"date1":          date1,
-			"name1":          name1,
-			"sortingNumber1": sortingNumber1,
-			"carrier1":       carrier1,
-			"packageType1":   packageType1,
-			"roomNumber2":    roomNumber2,
-			"date2":          date2,
-			"name2":          name2,
-			"sortingNumber2": sortingNumber2,
-			"carrier2":       carrier2,
-			"packageType2":   packageType2,
-			"roomNumber3":    roomNumber3,
-			"date3":          date3,
-			"name3":          name3,
-			"sortingNumber3": sortingNumber3,
-			"carrier3":       carrier3,
-			"packageType3":   packageType3,
-			"roomNumber4":    roomNumber4,
-			"date4":          date4,
-			"name4":          name4,
-			"sortingNumber4": sortingNumber4,
-			"carrier4":       carrier4,
-			"packageType4":   packageType4,
+			form["roomNumber" + iStr] = packagesToBePrinted[packageNum].Room
+			form["date" + iStr] = packagesToBePrinted[packageNum].DateReceived.Format("Mon Jan _2 3:04PM")
+			form["name" + iStr] = packagesToBePrinted[packageNum].Name
+			form["sortingNumber" + iStr] = packagesToBePrinted[packageNum].Number.String()
+			form["carrier" + iStr] = packagesToBePrinted[packageNum].Carrier
+			form["packageType" + iStr] = packagesToBePrinted[packageNum].PackageType
+
+			packageNum++
 		}
+
 
 		// Fill the form PDF with our values.
 		err = fillpdf.Fill(form, path.Join(root, "../printing/PackageSlipTemplate.pdf"), path.Join(root, fileName))
