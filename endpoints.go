@@ -7,8 +7,8 @@ import (
 	"net/http"
 	"path"
 	"text/template"
-	/*"os"
-	"io"*/
+	"os"
+	"io"
 )
 
 func handlePackageAdd(w http.ResponseWriter, r *http.Request) {
