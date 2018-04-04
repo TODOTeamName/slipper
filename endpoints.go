@@ -7,8 +7,8 @@ import (
 	"net/http"
 	"path"
 	"text/template"
-	"os"
-	"io"
+	/*"os"
+	"io"*/
 )
 
 func handlePackageAdd(w http.ResponseWriter, r *http.Request) {
@@ -104,15 +104,6 @@ func handleCreateSlips(w http.ResponseWriter, r *http.Request) {
 
 	/*
 
-	//copy the relevant headers. If you want to preserve the downloaded file name, extract it with go's url parser.
-	w.Header().Set("Content-Disposition", "attachment; filename=FilledPackageSlip.pdf")
-	w.Header().Set("Content-Type", "application/pdf")
-	w.Header().Set("Content-Length", r.Header.Get("Content-Length"))
-
-	http.ServeFile(w, r, path.Join(*Settings.Root, "FilledPackageSlip.pdf"))
-
-	*/
-
 	f, err := os.Open(path.Join(*Settings.Root, "PackageSlips.pdf"))
 	if err != nil {
 		fmt.Println(err)
@@ -129,5 +120,7 @@ func handleCreateSlips(w http.ResponseWriter, r *http.Request) {
 		fmt.Println(err)
 		w.WriteHeader(500)
 	}
+
+	*/
 
 }
