@@ -13,12 +13,10 @@ a:hover {
 	text-decoration: underline;
 }
 
-/* Images max-width and height at 49% to allow 2x2 without overflowing lines */
 .linkimg {
-  max-width: 49%;
-  max-height: 49%;
-  height: 45%;
-  width: auto;
+	width: 30%;
+	height: auto;
+	vertical-align:middle;
 }
 
 .logo {
@@ -29,6 +27,8 @@ a:hover {
 .container {
 	max-width: 640px;
 	margin: 20px auto;
+	position: relative;
+	padding-top: 100% 0;
 }
 
 img {
@@ -49,14 +49,14 @@ img {
 }
 
 #header {
-	width:100%;
+	width:99%;
+	overflow: hidden;
 	height: 50px;
 	background-color:#000000;
 	color:#FFFFFF;
+	padding:5px;
 }
 
-#footer {
-	width:100%;
-	height:50px;
-	background-color:#F0F0F0;
+.headimg {
+	max-height: 100%;
 }

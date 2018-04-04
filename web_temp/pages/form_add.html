@@ -6,9 +6,14 @@
 		<script src = "js/cropper_upd.js"></script>
 	</head>
 	<body>
-		<a href = "main.html">Go Back</a>
+		<center>
+		<div id = "header">
+			<!-- TODO: Handle logout -->
+			<a href = "main.html"><img class = "headimg" src = "res/logo.png" alt = "Go Back"></a>
+		</div>
+		</center>
 		<div id = "add">
-			<form action = "crop.html" onsubmit = "update_crop(photo.value)">
+			<form action = "crop.html">
 				<input type = "file" name = "photo" accept = "image/*" capture = "camera"><br /><br />
 				<input type = "submit" value = "Crop">
 			</form>
