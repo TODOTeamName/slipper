@@ -43,10 +43,13 @@ img {
 	float:left;
 }
 
-#rem {
+.content {
 	padding: 10%;
 	float: left;
 	width: 100%;
+}
+
+#rem {
 }
 
 #header {
