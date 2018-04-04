@@ -7,8 +7,8 @@ import (
 	"net/http"
 	"path"
 	"text/template"
-	/*"os"
-	"io"*/
+	"os"
+	"io"
 )
 
 func handlePackageAdd(w http.ResponseWriter, r *http.Request) {
@@ -102,7 +102,7 @@ func handleCreateSlips(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	/*
+	
 
 	f, err := os.Open(path.Join(*Settings.Root, "PackageSlips.pdf"))
 	if err != nil {
@@ -121,6 +121,6 @@ func handleCreateSlips(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(500)
 	}
 
-	*/
+	
 
 }
