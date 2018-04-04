@@ -3,12 +3,12 @@
 package printing
 
 import (
+	"bytes"
+	"fmt"
 	"github.com/desertbit/fillpdf"
 	"github.com/todoteamname/slipper/db"
-	"path"
-	"fmt"
 	"os/exec"
-	"bytes"
+	"path"
 	"strings"
 )
 
@@ -24,42 +24,42 @@ func CreateSlips(building string, root string) error {
 
 	/*
 
-	// Set up the form values for the first 4 packages
-	roomNumber1 := packagesToBePrinted[0].Room
-	date1 := packagesToBePrinted[0].DateReceived
-	name1 := packagesToBePrinted[0].Name
-	sortingNumber1 := packagesToBePrinted[0].Number.String()
-	carrier1 := packagesToBePrinted[0].Carrier
-	packageType1 := packagesToBePrinted[0].PackageType
+		// Set up the form values for the first 4 packages
+		roomNumber1 := packagesToBePrinted[0].Room
+		date1 := packagesToBePrinted[0].DateReceived
+		name1 := packagesToBePrinted[0].Name
+		sortingNumber1 := packagesToBePrinted[0].Number.String()
+		carrier1 := packagesToBePrinted[0].Carrier
+		packageType1 := packagesToBePrinted[0].PackageType
 
-	roomNumber2 := packagesToBePrinted[1].Room
-	date2 := packagesToBePrinted[1].DateReceived
-	name2 := packagesToBePrinted[1].Name
-	sortingNumber2 := packagesToBePrinted[1].Number.String()
-	carrier2 := packagesToBePrinted[1].Carrier
-	packageType2 := packagesToBePrinted[1].PackageType
+		roomNumber2 := packagesToBePrinted[1].Room
+		date2 := packagesToBePrinted[1].DateReceived
+		name2 := packagesToBePrinted[1].Name
+		sortingNumber2 := packagesToBePrinted[1].Number.String()
+		carrier2 := packagesToBePrinted[1].Carrier
+		packageType2 := packagesToBePrinted[1].PackageType
 
-	roomNumber3 := packagesToBePrinted[2].Room
-	date3 := packagesToBePrinted[2].DateReceived
-	name3 := packagesToBePrinted[2].Name
-	sortingNumber3 := packagesToBePrinted[2].Number.String()
-	carrier3 := packagesToBePrinted[2].Carrier
-	packageType3 := packagesToBePrinted[2].PackageType
+		roomNumber3 := packagesToBePrinted[2].Room
+		date3 := packagesToBePrinted[2].DateReceived
+		name3 := packagesToBePrinted[2].Name
+		sortingNumber3 := packagesToBePrinted[2].Number.String()
+		carrier3 := packagesToBePrinted[2].Carrier
+		packageType3 := packagesToBePrinted[2].PackageType
 
-	roomNumber4 := packagesToBePrinted[3].Room
-	date4 := packagesToBePrinted[3].DateReceived
-	name4 := packagesToBePrinted[3].Name
-	sortingNumber4 := packagesToBePrinted[3].Number.String()
-	carrier4 := packagesToBePrinted[3].Carrier
-	packageType4 := packagesToBePrinted[3].PackageType
+		roomNumber4 := packagesToBePrinted[3].Room
+		date4 := packagesToBePrinted[3].DateReceived
+		name4 := packagesToBePrinted[3].Name
+		sortingNumber4 := packagesToBePrinted[3].Number.String()
+		carrier4 := packagesToBePrinted[3].Carrier
+		packageType4 := packagesToBePrinted[3].PackageType
 
 	*/
-	
+
 	// Generate slips for all the packages (4 slips per pdf)
-	numPackages := 	len(packagesToBePrinted)		// Number of packages to be printed
-	numFiles 	:= 	((numPackages - 1) / 4) + 1		// Dean said this works
-	pdfFiles 	:= 	make([]string, numFiles)		// Slice containing all the pdf file names
-	packageNum 	:= 	0								// Counter to track which package is being processed
+	numPackages := len(packagesToBePrinted) // Number of packages to be printed
+	numFiles := ((numPackages - 1) / 4) + 1 // Dean said this works
+	pdfFiles := make([]string, numFiles)    // Slice containing all the pdf file names
+	packageNum := 0                         // Counter to track which package is being processed
 
 	var roomNumber1 string
 	var date1 string
@@ -86,19 +86,19 @@ func CreateSlips(building string, root string) error {
 	var carrier4 string
 	var packageType4 string
 
-	for fileNum := 0; fileNum < numFiles; fileNum++{
+	for fileNum := 0; fileNum < numFiles; fileNum++ {
 		// Generate the pdf file name
 		fileName := fmt.Sprintf("packageSlip%3d.pdf", fileNum)
 
 		// Popluate pacakge information into variables
-		if packageNum < numPackages{
+		if packageNum < numPackages {
 			roomNumber1 = packagesToBePrinted[packageNum].Room
 			date1 = (packagesToBePrinted[packageNum].DateReceived).Format("Mon Jan _2 3:04PM")
 			name1 = packagesToBePrinted[packageNum].Name
 			sortingNumber1 = packagesToBePrinted[packageNum].Number.String()
 			carrier1 = packagesToBePrinted[packageNum].Carrier
 			packageType1 = packagesToBePrinted[packageNum].PackageType
-		}else{
+		} else {
 			roomNumber1 = ""
 			date1 = ""
 			name1 = ""
@@ -108,14 +108,14 @@ func CreateSlips(building string, root string) error {
 		}
 		packageNum++
 
-		if packageNum < numPackages{
+		if packageNum < numPackages {
 			roomNumber2 = packagesToBePrinted[packageNum].Room
 			date2 = (packagesToBePrinted[packageNum].DateReceived).Format("Mon Jan _2 3:04PM")
 			name2 = packagesToBePrinted[packageNum].Name
 			sortingNumber2 = packagesToBePrinted[packageNum].Number.String()
 			carrier2 = packagesToBePrinted[packageNum].Carrier
 			packageType2 = packagesToBePrinted[packageNum].PackageType
-		}else{
+		} else {
 			roomNumber2 = ""
 			date2 = ""
 			name2 = ""
@@ -125,14 +125,14 @@ func CreateSlips(building string, root string) error {
 		}
 		packageNum++
 
-		if packageNum < numPackages{
+		if packageNum < numPackages {
 			roomNumber3 = packagesToBePrinted[packageNum].Room
 			date3 = (packagesToBePrinted[packageNum].DateReceived).Format("Mon Jan _2 3:04PM")
 			name3 = packagesToBePrinted[packageNum].Name
 			sortingNumber3 = packagesToBePrinted[packageNum].Number.String()
 			carrier3 = packagesToBePrinted[packageNum].Carrier
 			packageType3 = packagesToBePrinted[packageNum].PackageType
-		}else{
+		} else {
 			roomNumber3 = ""
 			date3 = ""
 			name3 = ""
@@ -142,14 +142,14 @@ func CreateSlips(building string, root string) error {
 		}
 		packageNum++
 
-		if packageNum < numPackages{
+		if packageNum < numPackages {
 			roomNumber4 = packagesToBePrinted[packageNum].Room
 			date4 = (packagesToBePrinted[packageNum].DateReceived).Format("Mon Jan _2 3:04PM")
 			name4 = packagesToBePrinted[packageNum].Name
 			sortingNumber4 = packagesToBePrinted[packageNum].Number.String()
 			carrier4 = packagesToBePrinted[packageNum].Carrier
 			packageType4 = packagesToBePrinted[packageNum].PackageType
-		}else{
+		} else {
 			roomNumber4 = ""
 			date4 = ""
 			name4 = ""
@@ -194,11 +194,11 @@ func CreateSlips(building string, root string) error {
 		}
 		pdfFiles[fileNum] = path.Join(root, fileName)
 	}
-	
+
 	// Collate all pdf files togethers
 	args := make([]string, numFiles+3)
-	var argNum int 
-	for argNum = 0; argNum < numFiles; argNum++{
+	var argNum int
+	for argNum = 0; argNum < numFiles; argNum++ {
 		args[argNum] = pdfFiles[argNum]
 	}
 	args[argNum] = "cat"
@@ -206,7 +206,7 @@ func CreateSlips(building string, root string) error {
 	args[argNum] = "output"
 	argNum++
 	args[argNum] = path.Join(root, "PackageSlips.pdf")
-	
+
 	var stderr bytes.Buffer
 	cmd := exec.Command("pdftk", args...)
 	cmd.Stderr = &stderr
