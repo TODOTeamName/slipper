@@ -44,11 +44,13 @@ img {
 }
 
 #rem {
-	float:left;
-	width:100%;
+	padding: 10%;
+	float: left;
+	width: 100%;
 }
 
 #header {
+	position: absolute;
 	width:99%;
 	overflow: hidden;
 	height: 50px;
