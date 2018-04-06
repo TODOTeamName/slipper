@@ -6,29 +6,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>Cropper.js</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-  <link rel="stylesheet" href="../dist/cropper.css">
-  <style>
-    .label {
-      cursor: pointer;
-    }
-
-    .progress {
-      display: none;
-      margin-bottom: 1rem;
-    }
-
-    .alert {
-      display: none;
-    }
-
-    .img-container img {
-      max-width: 100%;
-    }
-  </style>
+  <link rel="stylesheet" href="dist/cropper.css">
+  <link rel = "stylesheet" type ="text/css" href = "css/style.css">
 </head>
 <body>
   <div class="container">
-    <h1>Upload cropped image to server</h1>
+			<form action = "{{SendImageToOCR}}" method = "post">
     <label class="label" data-toggle="tooltip" title="Change your avatar">
       <img class="rounded" id="avatar" src="https://avatars0.githubusercontent.com/u/3456749?s=160" alt="avatar">
       <input type="file" class="sr-only" id="input" name="image" accept="image/*">
@@ -57,12 +40,14 @@
           </div>
         </div>
       </div>
-    </div>
+    </div><br />
+	<input type = "submit" value = "Submit">
+	</form>
   </div>
 
   <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
-  <script src="../dist/cropper.js"></script>
+  <script src="dist/cropper.js"></script>
   <script>
     window.addEventListener('DOMContentLoaded', function () {
       var avatar = document.getElementById('avatar');
