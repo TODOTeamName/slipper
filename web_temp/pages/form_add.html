@@ -12,11 +12,8 @@
 			<a href = "main.html"><img class = "headimg" src = "res/logo.png" alt = "Go Back"></a>
 		</div>
 		</center>
-		<div id = "add">
-			<form action = "crop.html">
-				<input type = "file" name = "photo" accept = "image/*" capture = "camera"><br /><br />
-				<input type = "submit" value = "Crop">
-			</form>
+		<div id = "add" class = "add content">
+			<iframe src = "upload-cropped-image-to-server.html" class = "iframe"></iframe><br />
 			<form action = "/addpackage" method = "post">
 				<!-- Req: Name, Building Name, Room Num, Package Carrier-->
 				Name:<br />

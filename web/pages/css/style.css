@@ -43,12 +43,17 @@ img {
 	float:left;
 }
 
+.content {
+	padding: 10%;
+	float: left;
+	width: 100%;
+}
+
 #rem {
-	float:left;
-	width:100%;
 }
 
 #header {
+	position: absolute;
 	width:99%;
 	overflow: hidden;
 	height: 50px;
