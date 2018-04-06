@@ -41,7 +41,7 @@ func main() {
 
 	// Start HTTP Server :)
 	http.Handle("/", http.FileServer(http.Dir(*Settings.Root)))
-	http.Handle("/test", http.FileServer(http.Dir(path.Clean(path.Join(*Settings.Root, "../web_temp")))))
+	http.Handle("/test", http.FileServer(http.Dir(path.Join(*Settings.Root, "..", "web_temp"))))
 	http.HandleFunc("/addpackage", handlePackageAdd)
 	http.HandleFunc("/removepackage", handlePackageRemove)
 	http.HandleFunc("/getpackage", handlePackageGet)
