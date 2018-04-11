@@ -139,7 +139,7 @@ func handleCreateSlips(w http.ResponseWriter, r *http.Request) {
 
 func handleOcr(w http.ResponseWriter, r *http.Request) {
 	r.ParseMultipartForm(500000)
-	fmt.Println(r.MultipartForm.File)
+	fmt.Println(r.MultipartForm.Value)
 	file, _, err := r.FormFile("image")
 	if err != nil {
 		w.WriteHeader(400)
