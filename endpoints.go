@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"fmt"
 	"github.com/todoteamname/slipper/db"
 	"github.com/todoteamname/slipper/printing"
@@ -135,7 +136,6 @@ func handleCreateSlips(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		return fmt.Errorf("%s", strings.TrimSpace(stderr.String()))
 	}
-
 }
 
 func handleOcr(w http.ResponseWriter, r *http.Request) {
