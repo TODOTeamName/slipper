@@ -3,7 +3,7 @@ body {
 }
 
 a {
-	color:#FFFFFF;
+	color:#000000;
 	text-decoration: none;
 }
 
@@ -21,7 +21,7 @@ a:hover {
 
 .logo {
 	width: auto;
-	height: 35%;
+	height: 15%;
 }
 
 .container {
@@ -84,6 +84,7 @@ img {
 	background-color:#000000;
 	color:#FFFFFF;
 	padding:5px;
+	border-radius:5px;
 }
 
 .headimg {

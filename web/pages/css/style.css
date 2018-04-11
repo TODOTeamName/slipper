@@ -3,7 +3,7 @@ body {
 }
 
 a {
-	color:#FFFFFF;
+	color:#000000;
 	text-decoration: none;
 }
 
@@ -21,7 +21,7 @@ a:hover {
 
 .logo {
 	width: auto;
-	height: 35%;
+	height: 15%;
 }
 
 .container {
@@ -49,6 +49,30 @@ img {
 	width: 100%;
 }
 
+.label {
+	cursor: pointer;
+}
+
+.progress {
+	display: none;
+	margin-bottom: 1rem;
+}
+
+.alert {
+	display: none;
+}
+
+.img-container img {
+	max-width: 100%;
+}
+
+.iframe {
+	width:100%;
+	height:450px;
+	border:none;
+	overflow:hidden;
+}
+
 #rem {
 }
 
@@ -60,6 +84,7 @@ img {
 	background-color:#000000;
 	color:#FFFFFF;
 	padding:5px;
+	border-radius:5px;
 }
 
 .headimg {

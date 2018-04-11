@@ -1,6 +1,4 @@
-form.html			{{.SubmitActionTakePhoto}}		Replace with OCR scan
-form_remove.html	{{.SubmitActionRemove}}			Replace with package removal
-form_add.html		{{.SubmitActionAdd}}			Replace with package addition
-form_update.html	{{.SubmitActionUpdate}}			Replace with package updates
+archive.html		{{.CheckArchive}}				Take a name and check the archive to see if it has been picked up
+upload-cropped-i...	{{.SendImageToOCR}}				Send the cropped image to OCR for text extraction
 logout.html			---								Handle logout
 login.html			---								Handle login
