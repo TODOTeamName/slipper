@@ -133,7 +133,8 @@ func handleCreateSlips(w http.ResponseWriter, r *http.Request) {
 	cmd.Dir = *Settings.Root
 	err = cmd.Run()
 	if err != nil {
-		return fmt.Errorf("%s", strings.TrimSpace(stderr.String()))
+		fmt.Fprintln(w, "Error 400: Something went wrong in the removal.")
+		fmt.Fprintln(w, "Precise error:", err)
 	}
 }
 
