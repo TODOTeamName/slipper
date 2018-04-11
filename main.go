@@ -45,6 +45,7 @@ func main() {
 	http.HandleFunc("/removepackage", handlePackageRemove)
 	http.HandleFunc("/getpackage", handlePackageGet)
 	http.HandleFunc("/createslips", handleCreateSlips)
+	http.HandleFunc("/ocr", handleOcr)
 
 	log.Println("Starting server...")
 	if Settings.Https != nil {
