@@ -29,5 +29,5 @@ func ReadFile(input []byte) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	return bytes, nil
+	return string(bytes), nil
 }

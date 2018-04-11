@@ -11,7 +11,6 @@ import (
 	"os"
 	"os/exec"
 	"io"
-	"bytes"
 	"strings"
 	"io/ioutil"
 	"github.com/todoteamname/slipper/ocr"
@@ -131,7 +130,7 @@ func handleCreateSlips(w http.ResponseWriter, r *http.Request) {
 	args[0] = "*.pdf"
 	cmd := exec.Command("rm", args...)
 	cmd.Stderr = &stderr
-	cmd.Dir = root
+	cmd.Dir = *Settings.Root
 	err = cmd.Run()
 	if err != nil {
 		return fmt.Errorf("%s", strings.TrimSpace(stderr.String()))
