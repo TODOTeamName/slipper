@@ -144,6 +144,7 @@ func handleOcr(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintln(w, "Error 400: Bad Request. OCR went wrong.")
 		fmt.Fprintln(w, "Precise error:", err)
 		fmt.Fprintln(w, "Click <a href=\"/\">here</a> to go to the home page")
+		return
 	}
 	defer file.Close()
 
@@ -153,6 +154,7 @@ func handleOcr(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintln(w, "Error 400: Bad Request. OCR went wrong.")
 		fmt.Fprintln(w, "Precise error:", err)
 		fmt.Fprintln(w, "Click <a href=\"/\">here</a> to go to the home page")
+		return
 	}
 	output, err := ocr.ReadFile(fb)
 	if err != nil {
@@ -160,6 +162,7 @@ func handleOcr(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintln(w, "Error 400: Bad Request. OCR went wrong.")
 		fmt.Fprintln(w, "Precise error:", err)
 		fmt.Fprintln(w, "Click <a href=\"/\">here</a> to go to the home page")
+		return
 	}
 
 	fmt.Fprintf(w, "OCR Output: %s", output)
