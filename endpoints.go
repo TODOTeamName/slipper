@@ -11,7 +11,6 @@ import (
 	"os"
 	"os/exec"
 	"io"
-	"strings"
 	"io/ioutil"
 	"github.com/todoteamname/slipper/ocr"
 )
