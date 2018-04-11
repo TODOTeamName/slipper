@@ -11,6 +11,7 @@ import (
 	"os"
 	"os/exec"
 	"io"
+	"strings"
 )
 
 func handlePackageAdd(w http.ResponseWriter, r *http.Request) {
