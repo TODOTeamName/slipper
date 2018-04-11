@@ -12,10 +12,14 @@ import (
 )
 
 func handlePackageAdd(w http.ResponseWriter, r *http.Request) {
-	r.ParseForm()
-	form := r.Form
 
-	num, err := db.AddPackage(form.Get("name"), form.Get("building"), form.Get("room"), form.Get("carrier"), form.Get("type"))
+	num, err := db.AddPackage(
+		r.FormValue("name"),
+		r.FormValue("building"),
+		r.FormValue("room"),
+		r.FormValue("carrier"),
+		r.FormValue("type"),
+	)
 	if err != nil {
 		w.WriteHeader(400)
 		fmt.Fprintln(w, "Error 400: Bad Request. Database call went wrong.")
@@ -36,10 +40,8 @@ func handlePackageAdd(w http.ResponseWriter, r *http.Request) {
 }
 
 func handlePackageRemove(w http.ResponseWriter, r *http.Request) {
-	r.ParseForm()
-	form := r.Form
 
-	err := db.Archive(form.Get("number"), form.Get("signature"))
+	err := db.Archive(r.FormValue("number"), r.FormValue("signature"))
 	if err != nil {
 		w.WriteHeader(400)
 		fmt.Fprintln(w, "Error 400: Bad Request. Database call went wrong.")
@@ -58,10 +60,8 @@ func handlePackageRemove(w http.ResponseWriter, r *http.Request) {
 }
 
 func handlePackageGet(w http.ResponseWriter, r *http.Request) {
-	r.ParseForm()
-	form := r.Form
 
-	pack, err := db.GetPackage(form.Get("number"))
+	pack, err := db.GetPackage(r.FormValue("number"))
 	if err != nil {
 		w.WriteHeader(400)
 		fmt.Fprintln(w, "Error 400: Bad Request. Database call went wrong.")
@@ -90,10 +90,8 @@ func handlePackageGet(w http.ResponseWriter, r *http.Request) {
 }
 
 func handleCreateSlips(w http.ResponseWriter, r *http.Request) {
-	r.ParseForm()
-	form := r.Form
 
-	err := printing.CreateSlips(form.Get("building"), *Settings.Root)
+	err := printing.CreateSlips(r.FormValue("building"), *Settings.Root)
 	if err != nil {
 		w.WriteHeader(400)
 		fmt.Fprintln(w, "Error 400: Bad Request. Assembling PDF went wrong.")
@@ -122,5 +120,9 @@ func handleCreateSlips(w http.ResponseWriter, r *http.Request) {
 	}
 
 	
+
+}
+
+func handleOcr(w http.ResponseWriter, r *http.Request) {
 
 }
