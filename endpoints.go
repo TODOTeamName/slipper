@@ -8,7 +8,12 @@ import (
 	"path"
 	"text/template"
 	"os"
+	"os/exec"
 	"io"
+	"bytes"
+	"strings"
+	"io/ioutil"
+	"github.com/todoteamname/slipper/ocr"
 )
 
 func handlePackageAdd(w http.ResponseWriter, r *http.Request) {
@@ -110,19 +115,53 @@ func handleCreateSlips(w http.ResponseWriter, r *http.Request) {
 	}
 	defer f.Close()
 
-	//Set header
+	// Set header
 	w.Header().Add("Content-Type", "application/pdf")
 
-	//Stream to response
+	// Stream to response
 	if _, err := io.Copy(w, f); err != nil {
 		fmt.Println(err)
 		w.WriteHeader(500)
 	}
 
-	
+	// Remove the package slip files
+	var stderr bytes.Buffer
+	args := make([]string, 1)
+	args[0] = "*.pdf"
+	cmd := exec.Command("rm", args...)
+	cmd.Stderr = &stderr
+	cmd.Dir = root
+	err = cmd.Run()
+	if err != nil {
+		return fmt.Errorf("%s", strings.TrimSpace(stderr.String()))
+	}
 
 }
 
 func handleOcr(w http.ResponseWriter, r *http.Request) {
+	file, _, err := r.FormFile("image")
+	if err != nil {
+		w.WriteHeader(400)
+		fmt.Fprintln(w, "Error 400: Bad Request. OCR went wrong.")
+		fmt.Fprintln(w, "Precise error:", err)
+		fmt.Fprintln(w, "Click <a href=\"/\">here</a> to go to the home page")
+	}
+	defer file.Close()
 
+	fb, err := ioutil.ReadAll(file)
+	if err != nil {
+		w.WriteHeader(400)
+		fmt.Fprintln(w, "Error 400: Bad Request. OCR went wrong.")
+		fmt.Fprintln(w, "Precise error:", err)
+		fmt.Fprintln(w, "Click <a href=\"/\">here</a> to go to the home page")
+	}
+	output, err := ocr.ReadFile(fb)
+	if err != nil {
+		w.WriteHeader(400)
+		fmt.Fprintln(w, "Error 400: Bad Request. OCR went wrong.")
+		fmt.Fprintln(w, "Precise error:", err)
+		fmt.Fprintln(w, "Click <a href=\"/\">here</a> to go to the home page")
+	}
+
+	fmt.Fprintf(w, "OCR Output: %s", output)
 }
