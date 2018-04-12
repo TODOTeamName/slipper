@@ -23,7 +23,6 @@ func CreateSlips(building string, root string) error {
 		return err
 	}
 
-
 	// Generate slips for all the packages (4 slips per pdf)
 	numPackages := len(packagesToBePrinted) // Number of packages to be printed
 	numFiles := ((numPackages - 1) / 4) + 1 // Dean said this works
@@ -94,5 +93,10 @@ func CreateSlips(building string, root string) error {
 	}
 
 	// Mark the packages as printed in the db
+	err := db.markPrinted(building)
+	if err != nil {
+		return err
+	}
+
 	return nil
 }

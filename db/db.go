@@ -121,6 +121,27 @@ func GetToBePrinted(building string) ([]Package, error) {
 	return toBePrinted, nil
 }
 
+func markPrinted(building string) error{
+	stmt, err := db.Prepare('
+		UPDATE Packages
+		SET is_printed = 1
+		WHERE is_printed = 0 AND building = ?
+		')
+	if err != nil {
+		log.Println("Error occured while preparing statement")
+		return err
+	}
+	defer stmt.Close()
+
+	_, err = stmt.Exec(building)
+	if err != nil {
+		log.Println("Error occured while executing statement:", err)
+		return err
+	}
+
+	return nil
+}
+
 func UpdatePackage(sortingNumber string, dateReceived time.Time, name string, building string, room string, carrier string, packageType string, isPrinted bool) error {
 	stmt, err := db.Prepare(`
 		UPDATE Packages
