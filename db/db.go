@@ -122,11 +122,11 @@ func GetToBePrinted(building string) ([]Package, error) {
 }
 
 func markPrinted(building string) error{
-	stmt, err := db.Prepare('
-		UPDATE Packages
+	stmt, err := db.Prepare(`
+		UPDATE Package
 		SET is_printed = 1
 		WHERE is_printed = 0 AND building = ?
-		')
+		`)
 	if err != nil {
 		log.Println("Error occured while preparing statement")
 		return err
