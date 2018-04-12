@@ -11,8 +11,6 @@ import (
 	"os"
 	"os/exec"
 	"io"
-	"bytes"
-	"strings"
 	"io/ioutil"
 	"github.com/todoteamname/slipper/ocr"
 )
@@ -131,7 +129,7 @@ func handleCreateSlips(w http.ResponseWriter, r *http.Request) {
 	args[0] = "*.pdf"
 	cmd := exec.Command("rm", args...)
 	cmd.Stderr = &stderr
-	cmd.Dir = root
+	cmd.Dir = *Settings.Root
 	err = cmd.Run()
 	if err != nil {
 		fmt.Fprintln(w, "Error 400: Something went wrong in the removal.")
@@ -140,12 +138,15 @@ func handleCreateSlips(w http.ResponseWriter, r *http.Request) {
 }
 
 func handleOcr(w http.ResponseWriter, r *http.Request) {
+	r.ParseMultipartForm(500000)
+	fmt.Println(r.MultipartForm.Value)
 	file, _, err := r.FormFile("image")
 	if err != nil {
 		w.WriteHeader(400)
 		fmt.Fprintln(w, "Error 400: Bad Request. OCR went wrong.")
 		fmt.Fprintln(w, "Precise error:", err)
 		fmt.Fprintln(w, "Click <a href=\"/\">here</a> to go to the home page")
+		return
 	}
 	defer file.Close()
 
@@ -155,6 +156,7 @@ func handleOcr(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintln(w, "Error 400: Bad Request. OCR went wrong.")
 		fmt.Fprintln(w, "Precise error:", err)
 		fmt.Fprintln(w, "Click <a href=\"/\">here</a> to go to the home page")
+		return
 	}
 	output, err := ocr.ReadFile(fb)
 	if err != nil {
@@ -162,6 +164,7 @@ func handleOcr(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintln(w, "Error 400: Bad Request. OCR went wrong.")
 		fmt.Fprintln(w, "Precise error:", err)
 		fmt.Fprintln(w, "Click <a href=\"/\">here</a> to go to the home page")
+		return
 	}
 
 	fmt.Fprintf(w, "OCR Output: %s", output)

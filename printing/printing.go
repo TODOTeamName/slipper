@@ -36,7 +36,7 @@ func CreateSlips(building string, root string) error {
 
 		form := fillpdf.Form{}
 
-		for i := 0; i < 4; i++ {
+		for i := 1; i <= 4; i++ {
 			iStr := strconv.Itoa(i)
 
 			if packageNum >= numPackages {
