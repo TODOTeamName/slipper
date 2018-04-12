@@ -93,7 +93,7 @@ func CreateSlips(building string, root string) error {
 	}
 
 	// Mark the packages as printed in the db
-	err := db.markPrinted(building)
+	err = db.MarkPrinted(building)
 	if err != nil {
 		return err
 	}
