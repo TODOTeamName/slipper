@@ -121,9 +121,9 @@ func GetToBePrinted(building string) ([]Package, error) {
 	return toBePrinted, nil
 }
 
-func markPrinted(building string) error{
+func MarkPrinted(building string) error{
 	stmt, err := db.Prepare(`
-		UPDATE Packages
+		UPDATE Package
 		SET is_printed = 1
 		WHERE is_printed = 0 AND building = ?
 		`)
