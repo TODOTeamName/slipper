@@ -150,6 +150,7 @@ func handleCreateSlips(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Remove the package slip files
+	/*
 	var stderr bytes.Buffer
 	args := make([]string, 1)
 	args[0] = "*.pdf"
@@ -162,6 +163,8 @@ func handleCreateSlips(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintln(w, "Error 400: Something went wrong in the removal.")
 		fmt.Fprintln(w, "Precise error:", err)
 	}
+	*/
+	os.Remove("*.pdf")
 }
 
 func handleOcr(w http.ResponseWriter, r *http.Request) {
