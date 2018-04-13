@@ -27,7 +27,7 @@
 				Room Number:<br />
 				<input type = "text" name = "room" value="{{.Room}}"><br />
 				Package Carrier:<br />
-				<select name = "type">
+				<select name = "carrier">
 					<option value = "USPS" {{if eq .Carrier "USPS"}}selected="selected"{{end}}>USPS</option>
 					<option value = "UPS" {{if eq .Carrier "UPS"}}selected="selected"{{end}}>UPS</option>
 					<option value = "FedEx" {{if eq .Carrier "FedEx"}}selected="selected"{{end}}>FedEx</option>

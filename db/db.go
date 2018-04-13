@@ -6,7 +6,6 @@ import (
 	"errors"
 	_ "github.com/mattn/go-sqlite3"
 	"log"
-	"time"
 )
 
 var db *sql.DB
@@ -142,11 +141,11 @@ func MarkPrinted(building string) error{
 	return nil
 }
 
-func UpdatePackage(sortingNumber string, dateReceived time.Time, name string, building string, room string, carrier string, packageType string, isPrinted bool) error {
+func UpdatePackage(sortingNumber string, name string, building string, room string, carrier string, packageType string, isPrinted int) error {
 	stmt, err := db.Prepare(`
 		UPDATE Packages
-		SET sorting_number = ?, date_received = ?, name = ?, building = ?, room = ?, carrier = ?, package_type = ?, is_printed = ?
-		WHERE sorting_number = ?
+		SET sorting_number = ?, name = ?, room = ?, carrier = ?, package_type = ?, is_printed = ?
+		WHERE sorting_number = ? and building = ?
 		`)
 	if err != nil {
 		log.Println("Error occured while preparing statement:", err)
@@ -154,7 +153,7 @@ func UpdatePackage(sortingNumber string, dateReceived time.Time, name string, bu
 	}
 	defer stmt.Close()
 
-	_, err = stmt.Exec(dateReceived, name, building, room, carrier, packageType, isPrinted, sortingNumber)
+	_, err = stmt.Exec(name, room, carrier, packageType, isPrinted, sortingNumber, building)
 	if err != nil {
 		log.Println("Error occured while executing statement:", err)
 		return err
