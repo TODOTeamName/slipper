@@ -1,7 +1,6 @@
 package main
 
 import (
-	"bytes"
 	"fmt"
 	"github.com/todoteamname/slipper/db"
 	"github.com/todoteamname/slipper/printing"
@@ -9,7 +8,6 @@ import (
 	"path"
 	"text/template"
 	"os"
-	"os/exec"
 	"io"
 	"github.com/todoteamname/slipper/ocr"
 	"encoding/base64"
