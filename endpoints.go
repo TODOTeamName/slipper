@@ -12,6 +12,8 @@ import (
 	"github.com/todoteamname/slipper/ocr"
 	"encoding/base64"
 	"strconv"
+	"bytes"
+	"os/exec"
 )
 
 func handleSelectBuilding(w http.ResponseWriter, r *http.Request) {
@@ -156,11 +158,8 @@ func handleCreateSlips(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Remove the package slip files
-	/*
 	var stderr bytes.Buffer
-	args := make([]string, 1)
-	args[0] = "*.pdf"
-	cmd := exec.Command("rm", args...)
+	cmd := exec.Command("rm", "*.pdf")
 	cmd.Stderr = &stderr
 	cmd.Dir = *Settings.Root
 	err = cmd.Run()
@@ -168,9 +167,8 @@ func handleCreateSlips(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(400)
 		fmt.Fprintln(w, "Error 400: Something went wrong in the removal.")
 		fmt.Fprintln(w, "Precise error:", err)
+		return
 	}
-	*/
-	os.Remove("*.pdf")
 }
 
 func handleOcr(w http.ResponseWriter, r *http.Request) {
