@@ -13,6 +13,8 @@
 		<div id = "update" class = "update content">
 			<form action = "/updatepackage" method = "post">
 				<!-- Req: Name, Building Name, Room Num, Package Carrier-->
+				Sorting Number:<br />
+				<input type = "text" name = "sortingnumber" value = "{{.SortingNumber}}" disabled = "true"><br />
 				Name:<br />
 				<input type = "text" name = "name" value = "{{.Name}}"><br />
 				Building Name:<br />
@@ -25,12 +27,24 @@
 				Room Number:<br />
 				<input type = "text" name = "room" value="{{.Room}}"><br />
 				Package Carrier:<br />
-				<select name = "type">
+				<select name = "carrier">
 					<option value = "USPS" {{if eq .Carrier "USPS"}}selected="selected"{{end}}>USPS</option>
 					<option value = "UPS" {{if eq .Carrier "UPS"}}selected="selected"{{end}}>UPS</option>
 					<option value = "FedEx" {{if eq .Carrier "FedEx"}}selected="selected"{{end}}>FedEx</option>
 					<option value = "Other" {{if eq .Carrier "Other"}}selected="selected"{{end}}>Other</option>
-				</select><br /><br />
+				</select><br />
+				Package Type:<br />
+				<select name = "type">
+					<option value = "Package">Package</option>
+					<option value = "LargeEnvelope">Large Envelope</option>
+					<option value = "Other">Other</option>
+				</select><br />
+				Slip has been printed:
+				<select name = "isprinted">
+					<option value = 0>No</option>
+					<option value = 1>Yes</option>
+				</select>
+				<br />
 				<input type = "submit" value = "Submit">
 			</form>
 		</div>
