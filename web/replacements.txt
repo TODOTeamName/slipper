@@ -1,4 +1,3 @@
 archive.html		{{.CheckArchive}}				Take a name and check the archive to see if it has been picked up
 upload-cropped-i...	{{.SendImageToOCR}}				Send the cropped image to OCR for text extraction
-logout.html			---								Handle logout
-login.html			---								Handle login
+login.html			{{.Login}}						Handle login
