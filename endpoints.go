@@ -143,7 +143,7 @@ func handleOcr(w http.ResponseWriter, r *http.Request) {
 	file, _, err := r.FormFile("image")
 	if err != nil {
 		w.WriteHeader(400)
-		fmt.Fprintln(w, "Error 400: Bad Request. OCR went wrong.")
+		fmt.Fprintln(w, "Error 400: Bad Request. Form Parsing went wrong")
 		fmt.Fprintln(w, "Precise error:", err)
 		fmt.Fprintln(w, "Click <a href=\"/\">here</a> to go to the home page")
 		return
@@ -153,7 +153,7 @@ func handleOcr(w http.ResponseWriter, r *http.Request) {
 	fb, err := ioutil.ReadAll(file)
 	if err != nil {
 		w.WriteHeader(400)
-		fmt.Fprintln(w, "Error 400: Bad Request. OCR went wrong.")
+		fmt.Fprintln(w, "Error 400: Bad Request. Reading File went wrong.")
 		fmt.Fprintln(w, "Precise error:", err)
 		fmt.Fprintln(w, "Click <a href=\"/\">here</a> to go to the home page")
 		return
