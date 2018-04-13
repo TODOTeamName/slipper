@@ -12,9 +12,10 @@
 <body>
 <div class="container">
     <form action="/ocr" method="post" enctype="multipart/form-data">
-        <label class="label" data-toggle="tooltip" title="Change your avatar">
+        <label class="label" data-toggle="tooltip" title="Package Image">
             <img class="rounded" id="avatar" src="https://avatars0.githubusercontent.com/u/3456749?s=160" alt="avatar">
             <input type="file" class="sr-only" id="input" name="image" accept="image/*" capture="camera">
+			<input type="hidden" id = "baseimage" value = "">
         </label>
         <div class="progress">
             <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="0"
@@ -115,6 +116,7 @@
 
                 initialAvatarURL = avatar.src;
                 avatar.src = canvas.toDataURL();
+				document.getElementById('baseimage').value = avatar.src;
                 $progress.show();
                 $alert.removeClass('alert-success alert-warning');
                 canvas.toBlob(function (blob) {
