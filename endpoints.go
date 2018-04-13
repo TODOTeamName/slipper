@@ -13,13 +13,16 @@ import (
 	"io"
 	"io/ioutil"
 	"github.com/todoteamname/slipper/ocr"
+	"strconv"
 )
 
 func handlePackageAdd(w http.ResponseWriter, r *http.Request) {
 
+	building := getBuilding(w, r)
+
 	num, err := db.AddPackage(
 		r.FormValue("name"),
-		r.FormValue("building"),
+		building,
 		r.FormValue("room"),
 		r.FormValue("carrier"),
 		r.FormValue("type"),
@@ -93,9 +96,32 @@ func handlePackageGet(w http.ResponseWriter, r *http.Request) {
 	t.Execute(w, pack)
 }
 
+func handlePackageUpdate(w http.ResponseWriter, r *http.Request){
+	isPrinted, _ := strconv.Atoi(r.FormValue("isprinted"))
+
+	err := db.UpdatePackage(
+		r.FormValue("sortingnumber"),
+		r.FormValue("name"),
+		r.FormValue("building"),
+		r.FormValue("room"),
+		r.FormValue("carrier"),
+		r.FormValue("type"),
+		isPrinted
+	)
+	if err != nil {
+		w.WriteHeader(400)
+		fmt.Fprintln(w, "Error 400: Bad Request. Database call went wrong.")
+		fmt.Fprintln(w, "Precise error:", err)
+		fmt.Fprintln(w, "Click <a href=\"/\">here</a> to go to the home page")
+		return
+	}
+}
+
 func handleCreateSlips(w http.ResponseWriter, r *http.Request) {
 
-	err := printing.CreateSlips(r.FormValue("building"), *Settings.Root)
+	building := getBuilding(w, r)
+
+	err := printing.CreateSlips(building, *Settings.Root)
 	if err != nil {
 		w.WriteHeader(400)
 		fmt.Fprintln(w, "Error 400: Bad Request. Assembling PDF went wrong.")
@@ -132,6 +158,7 @@ func handleCreateSlips(w http.ResponseWriter, r *http.Request) {
 	cmd.Dir = *Settings.Root
 	err = cmd.Run()
 	if err != nil {
+		w.WriteHeader(400)
 		fmt.Fprintln(w, "Error 400: Something went wrong in the removal.")
 		fmt.Fprintln(w, "Precise error:", err)
 	}
