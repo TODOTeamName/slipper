@@ -106,7 +106,7 @@ func handlePackageUpdate(w http.ResponseWriter, r *http.Request){
 		r.FormValue("room"),
 		r.FormValue("carrier"),
 		r.FormValue("type"),
-		isPrinted
+		isPrinted,
 	)
 	if err != nil {
 		w.WriteHeader(400)
