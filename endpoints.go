@@ -19,7 +19,7 @@ func handleSelectBuilding(w http.ResponseWriter, r *http.Request) {
 		Name: "building",
 		Value: r.FormValue("building"),
 	}
-	http.SetCookie(w, newCookie)
+	http.SetCookie(w, &newCookie)
 	http.Redirect(w, r, "/pages/main.html", http.StatusFound)
 }
 
