@@ -18,9 +18,11 @@ import (
 
 func handlePackageAdd(w http.ResponseWriter, r *http.Request) {
 
+	building := getBuilding(w, r)
+
 	num, err := db.AddPackage(
 		r.FormValue("name"),
-		r.FormValue("building"),
+		building,
 		r.FormValue("room"),
 		r.FormValue("carrier"),
 		r.FormValue("type"),
@@ -117,7 +119,9 @@ func handlePackageUpdate(w http.ResponseWriter, r *http.Request){
 
 func handleCreateSlips(w http.ResponseWriter, r *http.Request) {
 
-	err := printing.CreateSlips(r.FormValue("building"), *Settings.Root)
+	building := getBuilding(w, r)
+
+	err := printing.CreateSlips(building, *Settings.Root)
 	if err != nil {
 		w.WriteHeader(400)
 		fmt.Fprintln(w, "Error 400: Bad Request. Assembling PDF went wrong.")
@@ -154,6 +158,7 @@ func handleCreateSlips(w http.ResponseWriter, r *http.Request) {
 	cmd.Dir = *Settings.Root
 	err = cmd.Run()
 	if err != nil {
+		w.WriteHeader(400)
 		fmt.Fprintln(w, "Error 400: Something went wrong in the removal.")
 		fmt.Fprintln(w, "Precise error:", err)
 	}
