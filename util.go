@@ -9,7 +9,7 @@ func getBuilding(w http.ResponseWriter, r *http.Request) string {
 			Name: "building",
 			Value: "Wadsworth",
 		}
-		http.SetCookie(w, newCookie)
+		http.SetCookie(w, &newCookie)
 		return "Wadsworth"
 	}
 

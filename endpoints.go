@@ -11,9 +11,18 @@ import (
 	"os"
 	"os/exec"
 	"io"
-	"io/ioutil"
 	"github.com/todoteamname/slipper/ocr"
+	"encoding/base64"
 )
+
+func handleSelectBuilding(w http.ResponseWriter, r *http.Request) {
+	newCookie := http.Cookie{
+		Name: "building",
+		Value: r.FormValue("building"),
+	}
+	http.SetCookie(w, newCookie)
+	http.Redirect(w, r, "/pages/main.html", http.StatusFound)
+}
 
 func handlePackageAdd(w http.ResponseWriter, r *http.Request) {
 
@@ -32,7 +41,6 @@ func handlePackageAdd(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintln(w, "Precise error:", err)
 		fmt.Fprintln(w, "Click <a href=\"/\">here</a> to go to the home page")
 		return
-
 	}
 
 	fmt.Fprintf(w,
@@ -145,25 +153,16 @@ func handleCreateSlips(w http.ResponseWriter, r *http.Request) {
 func handleOcr(w http.ResponseWriter, r *http.Request) {
 	r.ParseMultipartForm(500000)
 	fmt.Println(r.MultipartForm.Value)
-	file, _, err := r.FormFile("image")
+	b64 := r.FormValue("baseimage")
+	byt, err := base64.RawStdEncoding.DecodeString(b64)
 	if err != nil {
 		w.WriteHeader(400)
-		fmt.Fprintln(w, "Error 400: Bad Request. Form Parsing went wrong")
+		fmt.Fprintln(w, "Error 400: Bad Request. Decoding went wrong.")
 		fmt.Fprintln(w, "Precise error:", err)
 		fmt.Fprintln(w, "Click <a href=\"/\">here</a> to go to the home page")
 		return
 	}
-	defer file.Close()
-
-	fb, err := ioutil.ReadAll(file)
-	if err != nil {
-		w.WriteHeader(400)
-		fmt.Fprintln(w, "Error 400: Bad Request. Reading File went wrong.")
-		fmt.Fprintln(w, "Precise error:", err)
-		fmt.Fprintln(w, "Click <a href=\"/\">here</a> to go to the home page")
-		return
-	}
-	output, err := ocr.ReadFile(fb)
+	output, err := ocr.ReadFile(byt)
 	if err != nil {
 		w.WriteHeader(400)
 		fmt.Fprintln(w, "Error 400: Bad Request. OCR went wrong.")
