@@ -1,22 +1,24 @@
 package main
 
 import (
+	"bytes"
+	"encoding/base64"
 	"fmt"
 	"github.com/todoteamname/slipper/db"
-	"github.com/todoteamname/slipper/printing"
-	"net/http"
-	"path"
-	"text/template"
-	"os"
-	"io"
 	"github.com/todoteamname/slipper/ocr"
-	"encoding/base64"
+	"github.com/todoteamname/slipper/printing"
+	"io"
+	"net/http"
+	"os"
+	"os/exec"
+	"path"
 	"strconv"
+	"text/template"
 )
 
 func handleSelectBuilding(w http.ResponseWriter, r *http.Request) {
 	newCookie := http.Cookie{
-		Name: "building",
+		Name:  "building",
 		Value: r.FormValue("building"),
 	}
 	http.SetCookie(w, &newCookie)
@@ -106,7 +108,7 @@ func handlePackageGet(w http.ResponseWriter, r *http.Request) {
 	t.Execute(w, pack)
 }
 
-func handlePackageUpdate(w http.ResponseWriter, r *http.Request){
+func handlePackageUpdate(w http.ResponseWriter, r *http.Request) {
 	isPrinted, _ := strconv.Atoi(r.FormValue("isprinted"))
 	building := getBuilding(w, r)
 
@@ -141,8 +143,6 @@ func handleCreateSlips(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	
-
 	f, err := os.Open(path.Join(*Settings.Root, "PackageSlips.pdf"))
 	if err != nil {
 		fmt.Println(err)
@@ -161,11 +161,8 @@ func handleCreateSlips(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Remove the package slip files
-	/*
 	var stderr bytes.Buffer
-	args := make([]string, 1)
-	args[0] = "*.pdf"
-	cmd := exec.Command("rm", args...)
+	cmd := exec.Command("rm", "*.pdf")
 	cmd.Stderr = &stderr
 	cmd.Dir = *Settings.Root
 	err = cmd.Run()
@@ -174,8 +171,6 @@ func handleCreateSlips(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintln(w, "Error 400: Something went wrong in the removal.")
 		fmt.Fprintln(w, "Precise error:", err)
 	}
-	*/
-	os.Remove("*.pdf")
 }
 
 func handleOcr(w http.ResponseWriter, r *http.Request) {
@@ -202,6 +197,6 @@ func handleOcr(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "OCR Output: %s", output)
 }
 
-func handleCheckArchive(w http.ResponseWriter, r *http.Request){
+func handleCheckArchive(w http.ResponseWriter, r *http.Request) {
 	return
 }
