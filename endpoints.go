@@ -54,7 +54,9 @@ func handlePackageAdd(w http.ResponseWriter, r *http.Request) {
 
 func handlePackageRemove(w http.ResponseWriter, r *http.Request) {
 
-	err := db.Archive(r.FormValue("number"), r.FormValue("signature"))
+	building := getBuilding(w, r)
+
+	err := db.Archive(r.FormValue("number"), building, r.FormValue("signature"))
 	if err != nil {
 		w.WriteHeader(400)
 		fmt.Fprintln(w, "Error 400: Bad Request. Database call went wrong.")
@@ -74,7 +76,9 @@ func handlePackageRemove(w http.ResponseWriter, r *http.Request) {
 
 func handlePackageGet(w http.ResponseWriter, r *http.Request) {
 
-	pack, err := db.GetPackage(r.FormValue("number"))
+	building := getBuilding(w, r)
+
+	pack, err := db.GetPackage(r.FormValue("number"), building)
 	if err != nil {
 		w.WriteHeader(400)
 		fmt.Fprintln(w, "Error 400: Bad Request. Database call went wrong.")
@@ -104,11 +108,12 @@ func handlePackageGet(w http.ResponseWriter, r *http.Request) {
 
 func handlePackageUpdate(w http.ResponseWriter, r *http.Request){
 	isPrinted, _ := strconv.Atoi(r.FormValue("isprinted"))
+	building := getBuilding(w, r)
 
 	err := db.UpdatePackage(
 		r.FormValue("sortingnumber"),
 		r.FormValue("name"),
-		r.FormValue("building"),
+		building,
 		r.FormValue("room"),
 		r.FormValue("carrier"),
 		r.FormValue("type"),
