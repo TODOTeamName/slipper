@@ -201,3 +201,7 @@ func handleOcr(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Fprintf(w, "OCR Output: %s", output)
 }
+
+func handleCheckArchive(w http.ResponseWriter, r *http.Request){
+	return
+}
