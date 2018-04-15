@@ -27,14 +27,14 @@ type SortingNumber struct {
 	Number uint16
 }
 
-func getNextSortingNumber() (SortingNumber, error) {
+func getNextSortingNumber(building string) (SortingNumber, error) {
 	since := time.Since(time.Unix(0, 0))
 	days := int(since.Hours()) / 24
 	letter := []rune(letters)[days%len(letters)]
 
 	res, err := db.Query(`
 		SELECT MAX(CAST(SUBSTR(sorting_number, 2, 4) AS INTEGER)) FROM Packages
-		WHERE SUBSTR(sorting_number, 1, 1) = ?`, string(letter))
+		WHERE SUBSTR(sorting_number, 1, 1) = ? AND building = ?`, string(letter), building)
 	if err != nil {
 		log.Println("Error while running query:", err)
 		return SortingNumber{}, err
