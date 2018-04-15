@@ -1,4 +1,3 @@
-
 	<!-- Form handles the updating of packages in the database -->
 	<head>
 		<title>Slipper|Update Package</title> <!-- Rename applicable? -->
@@ -12,9 +11,9 @@
 		</center>
 		<div id = "update" class = "update content">
 			<form action = "/updatepackage" method = "post">
-				<!-- Req: Name, Building Name, Room Num, Package Carrier-->
+				<!-- Req: Name, Building Name, Room Num, Package Carrier, Package Type, Has Been Printed-->
 				Sorting Number:<br />
-				<input type = "text" name = "sortingnumber" value = "{{.SortingNumber}}" disabled = "true"><br />
+				<input type = "text" name = "number" value = "{{.Number}}" disabled = "true"><br />
 				Name:<br />
 				<input type = "text" name = "name" value = "{{.Name}}"><br />
 				Building Name:<br />
