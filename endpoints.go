@@ -267,6 +267,8 @@ func handleOcr(w http.ResponseWriter, r *http.Request) {
 }
 
 func handleCheckArchive(w http.ResponseWriter, r *http.Request) {
+	/*
+
 	building, ok := getBuilding(r)
 	if !ok {
 		w.WriteHeader(401)
@@ -275,8 +277,9 @@ func handleCheckArchive(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// archivePackages, err := db.CheckArchive(r.FormValue("name"), building)
+	archivePackages, err := db.CheckArchive(r.FormValue("name"), building)
 	
+	*/
 	
 	return
 }
