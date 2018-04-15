@@ -17,13 +17,6 @@
 				<!-- Req: Name, Building Name, Room Num, Package Carrier-->
 				Name:<br />
 				<input type = "text" name = "name" value = "{{.Name}}"><br />
-				Building Name:<br />
-				<select name = "building">
-					<option value = "Wads" {{if eq .Building "Wads"}}selected="selected"{{end}}>Wadsworth Hall</option>
-					<option value = "McNair" {{if eq .Building "McNair"}}selected="selected"{{end}}>McNair Hall</option>
-					<option value = "DHH" {{if eq .Building "DHH"}}selected="selected"{{end}}>Douglass Houghton Hall</option>
-					<option value = "Hillside" {{if eq .Building "Hillside"}}selected="selected"{{end}}>Hillside Place</option>
-				</select><br />
 				Room Number:<br />
 				<input type = "text" name = "room" value="{{.Room}}"><br />
 				Package Carrier:<br />
