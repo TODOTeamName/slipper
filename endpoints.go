@@ -13,8 +13,6 @@ import (
 	"os/exec"
 	"path"
 	"strconv"
-	"bytes"
-	"os/exec"
 	"text/template"
 )
 
@@ -60,7 +58,10 @@ func handlePackageRemove(w http.ResponseWriter, r *http.Request) {
 
 	building := getBuilding(w, r)
 
-	err := db.Archive(r.FormValue("number"), building, r.FormValue("signature"))
+	sigB64 := r.FormValue("sig")
+	sig, err := base64.RawStdEncoding.DecodeString(sigB64)
+
+	err = db.Archive(r.FormValue("number"), building, sig)
 	if err != nil {
 		w.WriteHeader(400)
 		fmt.Fprintln(w, "Error 400: Bad Request. Database call went wrong.")
