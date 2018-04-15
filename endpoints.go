@@ -7,6 +7,7 @@ import (
 	"github.com/todoteamname/slipper/db"
 	"github.com/todoteamname/slipper/ocr"
 	"github.com/todoteamname/slipper/printing"
+	"golang.org/x/crypto/bcrypt"
 	"io"
 	"net/http"
 	"os"
@@ -14,20 +15,54 @@ import (
 	"path"
 	"strconv"
 	"text/template"
+	"runtime"
+	"math/rand"
 )
 
-func handleSelectBuilding(w http.ResponseWriter, r *http.Request) {
-	newCookie := http.Cookie{
-		Name:  "building",
-		Value: r.FormValue("building"),
+var sessions map[string]map[string]string
+
+func handleLogin(w http.ResponseWriter, r *http.Request) {
+	building := r.FormValue("building")
+	pass := r.FormValue("password")
+
+	hash, err := db.GetPassword(building)
+	if err != nil {
+		fmt.Fprintf(w, "<body>Database error: %s</body>", err.Error())
+		return
 	}
-	http.SetCookie(w, &newCookie)
-	http.Redirect(w, r, "/pages/main.html", http.StatusFound)
+
+	err = bcrypt.CompareHashAndPassword([]byte(hash), []byte(pass))
+	if err != nil {
+		fmt.Fprintf(w, "<body>Invalid login, try again... (redirecting)</body>")
+		fmt.Fprintf(w, "<script>setTimeout(function() { window.location='/' }, 3000)</script>")
+		return
+	}
+
+	var m runtime.MemStats
+	runtime.ReadMemStats(&m)
+
+	// select a session id (done secure-ish-ly)
+	sessid := string(int(float64(rand.Int()) * m.GCCPUFraction))
+	for _, ok := sessions[sessid]; ok; _, ok = sessions[sessid] {
+		sessid = string(int(float64(rand.Int()) * m.GCCPUFraction))
+	}
+
+	c := http.Cookie{Name:"session", Value:sessid}
+	sessions[sessid] = map[string]string {"building":building}
+	http.SetCookie(w, &c)
+
+	http.ServeFile(w, r, "/pages/main.html")
 }
 
 func handlePackageAdd(w http.ResponseWriter, r *http.Request) {
 
-	building := getBuilding(w, r)
+	building, ok := getBuilding(r)
+	if !ok {
+		w.WriteHeader(401)
+		fmt.Fprintln(w, "Error 401: Forbidden. Please log in.")
+		fmt.Fprintln(w, "Click <a href=\"/\">here</a> to go to the home page")
+		return
+	}
 
 	num, err := db.AddPackage(
 		r.FormValue("name"),
@@ -56,7 +91,13 @@ func handlePackageAdd(w http.ResponseWriter, r *http.Request) {
 
 func handlePackageRemove(w http.ResponseWriter, r *http.Request) {
 
-	building := getBuilding(w, r)
+	building, ok := getBuilding(r)
+	if !ok {
+		w.WriteHeader(401)
+		fmt.Fprintln(w, "Error 401: Forbidden. Please log in.")
+		fmt.Fprintln(w, "Click <a href=\"/\">here</a> to go to the home page")
+		return
+	}
 
 	sigB64 := r.FormValue("sig")
 	sig, err := base64.RawStdEncoding.DecodeString(sigB64)
@@ -81,7 +122,13 @@ func handlePackageRemove(w http.ResponseWriter, r *http.Request) {
 
 func handlePackageGet(w http.ResponseWriter, r *http.Request) {
 
-	building := getBuilding(w, r)
+	building, ok := getBuilding(r)
+	if !ok {
+		w.WriteHeader(401)
+		fmt.Fprintln(w, "Error 401: Forbidden. Please log in.")
+		fmt.Fprintln(w, "Click <a href=\"/\">here</a> to go to the home page")
+		return
+	}
 
 	pack, err := db.GetPackage(r.FormValue("number"), building)
 	if err != nil {
@@ -112,8 +159,15 @@ func handlePackageGet(w http.ResponseWriter, r *http.Request) {
 }
 
 func handlePackageUpdate(w http.ResponseWriter, r *http.Request) {
+	building, ok := getBuilding(r)
+	if !ok {
+		w.WriteHeader(401)
+		fmt.Fprintln(w, "Error 401: Forbidden. Please log in.")
+		fmt.Fprintln(w, "Click <a href=\"/\">here</a> to go to the home page")
+		return
+	}
+
 	isPrinted, _ := strconv.Atoi(r.FormValue("isprinted"))
-	building := getBuilding(w, r)
 
 	err := db.UpdatePackage(
 		r.FormValue("sortingnumber"),
@@ -135,7 +189,13 @@ func handlePackageUpdate(w http.ResponseWriter, r *http.Request) {
 
 func handleCreateSlips(w http.ResponseWriter, r *http.Request) {
 
-	building := getBuilding(w, r)
+	building, ok := getBuilding(r)
+	if !ok {
+		w.WriteHeader(401)
+		fmt.Fprintln(w, "Error 401: Forbidden. Please log in.")
+		fmt.Fprintln(w, "Click <a href=\"/\">here</a> to go to the home page")
+		return
+	}
 
 	err := printing.CreateSlips(building, *Settings.Root)
 	if err != nil {
@@ -178,6 +238,13 @@ func handleCreateSlips(w http.ResponseWriter, r *http.Request) {
 }
 
 func handleOcr(w http.ResponseWriter, r *http.Request) {
+	_, ok := getBuilding(r)
+	if !ok {
+		w.WriteHeader(401)
+		fmt.Fprintln(w, "Error 401: Forbidden. Please log in.")
+		fmt.Fprintln(w, "Click <a href=\"/\">here</a> to go to the home page")
+		return
+	}
 	r.ParseMultipartForm(500000)
 	fmt.Println(r.MultipartForm.Value)
 	b64 := r.FormValue("baseimage")
