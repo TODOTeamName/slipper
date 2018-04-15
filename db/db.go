@@ -241,7 +241,7 @@ func Archive(sortingNumber string, building string, signature []byte) error {
 	return nil
 }
 
-func GetPassword(building string) (string, err){
+func GetPassword(building string) (string, error){
 	// Prepare a statement which gets a package
 	stmt, err := db.Prepare(`
 		SELECT password
