@@ -19,7 +19,7 @@ import (
 	"math/rand"
 )
 
-var sessions map[string]map[string]string
+var sessions = make(map[string]map[string]string)
 
 func handleLogin(w http.ResponseWriter, r *http.Request) {
 	building := r.FormValue("building")
