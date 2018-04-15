@@ -52,15 +52,6 @@ func handleLogin(w http.ResponseWriter, r *http.Request) {
 	http.SetCookie(w, &c)
 }
 
-func handleSelectBuilding(w http.ResponseWriter, r *http.Request) {
-	newCookie := http.Cookie{
-		Name:  "building",
-		Value: r.FormValue("building"),
-	}
-	http.SetCookie(w, &newCookie)
-	http.Redirect(w, r, "/pages/main.html", http.StatusFound)
-}
-
 func handlePackageAdd(w http.ResponseWriter, r *http.Request) {
 
 	building, ok := getBuilding(r)
