@@ -241,6 +241,65 @@ func Archive(sortingNumber string, building string, signature []byte) error {
 	return nil
 }
 
+func CheckArchive(name string, building string) ([]Package, error){
+	// Prepare getting the number of packages to be printed
+	stmt, err := db.Prepare(`
+		SELECT COUNT(*)
+		FROM Picked_Up
+ 		WHERE name = ? AND building = ?`)
+	if err != nil {
+		log.Println("Error occured while preparing statement:", err)
+		return nil, err
+	}
+	defer stmt.Close()
+
+	// Execute getting the number of packages to be printed
+	res, err := stmt.Query(name, building)
+	if err != nil {
+		log.Println("Error occured while executing query:", err)
+		return nil, err
+	}
+	defer res.Close()
+
+	var count int
+	if res.Next() {
+		res.Scan(&count)
+	}
+
+	// Prepare getting the package info from the database
+	stmt, err = db.Prepare(`
+		SELECT date_received, name, room, carrier, package_type, date_picked_up, signature
+		FROM Picked_Up
+ 		WHERE name = ? AND building = ?`)
+	if err != nil {
+		log.Println("Error occured while preparing statement:", err)
+		return nil, err
+	}
+	defer stmt.Close()
+
+	// Execute getting the package info from the database
+	res, err = stmt.Query(name, building)
+	if err != nil {
+		log.Println("Error occured while executing query:", err)
+		return nil, err
+	}
+	defer res.Close()
+
+	//Create array of packages
+	fromArchive := make([]Package, count)
+	for i := 0; i < count; i++ {
+		if res.Next() {
+			var p Package
+			res.Scan(&p.DateReceived, &p.Name, &p.Room, &p.Carrier, &p.PackageType, &p.DatePickedUp, &p.Signature)
+			fromArchive[i] = p
+		} else {
+			return fromArchive, ErrNoPackageFound
+		}
+	}
+
+	return fromArchive, nil
+}
+
 func GetPassword(building string) (string, error){
 	// Prepare a statement which gets a package
 	stmt, err := db.Prepare(`
