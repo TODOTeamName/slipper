@@ -31,10 +31,10 @@
 					<option value = "LargeEnvelope" {{if eq .PackageType "LargeEnvelope"}}selected="selected"{{end}}>Large Envelope</option>
 					<option value = "Other" {{if eq .PackageType "Other"}}selected="selected"{{end}}>Other</option>
 				</select><br />
-				<label for = "isprinted">Slip has been printed:</label>
+				<label for = "isprinted">Slip has been printed:</label><br />
 				<select name = "isprinted">
-					<option value = 0 {{if eq .Printed "0"}}selected="selected"{{end}}>No</option>
-					<option value = 1 {{if eq .Printed "1"}}selected="selected"{{end}}>Yes</option>
+					<option value = 0 {{if eq .Printed 0}}selected="selected"{{end}}>No</option>
+					<option value = 1 {{if eq .Printed 1}}selected="selected"{{end}}>Yes</option>
 				</select>
 				<br />
 				<input type = "submit" value = "Submit">
