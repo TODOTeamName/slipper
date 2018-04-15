@@ -13,7 +13,7 @@
 <div class="container">
     <form action="/ocr" method="post" enctype="multipart/form-data">
         <label class="label" data-toggle="tooltip" title="Package Image">
-            <img class="rounded" id="avatar" src="https://avatars0.githubusercontent.com/u/3456749?s=160" alt="avatar">
+            <img class="rounded" id="avatar" src="res/scan_label.png" alt="avatar">
             <input type="file" class="sr-only" id="input" name="image" accept="image/*" capture="camera">
 			<input type="hidden" id = "baseimage" value = "">
         </label>
@@ -93,10 +93,7 @@
         });
 
         $modal.on('shown.bs.modal', function () {
-            cropper = new Cropper(image, {
-                aspectRatio: 1,
-                viewMode: 3,
-            });
+            cropper = new Cropper(image);
         }).on('hidden.bs.modal', function () {
             cropper.destroy();
             cropper = null;
