@@ -267,7 +267,6 @@ func handleOcr(w http.ResponseWriter, r *http.Request) {
 }
 
 func handleCheckArchive(w http.ResponseWriter, r *http.Request) {
-	/*
 
 	building, ok := getBuilding(r)
 	if !ok {
@@ -278,8 +277,15 @@ func handleCheckArchive(w http.ResponseWriter, r *http.Request) {
 	}
 
 	archivePackages, err := db.CheckArchive(r.FormValue("name"), building)
-	
-	*/
-	
+	if err != nil {
+		w.WriteHeader(400)
+		fmt.Fprintln(w, "Error 400: Bad Request. Database call went wrong.")
+		fmt.Fprintln(w, "Precise error:", err)
+		fmt.Fprintln(w, "Click <a href=\"/\">here</a> to go to the home page")
+		return
+	}
+
+	t, err := template.ParseFiles(path.Join(*Settings.Root, "pages/archived.html"))
+	t.Execute(w, struct {Packages []db.Package}{archivePackages})
 	return
 }
