@@ -13,8 +13,6 @@ import (
 	"os/exec"
 	"path"
 	"strconv"
-	"bytes"
-	"os/exec"
 	"text/template"
 )
 
