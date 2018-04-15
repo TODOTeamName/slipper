@@ -240,3 +240,35 @@ func Archive(sortingNumber string, building string, signature []byte) error {
 
 	return nil
 }
+
+func GetPassword(building string) (string, error){
+	// Prepare a statement which gets a package
+	stmt, err := db.Prepare(`
+		SELECT password
+		FROM Users
+ 		WHERE building = ?`)
+	if err != nil {
+		log.Println("Error occured while preparing statement:", err)
+		return "", err
+	}
+	defer stmt.Close()
+
+	// Run the query
+	res, err := stmt.Query(building)
+	if err != nil {
+		log.Println("Error occured while executing query:", err)
+		return "", err
+	}
+	defer res.Close()
+
+	// If there is a result...
+	if res.Next() {
+
+		// Store the found row into a variable p
+		var pass string
+		res.Scan(&pass)
+		return pass, nil
+	}
+
+	return "", err
+}
