@@ -166,7 +166,6 @@ func handlePackageGet(w http.ResponseWriter, r *http.Request) {
 }
 
 func handlePackageUpdate(w http.ResponseWriter, r *http.Request) {
-	isPrinted, _ := strconv.Atoi(r.FormValue("isprinted"))
 	building, ok := getBuilding(r)
 	if !ok {
 		w.WriteHeader(401)
@@ -174,6 +173,8 @@ func handlePackageUpdate(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintln(w, "Click <a href=\"/\">here</a> to go to the home page")
 		return
 	}
+
+	isPrinted, _ := strconv.Atoi(r.FormValue("isprinted"))
 
 	err := db.UpdatePackage(
 		r.FormValue("sortingnumber"),
@@ -244,6 +245,13 @@ func handleCreateSlips(w http.ResponseWriter, r *http.Request) {
 }
 
 func handleOcr(w http.ResponseWriter, r *http.Request) {
+	_, ok := getBuilding(r)
+	if !ok {
+		w.WriteHeader(401)
+		fmt.Fprintln(w, "Error 401: Forbidden. Please log in.")
+		fmt.Fprintln(w, "Click <a href=\"/\">here</a> to go to the home page")
+		return
+	}
 	r.ParseMultipartForm(500000)
 	fmt.Println(r.MultipartForm.Value)
 	b64 := r.FormValue("baseimage")
