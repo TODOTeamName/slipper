@@ -2,7 +2,6 @@
 package db
 
 import (
-	"bytes"
 	"database/sql"
 	"errors"
 	_ "github.com/mattn/go-sqlite3"
