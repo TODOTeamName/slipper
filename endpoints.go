@@ -33,7 +33,7 @@ func handleLogin(w http.ResponseWriter, r *http.Request) {
 
 	err = bcrypt.CompareHashAndPassword([]byte(hash), []byte(pass))
 	if err != nil {
-		fmt.Fprintf(w, "<body>Invalid login, try again...</body>")
+		fmt.Fprintf(w, "<body>Invalid login, try again... (redirecting)</body>")
 		fmt.Fprintf(w, "<script>setTimeout(function() { window.location='/' }, 3000)</script>")
 		return
 	}
