@@ -18,6 +18,8 @@ type Package struct {
 	Carrier      string
 	PackageType  string
 	Printed      bool
+	DatePickedUp time.Time
+	signature	 []byte
 }
 
 type SortingNumber struct {
