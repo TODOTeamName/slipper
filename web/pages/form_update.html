@@ -12,26 +12,26 @@
 		<div id = "update" class = "update content">
 			<form action = "/updatepackage" method = "post">
 				<!-- Req: Name, Building Name, Room Num, Package Carrier, Package Type, Has Been Printed-->
-				Sorting Number:<br />
+				<label for = "number">Sorting Number:</label><br />
 				<input type = "text" name = "number" value = "{{.Number}}" disabled = "true"><br />
-				Name:<br />
+				<label for = "name">Name:</label><br />
 				<input type = "text" name = "name" value = "{{.Name}}"><br />
-				Room Number:<br />
+				<label for = "room">Room Number:</label><br />
 				<input type = "text" name = "room" value="{{.Room}}"><br />
-				Package Carrier:<br />
+				<label for = "carrier">Package Carrier:</label><br />
 				<select name = "carrier">
 					<option value = "USPS" {{if eq .Carrier "USPS"}}selected="selected"{{end}}>USPS</option>
 					<option value = "UPS" {{if eq .Carrier "UPS"}}selected="selected"{{end}}>UPS</option>
 					<option value = "FedEx" {{if eq .Carrier "FedEx"}}selected="selected"{{end}}>FedEx</option>
 					<option value = "Other" {{if eq .Carrier "Other"}}selected="selected"{{end}}>Other</option>
 				</select><br />
-				Package Type:<br />
+				<label for  = "type">Package Type:</label><br />
 				<select name = "type">
 					<option value = "Package">Package</option>
 					<option value = "LargeEnvelope">Large Envelope</option>
 					<option value = "Other">Other</option>
 				</select><br />
-				Slip has been printed:
+				<label for = "isprinted">Slip has been printed:</label>
 				<select name = "isprinted">
 					<option value = 0>No</option>
 					<option value = 1>Yes</option>
