@@ -48,7 +48,8 @@ func handleLogin(w http.ResponseWriter, r *http.Request) {
 
 	sessions[sessid] = map[string]string {"building":building}
 
-	http.ServeFile(w, r, path.Join(*Settings.Root, "/pages/main.html"))
+	fmt.Fprintf(w, "<body>Login successful! (redirecting)</body>")
+	fmt.Fprintf(w, "<script>setTimeout(function() { window.location='/pages/main.html' }, 3000)</script>")
 }
 
 func handlePackageAdd(w http.ResponseWriter, r *http.Request) {
