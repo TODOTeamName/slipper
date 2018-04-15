@@ -7,6 +7,7 @@ import (
 	"github.com/todoteamname/slipper/db"
 	"github.com/todoteamname/slipper/ocr"
 	"github.com/todoteamname/slipper/printing"
+	"golang.org/x/crypto/bcrypt"
 	"io"
 	"net/http"
 	"os"
@@ -14,7 +15,34 @@ import (
 	"path"
 	"strconv"
 	"text/template"
+	"runtime"
+	"math/rand"
 )
+
+var sessions map[int]interface{}
+
+func handleLogin(w http.ResponseWriter, r *http.Request) {
+	building := r.FormValue("building")
+	pass := r.FormValue("password")
+	err := bcrypt.CompareHashAndPassword(db.GetPassword(building), []byte(pass))
+	if err != nil {
+		fmt.Fprintf(w, "<body>Invalid login, try again...</body>")
+		fmt.Fprintf(w, "<script>setTimeout(function() { window.location='/' }, 3000)</script>")
+		return
+	}
+
+	var m runtime.MemStats
+	runtime.ReadMemStats(&m)
+
+	// select a session id (secure! :) )
+	sessid := int(float64(rand.Int()) * m.GCCPUFraction)
+	for _, ok := sessions[sessid]; ok; _, ok = sessions[sessid] {
+		sessid = int(float64(rand.Int()) * m.GCCPUFraction)
+	}
+
+	c := http.Cookie{Name:"session", Value:strconv.Itoa(sessid)}
+	http.SetCookie(w, &c)
+}
 
 func handleSelectBuilding(w http.ResponseWriter, r *http.Request) {
 	newCookie := http.Cookie{

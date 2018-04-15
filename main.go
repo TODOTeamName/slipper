@@ -48,6 +48,7 @@ func main() {
 	http.HandleFunc("/ocr", handleOcr)
 	http.HandleFunc("/updatepackage", handlePackageUpdate)
 	http.HandleFunc("/checkarchive", handleCheckArchive)
+	http.HandleFunc("/login", handleLogin)
 
 	log.Println("Starting server...")
 	if Settings.Https != nil {
