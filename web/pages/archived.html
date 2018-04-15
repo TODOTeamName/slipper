@@ -1,0 +1,29 @@
+<!-- Form handles the checking of signatures from the database -->
+<head>
+    <title>Slipper|Archive</title> <!-- Rename applicable? -->
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <script src="dbreturn.js"></script>
+</head>
+<body>
+<center>
+    <div id="header">
+        <a href="main.html"><img class="headimg" src="res/logo.png" alt="Go Back"></a>
+    </div>
+</center>
+
+<div id="info">
+    <table>
+    {{range .Package}}
+        <tr>
+            <td>{{.Name}}</td>
+            <td>{{.Building}}</td>
+            <td>{{.Room}}</td>
+            <td>{{.Carrier}}</td>
+            <td>{{.PackageType}}</td>
+            <td>{{.DatePickedUp}}</td>
+            <td><img src="{{.Signature}}" width="50px"/></td>
+        </tr>
+    {{end}}
+    </table>
+</div>
+</body>
