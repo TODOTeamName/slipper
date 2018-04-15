@@ -50,6 +50,8 @@ func handleLogin(w http.ResponseWriter, r *http.Request) {
 	c := http.Cookie{Name:"session", Value:sessid}
 	sessions[sessid] = map[string]string {"building":building}
 	http.SetCookie(w, &c)
+
+	http.ServeFile(w, r, "/pages/main.html")
 }
 
 func handlePackageAdd(w http.ResponseWriter, r *http.Request) {
