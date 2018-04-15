@@ -144,7 +144,7 @@ func MarkPrinted(building string) error{
 func UpdatePackage(sortingNumber string, name string, building string, room string, carrier string, packageType string, isPrinted int) error {
 	stmt, err := db.Prepare(`
 		UPDATE Packages
-		SET sorting_number = ?, name = ?, room = ?, carrier = ?, package_type = ?, is_printed = ?
+		SET name = ?, room = ?, carrier = ?, package_type = ?, is_printed = ?
 		WHERE sorting_number = ? and building = ?
 		`)
 	if err != nil {
