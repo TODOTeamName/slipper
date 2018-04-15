@@ -52,7 +52,7 @@ func handleLogin(w http.ResponseWriter, r *http.Request) {
 
 	sessions[sessid] = map[string]string {"building":building}
 
-	http.ServeFile(w, r, "/pages/main.html")
+	http.ServeFile(w, r, path.Join(*Settings.Root, "/pages/main.html"))
 }
 
 func handlePackageAdd(w http.ResponseWriter, r *http.Request) {
