@@ -90,3 +90,7 @@ img {
 .headimg {
 	max-height: 100%;
 }
+
+.modal-dialog {
+	top:-29px;
+}
