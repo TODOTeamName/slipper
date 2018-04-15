@@ -249,7 +249,7 @@ func GetPassword(building string) (string, error){
  		WHERE building = ?`)
 	if err != nil {
 		log.Println("Error occured while preparing statement:", err)
-		return nil, err
+		return "", err
 	}
 	defer stmt.Close()
 
@@ -257,7 +257,7 @@ func GetPassword(building string) (string, error){
 	res, err := stmt.Query(building)
 	if err != nil {
 		log.Println("Error occured while executing query:", err)
-		return nil, err
+		return "", err
 	}
 	defer res.Close()
 
@@ -270,5 +270,5 @@ func GetPassword(building string) (string, error){
 		return pass, nil
 	}
 
-	return nil, err
+	return "", err
 }
