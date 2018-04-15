@@ -2,6 +2,7 @@
 package db
 
 import (
+	"bytes"
 	"database/sql"
 	"errors"
 	_ "github.com/mattn/go-sqlite3"
@@ -187,7 +188,7 @@ func AddPackage(name string, building string, room string, carrier string, packa
 	return sortingNumber.String(), nil
 }
 
-func Archive(sortingNumber string, building string, signature string) error {
+func Archive(sortingNumber string, building string, signature []byte]) error {
 
 	// Get package information for the archive
 	pack, err := GetPackage(sortingNumber, building)
