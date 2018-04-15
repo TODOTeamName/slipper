@@ -7,7 +7,7 @@
 	<body>
 		<img src = "pages/res/logo.png" alt = "Slipper Logo" class = "logo"><br /><br />
         Log into Slipper:<br />
-        <form>
+        <form method="post" action="/login">
             Building Name:<br />
             <select name = "building" title="Wads">
                 <option value = "Wads" {{if eq .Building "Wads"}}selected="selected"{{end}}>Wadsworth Hall</option>
