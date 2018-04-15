@@ -275,7 +275,7 @@ func handleCheckArchive(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	archivePackages := db.CheckArchive(r.FormValue("name"), building)
+	archivePackages, err := db.CheckArchive(r.FormValue("name"), building)
 	
 	
 	return
