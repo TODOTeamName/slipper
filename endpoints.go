@@ -15,11 +15,10 @@ import (
 	"path"
 	"strconv"
 	"text/template"
-	"runtime"
 	"math/rand"
 )
 
-var sessions map[string]map[string]string
+var sessions = make(map[string]map[string]string)
 
 func handleLogin(w http.ResponseWriter, r *http.Request) {
 	building := r.FormValue("building")
@@ -33,32 +32,23 @@ func handleLogin(w http.ResponseWriter, r *http.Request) {
 
 	err = bcrypt.CompareHashAndPassword([]byte(hash), []byte(pass))
 	if err != nil {
-		fmt.Fprintf(w, "<body>Invalid login, try again...</body>")
+		fmt.Fprintf(w, "<body>Invalid login, try again... (redirecting)</body>")
 		fmt.Fprintf(w, "<script>setTimeout(function() { window.location='/' }, 3000)</script>")
 		return
 	}
 
-	var m runtime.MemStats
-	runtime.ReadMemStats(&m)
-
 	// select a session id (done secure-ish-ly)
-	sessid := string(int(float64(rand.Int()) * m.GCCPUFraction))
+	sessid := strconv.Itoa(rand.Int())
 	for _, ok := sessions[sessid]; ok; _, ok = sessions[sessid] {
-		sessid = string(int(float64(rand.Int()) * m.GCCPUFraction))
+		sessid = strconv.Itoa(rand.Int())
 	}
 
 	c := http.Cookie{Name:"session", Value:sessid}
-	sessions[sessid] = map[string]string {"building":building}
 	http.SetCookie(w, &c)
-}
 
-func handleSelectBuilding(w http.ResponseWriter, r *http.Request) {
-	newCookie := http.Cookie{
-		Name:  "building",
-		Value: r.FormValue("building"),
-	}
-	http.SetCookie(w, &newCookie)
-	http.Redirect(w, r, "/pages/main.html", http.StatusFound)
+	sessions[sessid] = map[string]string {"building":building}
+
+	http.ServeFile(w, r, path.Join(*Settings.Root, "/pages/main.html"))
 }
 
 func handlePackageAdd(w http.ResponseWriter, r *http.Request) {
@@ -276,5 +266,7 @@ func handleOcr(w http.ResponseWriter, r *http.Request) {
 }
 
 func handleCheckArchive(w http.ResponseWriter, r *http.Request) {
+
+	
 	return
 }
