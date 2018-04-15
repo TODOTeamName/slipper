@@ -13,6 +13,8 @@ import (
 	"os/exec"
 	"path"
 	"strconv"
+	"bytes"
+	"os/exec"
 	"text/template"
 )
 
@@ -170,6 +172,7 @@ func handleCreateSlips(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(400)
 		fmt.Fprintln(w, "Error 400: Something went wrong in the removal.")
 		fmt.Fprintln(w, "Precise error:", err)
+		return
 	}
 }
 
