@@ -1,17 +1,14 @@
 package main
 
-import "net/http"
+import (
+	"net/http"
+)
 
-func getBuilding(w http.ResponseWriter, r *http.Request) string {
-	cookie, err := r.Cookie("building")
+func getBuilding(r *http.Request) (string, bool) {
+	cookie, err := r.Cookie("session")
 	if err != nil {
-		newCookie := http.Cookie{
-			Name: "building",
-			Value: "Wadsworth",
-		}
-		http.SetCookie(w, &newCookie)
-		return "Wadsworth"
+		return "", false
 	}
 
-	return cookie.Value
+	return sessions[cookie.Value]["building"], true
 }

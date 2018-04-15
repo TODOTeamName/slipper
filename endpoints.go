@@ -19,12 +19,19 @@ import (
 	"math/rand"
 )
 
-var sessions map[int]interface{}
+var sessions map[string]map[string]string
 
 func handleLogin(w http.ResponseWriter, r *http.Request) {
 	building := r.FormValue("building")
 	pass := r.FormValue("password")
-	err := bcrypt.CompareHashAndPassword(db.GetPassword(building), []byte(pass))
+
+	hash, err := db.GetPassword(building)
+	if err != nil {
+		fmt.Fprintf(w, "<body>Database error: %s</body>", err.Error())
+		return
+	}
+
+	err = bcrypt.CompareHashAndPassword([]byte(hash), []byte(pass))
 	if err != nil {
 		fmt.Fprintf(w, "<body>Invalid login, try again...</body>")
 		fmt.Fprintf(w, "<script>setTimeout(function() { window.location='/' }, 3000)</script>")
@@ -34,13 +41,14 @@ func handleLogin(w http.ResponseWriter, r *http.Request) {
 	var m runtime.MemStats
 	runtime.ReadMemStats(&m)
 
-	// select a session id (secure! :) )
-	sessid := int(float64(rand.Int()) * m.GCCPUFraction)
+	// select a session id (done secure-ish-ly)
+	sessid := string(int(float64(rand.Int()) * m.GCCPUFraction))
 	for _, ok := sessions[sessid]; ok; _, ok = sessions[sessid] {
-		sessid = int(float64(rand.Int()) * m.GCCPUFraction)
+		sessid = string(int(float64(rand.Int()) * m.GCCPUFraction))
 	}
 
-	c := http.Cookie{Name:"session", Value:strconv.Itoa(sessid)}
+	c := http.Cookie{Name:"session", Value:sessid}
+	sessions[sessid] = map[string]string {"building":building}
 	http.SetCookie(w, &c)
 }
 
