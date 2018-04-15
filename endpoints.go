@@ -1,24 +1,26 @@
 package main
 
 import (
+	"bytes"
+	"encoding/base64"
 	"fmt"
 	"github.com/todoteamname/slipper/db"
-	"github.com/todoteamname/slipper/printing"
-	"net/http"
-	"path"
-	"text/template"
-	"os"
-	"io"
 	"github.com/todoteamname/slipper/ocr"
-	"encoding/base64"
+	"github.com/todoteamname/slipper/printing"
+	"io"
+	"net/http"
+	"os"
+	"os/exec"
+	"path"
 	"strconv"
 	"bytes"
 	"os/exec"
+	"text/template"
 )
 
 func handleSelectBuilding(w http.ResponseWriter, r *http.Request) {
 	newCookie := http.Cookie{
-		Name: "building",
+		Name:  "building",
 		Value: r.FormValue("building"),
 	}
 	http.SetCookie(w, &newCookie)
@@ -56,7 +58,9 @@ func handlePackageAdd(w http.ResponseWriter, r *http.Request) {
 
 func handlePackageRemove(w http.ResponseWriter, r *http.Request) {
 
-	err := db.Archive(r.FormValue("number"), r.FormValue("signature"))
+	building := getBuilding(w, r)
+
+	err := db.Archive(r.FormValue("number"), building, r.FormValue("signature"))
 	if err != nil {
 		w.WriteHeader(400)
 		fmt.Fprintln(w, "Error 400: Bad Request. Database call went wrong.")
@@ -76,7 +80,9 @@ func handlePackageRemove(w http.ResponseWriter, r *http.Request) {
 
 func handlePackageGet(w http.ResponseWriter, r *http.Request) {
 
-	pack, err := db.GetPackage(r.FormValue("number"))
+	building := getBuilding(w, r)
+
+	pack, err := db.GetPackage(r.FormValue("number"), building)
 	if err != nil {
 		w.WriteHeader(400)
 		fmt.Fprintln(w, "Error 400: Bad Request. Database call went wrong.")
@@ -104,13 +110,14 @@ func handlePackageGet(w http.ResponseWriter, r *http.Request) {
 	t.Execute(w, pack)
 }
 
-func handlePackageUpdate(w http.ResponseWriter, r *http.Request){
+func handlePackageUpdate(w http.ResponseWriter, r *http.Request) {
 	isPrinted, _ := strconv.Atoi(r.FormValue("isprinted"))
+	building := getBuilding(w, r)
 
 	err := db.UpdatePackage(
 		r.FormValue("sortingnumber"),
 		r.FormValue("name"),
-		r.FormValue("building"),
+		building,
 		r.FormValue("room"),
 		r.FormValue("carrier"),
 		r.FormValue("type"),
@@ -137,8 +144,6 @@ func handleCreateSlips(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintln(w, "Click <a href=\"/\">here</a> to go to the home page")
 		return
 	}
-
-	
 
 	f, err := os.Open(path.Join(*Settings.Root, "PackageSlips.pdf"))
 	if err != nil {
@@ -193,4 +198,8 @@ func handleOcr(w http.ResponseWriter, r *http.Request) {
 	}
 
 	fmt.Fprintf(w, "OCR Output: %s", output)
+}
+
+func handleCheckArchive(w http.ResponseWriter, r *http.Request) {
+	return
 }

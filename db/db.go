@@ -23,13 +23,13 @@ func Close() {
 	db.Close()
 }
 
-func GetPackage(sortingNumber string) (Package, error) {
+func GetPackage(sortingNumber string, building string) (Package, error) {
 
 	// Prepare a statement which gets a package
 	stmt, err := db.Prepare(`
 		SELECT sorting_number, date_received, name, building, room, carrier, package_type, is_printed
 		FROM Packages
- 		WHERE sorting_number = ?`)
+ 		WHERE sorting_number = ? AND building = ?`)
 	if err != nil {
 		log.Println("Error occured while preparing statement:", err)
 		return Package{}, err
@@ -37,7 +37,7 @@ func GetPackage(sortingNumber string) (Package, error) {
 	defer stmt.Close()
 
 	// Run the query
-	res, err := stmt.Query(sortingNumber)
+	res, err := stmt.Query(sortingNumber, building)
 	if err != nil {
 		log.Println("Error occured while executing query:", err)
 		return Package{}, err
@@ -187,10 +187,10 @@ func AddPackage(name string, building string, room string, carrier string, packa
 	return sortingNumber.String(), nil
 }
 
-func Archive(sortingNumber string, signature string) error {
+func Archive(sortingNumber string, building string, signature string) error {
 
 	// Get package information for the archive
-	pack, err := GetPackage(sortingNumber)
+	pack, err := GetPackage(sortingNumber, building)
 	if err != nil {
 		log.Println("Error occured while getting package:", err)
 		return err
@@ -225,14 +225,14 @@ func Archive(sortingNumber string, signature string) error {
 	}
 
 	// Remove archived package from current package table
-	delstmt, err := db.Prepare("DELETE FROM Packages WHERE sorting_number=?")
+	delstmt, err := db.Prepare("DELETE FROM Packages WHERE sorting_number=? AND building=?")
 	if err != nil {
 		log.Println("Error occured while preparing statement:", err)
 		return err
 	}
 	defer delstmt.Close()
 
-	_, err = delstmt.Exec(sortingNumber)
+	_, err = delstmt.Exec(sortingNumber, building)
 	if err != nil {
 		log.Println("Error occured while executing statement:", err)
 		return err
