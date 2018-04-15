@@ -3,12 +3,20 @@
 	<head>
 		<title>Slipper|Login</title> <!-- Rename applicable? -->
 		<link rel = "stylesheet" type = "text/css" href = "pages/css/style.css">
-        <script src="https://apis.google.com/js/platform.js" async defer></script>
-        <meta name="google-signin-client_id" content=" 984431400321-0dcubiqe8a009dhifffgnemmiqut5qga.apps.googleusercontent.com">
 	</head>
 	<body>
 		<img src = "pages/res/logo.png" alt = "Slipper Logo" class = "logo"><br /><br />
-        Log into Slipper:
-		<div class="g-signin2" data-onsuccess="onSignIn"></div>
+        Log into Slipper:<br />
+        <form>
+            Building Name:<br />
+            <select name = "building" title="Wads">
+                <option value = "Wads" {{if eq .Building "Wads"}}selected="selected"{{end}}>Wadsworth Hall</option>
+                <option value = "McNair" {{if eq .Building "McNair"}}selected="selected"{{end}}>McNair Hall</option>
+                <option value = "DHH" {{if eq .Building "DHH"}}selected="selected"{{end}}>Douglass Houghton Hall</option>
+                <option value = "Hillside" {{if eq .Building "Hillside"}}selected="selected"{{end}}>Hillside Place</option>
+            </select><br />
+            Password:<br />
+            <input name="password" type="password" />
+        </form>
     </body>
 </html>
