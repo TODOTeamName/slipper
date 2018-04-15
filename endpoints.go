@@ -270,7 +270,16 @@ func handleOcr(w http.ResponseWriter, r *http.Request) {
 }
 
 func handleCheckArchive(w http.ResponseWriter, r *http.Request) {
+	building, ok := getBuilding(r)
+	if !ok {
+		w.WriteHeader(401)
+		fmt.Fprintln(w, "Error 401: Forbidden. Please log in.")
+		fmt.Fprintln(w, "Click <a href=\"/\">here</a> to go to the home page")
+		return
+	}
 
+	archivePackages := db.checkArchive(r.FormValue("name"), building)
+	
 	
 	return
 }
