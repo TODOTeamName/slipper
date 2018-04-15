@@ -63,7 +63,13 @@ func handleSelectBuilding(w http.ResponseWriter, r *http.Request) {
 
 func handlePackageAdd(w http.ResponseWriter, r *http.Request) {
 
-	building := getBuilding(w, r)
+	building, ok := getBuilding(r)
+	if !ok {
+		w.WriteHeader(401)
+		fmt.Fprintln(w, "Error 401: Forbidden. Please log in.")
+		fmt.Fprintln(w, "Click <a href=\"/\">here</a> to go to the home page")
+		return
+	}
 
 	num, err := db.AddPackage(
 		r.FormValue("name"),
@@ -92,7 +98,13 @@ func handlePackageAdd(w http.ResponseWriter, r *http.Request) {
 
 func handlePackageRemove(w http.ResponseWriter, r *http.Request) {
 
-	building := getBuilding(w, r)
+	building, ok := getBuilding(r)
+	if !ok {
+		w.WriteHeader(401)
+		fmt.Fprintln(w, "Error 401: Forbidden. Please log in.")
+		fmt.Fprintln(w, "Click <a href=\"/\">here</a> to go to the home page")
+		return
+	}
 
 	sigB64 := r.FormValue("sig")
 	sig, err := base64.RawStdEncoding.DecodeString(sigB64)
@@ -117,7 +129,13 @@ func handlePackageRemove(w http.ResponseWriter, r *http.Request) {
 
 func handlePackageGet(w http.ResponseWriter, r *http.Request) {
 
-	building := getBuilding(w, r)
+	building, ok := getBuilding(r)
+	if !ok {
+		w.WriteHeader(401)
+		fmt.Fprintln(w, "Error 401: Forbidden. Please log in.")
+		fmt.Fprintln(w, "Click <a href=\"/\">here</a> to go to the home page")
+		return
+	}
 
 	pack, err := db.GetPackage(r.FormValue("number"), building)
 	if err != nil {
@@ -149,7 +167,13 @@ func handlePackageGet(w http.ResponseWriter, r *http.Request) {
 
 func handlePackageUpdate(w http.ResponseWriter, r *http.Request) {
 	isPrinted, _ := strconv.Atoi(r.FormValue("isprinted"))
-	building := getBuilding(w, r)
+	building, ok := getBuilding(r)
+	if !ok {
+		w.WriteHeader(401)
+		fmt.Fprintln(w, "Error 401: Forbidden. Please log in.")
+		fmt.Fprintln(w, "Click <a href=\"/\">here</a> to go to the home page")
+		return
+	}
 
 	err := db.UpdatePackage(
 		r.FormValue("sortingnumber"),
@@ -171,7 +195,13 @@ func handlePackageUpdate(w http.ResponseWriter, r *http.Request) {
 
 func handleCreateSlips(w http.ResponseWriter, r *http.Request) {
 
-	building := getBuilding(w, r)
+	building, ok := getBuilding(r)
+	if !ok {
+		w.WriteHeader(401)
+		fmt.Fprintln(w, "Error 401: Forbidden. Please log in.")
+		fmt.Fprintln(w, "Click <a href=\"/\">here</a> to go to the home page")
+		return
+	}
 
 	err := printing.CreateSlips(building, *Settings.Root)
 	if err != nil {
