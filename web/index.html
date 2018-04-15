@@ -3,12 +3,12 @@
 	<head>
 		<title>Slipper|Login</title> <!-- Rename applicable? -->
 		<link rel = "stylesheet" type = "text/css" href = "pages/css/style.css">
+        <script src="https://apis.google.com/js/platform.js" async defer></script>
+        <meta name="google-signin-client_id" content=" 984431400321-0dcubiqe8a009dhifffgnemmiqut5qga.apps.googleusercontent.com">
 	</head>
 	<body>
 		<img src = "pages/res/logo.png" alt = "Slipper Logo" class = "logo"><br /><br />
-		<form action = "login.html">
-			Log into Slipper:
-			<input type = "submit" value = "Log In">
-		</form>
-	</body>
+        Log into Slipper:
+		<div class="g-signin2" data-onsuccess="onSignIn"></div>
+    </body>
 </html>
