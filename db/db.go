@@ -172,7 +172,7 @@ func AddPackage(name string, building string, room string, carrier string, packa
 	}
 	defer stmt.Close()
 
-	sortingNumber, err := getNextSortingNumber()
+	sortingNumber, err := getNextSortingNumber(building)
 	if err != nil {
 		log.Println("Error occured while getting sorting number:", err)
 		return "", err
