@@ -46,6 +46,7 @@ func handleLogin(w http.ResponseWriter, r *http.Request) {
 	for _, ok := sessions[sessid]; ok; _, ok = sessions[sessid] {
 		sessid = string(int(float64(rand.Int()) * m.GCCPUFraction))
 	}
+	fmt.Printf("sessionid %s", sessid)
 
 	c := http.Cookie{Name:"session", Value:sessid}
 	http.SetCookie(w, &c)
