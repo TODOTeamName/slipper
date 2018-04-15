@@ -1,5 +1,12 @@
 
 	<!-- Form handles the addition of packages from the database -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Slipper|Add Package</title>
+  <link rel = "stylesheet" type = "text/css" href = "css/style.css">
+  <script src = "js/cropper_upd.js"></script>
+</head>
 	<head>
 		<title>Slipper|Add Package</title> <!-- Rename applicable? -->
 		<link rel = "stylesheet" type = "text/css" href = "css/style.css">
@@ -11,22 +18,23 @@
 			<a href = "main.html"><img class = "headimg" src = "res/logo.png" alt = "Go Back"></a>
 		</div>
 		</center>
+
 		<div id = "add" class = "add content">
 			<iframe src = "upload-cropped-image-to-server.html" class = "iframe"></iframe><br />
 			<form action = "/addpackage" method = "post">
 				<!-- Req: Name, Building Name, Room Num, Package Carrier-->
-				Name:<br />
+				<label for = "name">Name:</label><br />
 				<input type = "text" name = "name" value = "{{.Name}}"><br />
-				Room Number:<br />
+				<label for = "room">Room Number:</label><br />
 				<input type = "text" name = "room" value="{{.Room}}"><br />
-				Package Carrier:<br />
+				<label for = "carrier">Package Carrier:</label><br />
 				<select name = "carrier">
 					<option value = "USPS" {{if eq .Carrier "USPS"}}selected="selected"{{end}}>USPS</option>
 					<option value = "UPS" {{if eq .Carrier "UPS"}}selected="selected"{{end}}>UPS</option>
 					<option value = "FedEx" {{if eq .Carrier "FedEx"}}selected="selected"{{end}}>FedEx</option>
 					<option value = "Other" {{if eq .Carrier "Other"}}selected="selected"{{end}}>Other</option>
 				</select><br />
-				Package Type:<br />
+				<label for = "type">Package Type:</label><br />
 				<select name = "type">
 					<option value = "Package">Package</option>
 					<option value = "LargeEnvelope">Large Envelope</option>
@@ -35,4 +43,5 @@
 				<input type = "submit" value = "Submit">
 			</form>
 		</div>
+		
 	</body>
