@@ -290,7 +290,7 @@ func CheckArchive(name string, building string) ([]Package, error){
 	for i := 0; i < count; i++ {
 		if res.Next() {
 			var p Package
-			res.Scan(&p.DateReceived, &p.Name, &p.Room, &p.Carrier, &p.PackageType, &p.DatePickedUp, &Signature)
+			res.Scan(&p.DateReceived, &p.Name, &p.Room, &p.Carrier, &p.PackageType, &p.DatePickedUp, &p.Signature)
 			fromArchive[i] = p
 		} else {
 			return fromArchive, ErrNoPackageFound
