@@ -14,10 +14,17 @@
 <div id="info" class="content">
 {{if .Packages}}
     <table>
+        <tr>
+            <th>Name</th>
+            <th>Room</th>
+            <th>Carrier</th>
+            <th>Package Type</th>
+            <th>Picked Up</th>
+            <th>Signature</th>
+        </tr>
     {{range .Packages}}
         <tr>
             <td>{{.Name}}</td>
-            <td>{{.Building}}</td>
             <td>{{.Room}}</td>
             <td>{{.Carrier}}</td>
             <td>{{.PackageType}}</td>
