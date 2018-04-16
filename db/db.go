@@ -142,7 +142,6 @@ func MarkPrinted(building string) error{
 }
 
 func UpdatePackage(sortingNumber string, name string, building string, room string, carrier string, packageType string, isPrinted int) error {
-	log.Println("New values:", sortingNumber, name, building, room, carrier, packageType, isPrinted)
 	stmt, err := db.Prepare(`
 		UPDATE Packages
 		SET name = ?, room = ?, carrier = ?, package_type = ?, is_printed = ?
@@ -154,10 +153,13 @@ func UpdatePackage(sortingNumber string, name string, building string, room stri
 	}
 	defer stmt.Close()
 
-	_, err = stmt.Exec(name, room, carrier, packageType, isPrinted, sortingNumber, building)
+	changed, err := stmt.Exec(name, room, carrier, packageType, isPrinted, sortingNumber, building)
 	if err != nil {
 		log.Println("Error occured while executing statement:", err)
 		return err
+	}
+	if rows, _ := changed.RowsAffected(); rows < 1 {
+		log.Println("Nothing printed")
 	}
 
 	return nil
