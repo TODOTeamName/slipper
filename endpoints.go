@@ -182,6 +182,8 @@ func handlePackageUpdate(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintln(w, "Click <a href=\"/\">here</a> to go to the home page")
 		return
 	}
+
+	http.Redirect(w, r, "/pages/main.html", http.StatusFound)
 }
 
 func handleCreateSlips(w http.ResponseWriter, r *http.Request) {
