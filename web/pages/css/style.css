@@ -54,6 +54,7 @@ a:hover {
 
 .linkimg {
 	width: 30%;
+	padding-top:15%;
 	height: auto;
 	vertical-align:middle;
 }
@@ -68,7 +69,6 @@ a:hover {
 	margin: 20px auto;
 	position: relative;
 	padding-top: 100% 0;
-	float: right;
 }
 
 
@@ -97,7 +97,6 @@ img {
 .content {
 	padding-top: 15%;
 	width: 100%;
-	float: left;
 }
 
 .label {
