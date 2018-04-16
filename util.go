@@ -9,7 +9,7 @@ func getBuilding(r *http.Request) (string, bool) {
 	if err != nil {
 		return "", false
 	}
-	if _, ok := sessions[cookie.Value]; ok {
+	if _, ok := sessions[cookie.Value]; !ok {
 		return "", false
 	}
 
