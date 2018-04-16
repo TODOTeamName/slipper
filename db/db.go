@@ -142,6 +142,7 @@ func MarkPrinted(building string) error{
 }
 
 func UpdatePackage(sortingNumber string, name string, building string, room string, carrier string, packageType string, isPrinted int) error {
+	log.Println("New values:", sortingNumber, name, building, room, carrier, packageType, isPrinted)
 	stmt, err := db.Prepare(`
 		UPDATE Packages
 		SET name = ?, room = ?, carrier = ?, package_type = ?, is_printed = ?
