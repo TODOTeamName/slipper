@@ -167,7 +167,7 @@ func handlePackageUpdate(w http.ResponseWriter, r *http.Request) {
 	isPrinted, _ := strconv.Atoi(r.FormValue("isprinted"))
 
 	err := db.UpdatePackage(
-		r.FormValue("sortingnumber"),
+		r.FormValue("number"),
 		r.FormValue("name"),
 		building,
 		r.FormValue("room"),
