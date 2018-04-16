@@ -153,13 +153,10 @@ func UpdatePackage(sortingNumber string, name string, building string, room stri
 	}
 	defer stmt.Close()
 
-	changed, err := stmt.Exec(name, room, carrier, packageType, isPrinted, sortingNumber, building)
+	_, err = stmt.Exec(name, room, carrier, packageType, isPrinted, sortingNumber, building)
 	if err != nil {
 		log.Println("Error occured while executing statement:", err)
 		return err
-	}
-	if rows, _ := changed.RowsAffected(); rows < 1 {
-		log.Println("Nothing printed")
 	}
 
 	return nil
