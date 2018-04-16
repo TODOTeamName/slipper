@@ -19,7 +19,7 @@ type Package struct {
 	PackageType  string
 	Printed      bool
 	DatePickedUp time.Time
-	Signature	 []byte
+	Signature	  string
 }
 
 type SortingNumber struct {
