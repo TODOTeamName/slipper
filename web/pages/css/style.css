@@ -83,7 +83,9 @@ img {
 }
 
 .content {
+	
 	padding: 10%;
+	padding-top: 15%;
 	float: left;
 	width: 100%;
 }
@@ -119,7 +121,7 @@ img {
 	position: absolute;
 	width:99%;
 	overflow: hidden;
-	height: 50px;
+	height: 100px;
 	background-color:#000000;
 	color:#FFFFFF;
 	padding:5px;
