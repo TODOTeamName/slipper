@@ -12,6 +12,7 @@
 </center>
 
 <div id="info">
+{{if .Packages}}
     <table>
     {{range .Packages}}
         <tr>
@@ -25,5 +26,8 @@
         </tr>
     {{end}}
     </table>
+{{else}}
+    <p>No packages for that name</p>
+{{end}}
 </div>
 </body>
