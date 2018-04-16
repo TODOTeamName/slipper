@@ -14,7 +14,7 @@
 			<form action = "/updatepackage" method = "post">
 				<!-- Req: Name, Building Name, Room Num, Package Carrier, Package Type, Has Been Printed-->
 				<label for = "number">Sorting Number:</label><br />
-				<input type = "text" name = "number" value = "{{.Number}}" disabled = "true"><br />
+				<input type = "text" name = "number" value = "{{.Number}}" disabled = "false"><br />
 				<label for = "name">Name:</label><br />
 				<input type = "text" name = "name" value = "{{.Name}}"><br />
 				<label for = "room">Room Number:</label><br />
@@ -34,8 +34,8 @@
 				</select><br />
 				<label for = "isprinted">Slip has been printed:</label><br />
 				<select name = "isprinted">
-					<option value = 0 {{if eq .Printed false}}selected="selected"{{end}}>No</option>
-					<option value = 1 {{if eq .Printed true}}selected="selected"{{end}}>Yes</option>
+					<option value = "0" {{if eq .Printed false}}selected="selected"{{end}}>No</option>
+					<option value = "1" {{if eq .Printed true}}selected="selected"{{end}}>Yes</option>
 				</select><br />
 				<input type = "submit" value = "Submit">
 			</form>
