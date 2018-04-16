@@ -54,9 +54,8 @@ a:hover {
 
 .linkimg {
 	width: 30%;
-	padding-top:15%;
 	height: auto;
-	vertical-align:middle;
+	vertical-align: middle;
 }
 
 .logo {
@@ -68,18 +67,7 @@ a:hover {
 	max-width: 640px;
 	margin: 20px auto;
 	position: relative;
-	padding-top: 100% 0;
-}
-
-
-.container_content {
-	max-width: 640px;
-	margin: 20px auto;
-	position: relative;
-	padding-top: 100% 0;
-	padding: 10%;
-	padding-top: 15%;
-	width: 100%;
+	padding-top: 200px;
 }
 
 img {
@@ -95,7 +83,7 @@ img {
 }
 
 .content {
-	padding-top: 15%;
+	padding-top: 100px;
 	width: 100%;
 }
 
