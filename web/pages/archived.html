@@ -1,7 +1,7 @@
 <!-- Form handles the checking of signatures from the database -->
 <head>
     <title>Slipper|Archive</title> <!-- Rename applicable? -->
-    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="/pages/css/style.css">
     <script src="dbreturn.js"></script>
 </head>
 <body>
@@ -12,6 +12,7 @@
 </center>
 
 <div id="info">
+{{if .Packages}}
     <table>
     {{range .Packages}}
         <tr>
@@ -25,5 +26,8 @@
         </tr>
     {{end}}
     </table>
+{{else}}
+    <p>No packages for that name</p>
+{{end}}
 </div>
 </body>
