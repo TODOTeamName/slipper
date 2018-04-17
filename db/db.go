@@ -340,7 +340,7 @@ func CleanArchive() error{
 		SELECT COUNT(*)
 		FROM Picked_Up`)
 	if err != nil {
-		log.Println("Error occured while preparing statement:", err
+		log.Println("Error occured while preparing statement:", err)
 		return err
 	}
 	defer stmt.Close()
