@@ -242,12 +242,12 @@ func Archive(sortingNumber string, building string, signature string) error {
 	return nil
 }
 
-func CheckArchive(name string, building string) ([]Package, error){
+func CheckArchive(name string, room string, building string) ([]Package, error){
 	// Prepare getting the number of packages to be printed
 	stmt, err := db.Prepare(`
 		SELECT COUNT(*)
 		FROM Picked_Up
- 		WHERE name = ? AND building = ?`)
+ 		WHERE (name = ? OR room = ?) AND building = ?`)
 	if err != nil {
 		log.Println("Error occured while preparing statement:", err)
 		return nil, err
@@ -255,7 +255,7 @@ func CheckArchive(name string, building string) ([]Package, error){
 	defer stmt.Close()
 
 	// Execute getting the number of packages to be printed
-	res, err := stmt.Query(name, building)
+	res, err := stmt.Query(name, room, building)
 	if err != nil {
 		log.Println("Error occured while executing query:", err)
 		return nil, err
@@ -271,7 +271,7 @@ func CheckArchive(name string, building string) ([]Package, error){
 	stmt, err = db.Prepare(`
 		SELECT date_received, name, room, carrier, package_type, date_picked_up, signature
 		FROM Picked_Up
- 		WHERE name = ? AND building = ?`)
+ 		WHERE (name = ? OR room = ?) AND building = ?`)
 	if err != nil {
 		log.Println("Error occured while preparing statement:", err)
 		return nil, err
@@ -279,7 +279,7 @@ func CheckArchive(name string, building string) ([]Package, error){
 	defer stmt.Close()
 
 	// Execute getting the package info from the database
-	res, err = stmt.Query(name, building)
+	res, err = stmt.Query(name, room, building)
 	if err != nil {
 		log.Println("Error occured while executing query:", err)
 		return nil, err

@@ -277,7 +277,7 @@ func handleCheckArchive(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	archivePackages, err := db.CheckArchive(r.FormValue("name"), building)
+	archivePackages, err := db.CheckArchive(r.FormValue("name"), r.FormValue("room"), building)
 	if err != nil {
 		w.WriteHeader(400)
 		fmt.Fprintln(w, "Error 400: Bad Request. Database call went wrong.")
