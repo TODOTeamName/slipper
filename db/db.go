@@ -6,6 +6,7 @@ import (
 	"errors"
 	_ "github.com/mattn/go-sqlite3"
 	"log"
+	"time"
 )
 
 var db *sql.DB
@@ -331,4 +332,74 @@ func GetPassword(building string) (string, error){
 	}
 
 	return "", err
+}
+
+func cleanArchive() error{
+	// Prepare getting the number of packages to be printed
+	stmt, err := db.Prepare(`
+		SELECT COUNT(*)
+		FROM Picked_Up`)
+	if err != nil {
+		log.Println("Error occured while preparing statement:", err)
+		return nil, err
+	}
+	defer stmt.Close()
+
+	// Execute getting the number of packages to be printed
+	res, err := stmt.Query()
+	if err != nil {
+		log.Println("Error occured while executing query:", err)
+		return nil, err
+	}
+	defer res.Close()
+
+	var count int
+	if res.Next() {
+		res.Scan(&count)
+	}
+
+	// Prepare getting the package info from the database
+	stmt, err = db.Prepare(`
+		SELECT date_received, date_picked_up
+		FROM Picked_Up`)
+	if err != nil {
+		log.Println("Error occured while preparing statement:", err)
+		return nil, err
+	}
+	defer stmt.Close()
+
+	// Execute getting the package info from the database
+	res, err = stmt.Query()
+	if err != nil {
+		log.Println("Error occured while executing query:", err)
+		return nil, err
+	}
+	defer res.Close()
+
+	now := Time.Now()
+	// Iterate over all the packages in Picked_Up
+	for i := 0; i < count; i++ {
+		if res.Next() {
+			var p Package
+			res.Scan(&p.DateReceived, &p.DatePickedUp)
+			diff := now.Sub(p.DatePickedUp)
+			if diff.Hours() >= 672 {	// Check to see if the packages is at least 2 weeks old
+				// Remove the pacakge from the archive
+				delstmt, err := db.Prepare("DELETE FROM Picked_Up WHERE date_received=? AND date_picked_up=?")
+				if err != nil {
+					log.Println("Error occured while preparing statement:", err)
+					return err
+				}
+				defer delstmt.Close()
+
+				_, err = delstmt.Exec(p.DateReceived, p.DatePickedUp)
+				if err != nil {
+					log.Println("Error occured while executing statement:", err)
+					return err
+				}
+			}
+		} else {
+			return ErrNoPackageFound
+		}
+	}
 }
