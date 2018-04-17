@@ -334,13 +334,13 @@ func GetPassword(building string) (string, error){
 	return "", err
 }
 
-func cleanArchive() error{
+func CleanArchive() error{
 	// Prepare getting the number of packages to be printed
 	stmt, err := db.Prepare(`
 		SELECT COUNT(*)
 		FROM Picked_Up`)
 	if err != nil {
-		log.Println("Error occured while preparing statement:", err)
+		log.Println("Error occured while preparing statement:", err
 		return err
 	}
 	defer stmt.Close()
