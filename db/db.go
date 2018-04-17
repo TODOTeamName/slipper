@@ -341,7 +341,7 @@ func cleanArchive() error{
 		FROM Picked_Up`)
 	if err != nil {
 		log.Println("Error occured while preparing statement:", err)
-		return nil, err
+		return err
 	}
 	defer stmt.Close()
 
@@ -349,7 +349,7 @@ func cleanArchive() error{
 	res, err := stmt.Query()
 	if err != nil {
 		log.Println("Error occured while executing query:", err)
-		return nil, err
+		return err
 	}
 	defer res.Close()
 
@@ -364,7 +364,7 @@ func cleanArchive() error{
 		FROM Picked_Up`)
 	if err != nil {
 		log.Println("Error occured while preparing statement:", err)
-		return nil, err
+		return err
 	}
 	defer stmt.Close()
 
@@ -372,11 +372,11 @@ func cleanArchive() error{
 	res, err = stmt.Query()
 	if err != nil {
 		log.Println("Error occured while executing query:", err)
-		return nil, err
+		return err
 	}
 	defer res.Close()
 
-	now := Time.Now()
+	now := time.Now()
 	// Iterate over all the packages in Picked_Up
 	for i := 0; i < count; i++ {
 		if res.Next() {
@@ -402,4 +402,6 @@ func cleanArchive() error{
 			return ErrNoPackageFound
 		}
 	}
+
+	return nil
 }
