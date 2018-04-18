@@ -1,44 +1,46 @@
-	<!-- Form handles the updating of packages in the database -->
-	<head>
-		<title>Slipper|Update Package</title> <!-- Rename applicable? -->
-		<link rel = "stylesheet" type = "text/css" href = "css/style.css">
-	</head>
-	<body>
+<!-- Form handles the updating of packages in the database -->
+<head>
+	<title>Slipper|Update Package</title>
+	<link rel = "stylesheet" type = "text/css" href = "css/style.css">
+</head>
+<body>
+	<center>
+	<div id = "header">
+		<a href = "main.html"><img class = "headimg" src = "res/logo.png" alt = "Go Back"></a>
+	</div>
+	</center>
+	<div id = "update" class = "update content">
 		<center>
-		<div id = "header">
-			<a href = "main.html"><img class = "headimg" src = "res/logo.png" alt = "Go Back"></a>
-		</div>
+		
+		<!-- Update package allows the editing of editable fields to be saved back into the database -->
+		<form action = "/updatepackage" method = "post">
+			<!-- Req: Name, Building Name, Room Num, Package Carrier, Package Type, Has Been Printed-->
+			<label for = "number">Sorting Number:</label><br />
+			<input type = "text" name = "number" value = "{{.Number}}" readonly><br />
+			<label for = "name">Name:</label><br />
+			<input type = "text" name = "name" value = "{{.Name}}"><br />
+			<label for = "room">Room Number:</label><br />
+			<input type = "text" name = "room" value="{{.Room}}"><br />
+			<label for = "carrier">Package Carrier:</label><br />
+			<select name = "carrier">
+				<option value = "USPS" {{if eq .Carrier "USPS"}}selected="selected"{{end}}>USPS</option>
+				<option value = "UPS" {{if eq .Carrier "UPS"}}selected="selected"{{end}}>UPS</option>
+				<option value = "FedEx" {{if eq .Carrier "FedEx"}}selected="selected"{{end}}>FedEx</option>
+				<option value = "Other" {{if eq .Carrier "Other"}}selected="selected"{{end}}>Other</option>
+			</select><br />
+			<label for  = "type">Package Type:</label><br />
+			<select name = "type">
+				<option value = "Package" {{if eq .PackageType "Package"}}selected="selected"{{end}}>Package</option>
+				<option value = "LargeEnvelope" {{if eq .PackageType "LargeEnvelope"}}selected="selected"{{end}}>Large Envelope</option>
+				<option value = "Other" {{if eq .PackageType "Other"}}selected="selected"{{end}}>Other</option>
+			</select><br />
+			<label for = "isprinted">Slip has been printed:</label><br />
+			<select name = "isprinted">
+				<option value = "0" {{if eq .Printed false}}selected="selected"{{end}}>No</option>
+				<option value = "1" {{if eq .Printed true}}selected="selected"{{end}}>Yes</option>
+			</select><br />
+			<input type = "submit" value = "Submit">
+		</form>
 		</center>
-		<div id = "update" class = "update content">
-			<center>
-			<form action = "/updatepackage" method = "post">
-				<!-- Req: Name, Building Name, Room Num, Package Carrier, Package Type, Has Been Printed-->
-				<label for = "number">Sorting Number:</label><br />
-				<input type = "text" name = "number" value = "{{.Number}}" readonly><br />
-				<label for = "name">Name:</label><br />
-				<input type = "text" name = "name" value = "{{.Name}}"><br />
-				<label for = "room">Room Number:</label><br />
-				<input type = "text" name = "room" value="{{.Room}}"><br />
-				<label for = "carrier">Package Carrier:</label><br />
-				<select name = "carrier">
-					<option value = "USPS" {{if eq .Carrier "USPS"}}selected="selected"{{end}}>USPS</option>
-					<option value = "UPS" {{if eq .Carrier "UPS"}}selected="selected"{{end}}>UPS</option>
-					<option value = "FedEx" {{if eq .Carrier "FedEx"}}selected="selected"{{end}}>FedEx</option>
-					<option value = "Other" {{if eq .Carrier "Other"}}selected="selected"{{end}}>Other</option>
-				</select><br />
-				<label for  = "type">Package Type:</label><br />
-				<select name = "type">
-					<option value = "Package" {{if eq .PackageType "Package"}}selected="selected"{{end}}>Package</option>
-					<option value = "LargeEnvelope" {{if eq .PackageType "LargeEnvelope"}}selected="selected"{{end}}>Large Envelope</option>
-					<option value = "Other" {{if eq .PackageType "Other"}}selected="selected"{{end}}>Other</option>
-				</select><br />
-				<label for = "isprinted">Slip has been printed:</label><br />
-				<select name = "isprinted">
-					<option value = "0" {{if eq .Printed false}}selected="selected"{{end}}>No</option>
-					<option value = "1" {{if eq .Printed true}}selected="selected"{{end}}>Yes</option>
-				</select><br />
-				<input type = "submit" value = "Submit">
-			</form>
-			</center>
-		</div>
-	</body>
+	</div>
+</body>

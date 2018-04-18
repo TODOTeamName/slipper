@@ -1,13 +1,17 @@
 <!-- Index page blocks unauthorized users from entry -->
 <head>
-    <title>Slipper|Login</title> <!-- Rename applicable? -->
+    <title>Slipper|Login</title>
     <link rel="stylesheet" type="text/css" href="pages/css/style.css">
 </head>
 <body>
 <center>
 <img src="pages/res/logo.png" alt="Slipper Logo" class="logo"><br/><br/>
+
 <h3>Log into Slipper</h3><br/>
-<form method="post" action="/login">
+
+<!-- Login form takes a building and password -->
+<form action="/login" method="post">
+	<!-- Req: Building, Password -->
     <label for = "building">Building Name:</label><br/>
     <select name="building" title="Wads">
         <option value="Wads">Wadsworth Hall</option>
