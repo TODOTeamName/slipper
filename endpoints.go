@@ -51,7 +51,7 @@ func handleLogin(w http.ResponseWriter, r *http.Request) {
 	sessions[sessid] = map[string]string {"building":building}
 
 	fmt.Fprintf(w, "<body>Login successful! (redirecting)</body>")
-	fmt.Fprintf(w, "<script>setTimeout(function() { window.location='/pages/main.html' }, 3000)</script>")
+	fmt.Fprintf(w, "<script>setTimeout(function() { window.location='/pages/main.html' }, 1500)</script>")
 }
 
 // Handles the /addpackage endpoint. Adds a package to the database.
