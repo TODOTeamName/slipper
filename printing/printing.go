@@ -13,8 +13,6 @@ import (
 	"strconv"
 )
 
-var PackageSlipsPdf string
-
 // Generate the pdf file contanining the slips to be printed
 func CreateSlips(building string, root string) error {
 	// Get packages to be printed
