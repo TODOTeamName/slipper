@@ -1,3 +1,0 @@
-archive.html		{{.CheckArchive}}				Take a name and check the archive to see if it has been picked up
-upload-cropped-i...	{{.SendImageToOCR}}				Send the cropped image to OCR for text extraction
-login.html			{{.Login}}						Handle login

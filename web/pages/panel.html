@@ -1,22 +1,26 @@
-	<!-- Form handles theremoval of packages from the database -->
-	<head>
-		<title>Slipper|Panel</title> <!-- Rename applicable? -->
-		<link rel = "stylesheet" type = "text/css" href = "css/style.css">
-	</head>
-	<body>
+<!-- Page for lesser used functionality -->
+<head>
+	<title>Slipper|Panel</title>
+	<link rel = "stylesheet" type = "text/css" href = "css/style.css">
+</head>
+<body>
+	<center>
+	<div id = "header">
+		<a href = "main.html"><img class = "headimg" src = "res/logo.png" alt = "Go Back"></a>
+	</div>
+	</center>
+	<div id = "contains" class = "panel content">
 		<center>
-		<div id = "header">
-			<a href = "main.html"><img class = "headimg" src = "res/logo.png" alt = "Go Back"></a>
-		</div>
+		
+		<!-- Generates the package slips as a PDF and opens it in a new tab -->
+		<form action = "/createslips" method = "post" target = "_blank">
+			<input type = "submit" value = "Create Slip">
+		</form>
+		
+		<!-- Checks archive for picked up packages -->
+		<form action = "archive.html">
+			<input type = "submit" value = "Check Archive">
+		</form>
 		</center>
-		<div id = "contains" class = "panel content">
-			<center>
-			<form action = "/createslips" method = "post" target = "_blank">
-				<input type = "submit" value = "Create Slip">
-			</form>
-			<form action = "archive.html">
-				<input type = "submit" value = "Check Archive">
-			</form>
-			</center>
-		</div>
-	</body>
+	</div>
+</body>

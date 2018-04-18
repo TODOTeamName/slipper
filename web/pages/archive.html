@@ -1,25 +1,26 @@
-	<!-- Form handles the checking of signatures from the database -->
-	<head>
-		<title>Slipper|Archive</title> <!-- Rename applicable? -->
-		<link rel = "stylesheet" type = "text/css" href = "css/style.css">
-		<script src = "dbreturn.js"></script>
-	</head>
-	<body>
+<!-- Form handles the checking of signatures from the database -->
+<head>
+	<title>Slipper|Archive</title>
+	<link rel = "stylesheet" type = "text/css" href = "css/style.css">
+</head>
+<body>
+	<center>
+	<div id = "header">
+		<a href = "main.html"><img class = "headimg" src = "/pages/res/logo.png" alt = "Go Back"></a>
+	</div>
+	</center>
+	
+	<div id = "archive" class = "archive content">
 		<center>
-		<div id = "header">
-			<a href = "main.html"><img class = "headimg" src = "/pages/res/logo.png" alt = "Go Back"></a>
-		</div>
+		<!-- Archive form checks the archives for a room number or name and returns a table (see archived.html) -->
+		<form action = "/checkarchive" method = "post">
+			<!-- Req: {Name|Room Number} -->
+			Name:<br />
+			<input type = "text" name = "name"><br /><br />
+			Room Number:<br />
+			<input type = "text" name = "room"><br /><br />
+			<input type = "submit" value = "Submit">
+		</form><br />
 		</center>
-		<div id = "update" class = "update content">
-			<center>
-			<form action = "/checkarchive" method = "post">
-				<!-- Req: Name -->
-				Name:<br />
-				<input type = "text" name = "name"><br /><br />
-				Room Number:<br />
-				<input type = "text" name = "room"><br /><br />
-				<input type = "submit" value = "Submit">
-			</form><br />
-			</center>
-		</div>
-	</body>
+	</div>
+</body>
