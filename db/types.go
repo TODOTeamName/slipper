@@ -5,10 +5,13 @@ import (
 	"log"
 	"time"
 	"strconv"
+	"unicode"
 )
 
-const letters = "ABCDEFGHJKLMNPQRTUVWXY"
+// All letters used for the sorting number's letters
+const letters = "ABCDEFGHJKLMNPQRTUWXY"
 
+// Defines a package
 type Package struct {
 	Number       SortingNumber
 	DateReceived time.Time
@@ -22,11 +25,13 @@ type Package struct {
 	Signature	  string
 }
 
+// Represents a sorting number.
 type SortingNumber struct {
 	Letter rune
 	Number uint16
 }
 
+// Gets the next sorting number. Note: does a database call.
 func getNextSortingNumber(building string) (SortingNumber, error) {
 	since := time.Since(time.Unix(0, 0))
 	days := int(since.Hours()) / 24
@@ -52,14 +57,19 @@ func getNextSortingNumber(building string) (SortingNumber, error) {
 	return SortingNumber{letter, 0}, nil
 }
 
+// Turns a string into a sorting number
 func Atosn(src string) SortingNumber {
 	var val SortingNumber
-	val.Letter = []rune(src)[0]
+	val.Letter = unicode.ToUpper([]rune(src)[0])
 	conv, _ := strconv.Atoi(src[1:])
 	val.Number = uint16(conv)
+	if val.Letter == "V" {
+		val.Letter = "U"
+	}
 	return val
 }
 
+// Turns a sorting number to a string
 func (s SortingNumber) String() string {
 	return fmt.Sprintf("%c%04d", s.Letter, s.Number)
 }
