@@ -10,8 +10,10 @@ import (
 	"path"
 )
 
+// The configuration information for the webserver
 var Settings Config
 
+// The main function. Loads the config, configures/starts the webserver.
 func main() {
 	log.Println("Loading config...")
 

@@ -12,6 +12,9 @@ import (
 var db *sql.DB
 var ErrNoPackageFound = errors.New("no package found")
 
+// Initializes the database.
+//
+// path: the path to the sqlite3 file
 func Init(path string) {
 	con, err := sql.Open("sqlite3", "file:"+path)
 	if err != nil {
@@ -20,10 +23,12 @@ func Init(path string) {
 	db = con
 }
 
+// Closes the database.
 func Close() {
 	db.Close()
 }
 
+// Gets package information of a given sorting number and building.
 func GetPackage(sortingNumber string, building string) (Package, error) {
 
 	// Prepare a statement which gets a package
@@ -60,6 +65,7 @@ func GetPackage(sortingNumber string, building string) (Package, error) {
 	return Package{}, ErrNoPackageFound
 }
 
+// Gets which packages need to be printed for a building.
 func GetToBePrinted(building string) ([]Package, error) {
 	// Prepare getting the number of packages to be printed
 	stmt, err := db.Prepare(`
@@ -121,6 +127,7 @@ func GetToBePrinted(building string) ([]Package, error) {
 	return toBePrinted, nil
 }
 
+// Mark a building's packages as printed.
 func MarkPrinted(building string) error{
 	stmt, err := db.Prepare(`
 		UPDATE Packages
@@ -142,6 +149,7 @@ func MarkPrinted(building string) error{
 	return nil
 }
 
+// Updates a package's info.
 func UpdatePackage(sortingNumber string, name string, building string, room string, carrier string, packageType string, isPrinted int) error {
 	log.Println(sortingNumber, building, name)
 	stmt, err := db.Prepare(`
@@ -164,6 +172,7 @@ func UpdatePackage(sortingNumber string, name string, building string, room stri
 	return nil
 }
 
+// Adds a package to the database.
 func AddPackage(name string, building string, room string, carrier string, packageType string) (string, error) {
 	stmt, err := db.Prepare(`
 		INSERT INTO Packages(sorting_number, date_received, name, building, room, carrier, package_type)
@@ -189,6 +198,8 @@ func AddPackage(name string, building string, room string, carrier string, packa
 	return sortingNumber.String(), nil
 }
 
+// Archives a package in the database. Moves a package from
+// the Packages table to the Picked_Up table.
 func Archive(sortingNumber string, building string, signature string) error {
 
 	// Get package information for the archive
@@ -243,6 +254,7 @@ func Archive(sortingNumber string, building string, signature string) error {
 	return nil
 }
 
+// Gets all archived packages for a given person in a room.
 func CheckArchive(name string, room string, building string) ([]Package, error){
 	// Prepare getting the number of packages to be printed
 	stmt, err := db.Prepare(`
@@ -302,6 +314,7 @@ func CheckArchive(name string, room string, building string) ([]Package, error){
 	return fromArchive, nil
 }
 
+// Gets the password hash for the login of a building
 func GetPassword(building string) (string, error){
 	// Prepare a statement which gets a package
 	stmt, err := db.Prepare(`
@@ -334,6 +347,7 @@ func GetPassword(building string) (string, error){
 	return "", err
 }
 
+// Cleans the archive so that the database doesn't get clogged up.
 func CleanArchive() error{
 	// Prepare getting the number of packages to be printed
 	stmt, err := db.Prepare(`

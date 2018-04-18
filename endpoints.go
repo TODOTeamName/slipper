@@ -18,8 +18,10 @@ import (
 	"math/rand"
 )
 
+// Maps session IDs to a map[string]string (misc data about the session)
 var sessions = make(map[string]map[string]string)
 
+// Handles the /login endpoint
 func handleLogin(w http.ResponseWriter, r *http.Request) {
 	building := r.FormValue("building")
 	pass := r.FormValue("password")
@@ -32,8 +34,8 @@ func handleLogin(w http.ResponseWriter, r *http.Request) {
 
 	err = bcrypt.CompareHashAndPassword([]byte(hash), []byte(pass))
 	if err != nil {
-		fmt.Fprintf(w, "<body>Invalid login, try again... (redirecting)</body>")
-		fmt.Fprintf(w, "<script>setTimeout(function() { window.location='/' }, 3000)</script>")
+		fmt.Fprintln(w, "<body>Invalid login, try again... (redirecting)</body>")
+		fmt.Fprintln(w, "<script>setTimeout(function() { window.location='/' }, 3000)</script>")
 		return
 	}
 
@@ -52,6 +54,7 @@ func handleLogin(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "<script>setTimeout(function() { window.location='/pages/main.html' }, 3000)</script>")
 }
 
+// Handles the /addpackage endpoint. Adds a package to the database.
 func handlePackageAdd(w http.ResponseWriter, r *http.Request) {
 
 	building, ok := getBuilding(r)
@@ -87,6 +90,7 @@ func handlePackageAdd(w http.ResponseWriter, r *http.Request) {
 	http.ServeFile(w, r, path.Join(*Settings.Root, "pages/form_add.html"))
 }
 
+// Handles the /removepackage endpoint. Removes a package and stores the signature.
 func handlePackageRemove(w http.ResponseWriter, r *http.Request) {
 
 	building, ok := getBuilding(r)
@@ -117,6 +121,7 @@ func handlePackageRemove(w http.ResponseWriter, r *http.Request) {
 	http.ServeFile(w, r, path.Join(*Settings.Root, "pages/form_remove.html"))
 }
 
+// Handles the /getpackage endpoint. Takes a sorting number and sends that package for the building.
 func handlePackageGet(w http.ResponseWriter, r *http.Request) {
 
 	building, ok := getBuilding(r)
@@ -155,6 +160,7 @@ func handlePackageGet(w http.ResponseWriter, r *http.Request) {
 	t.Execute(w, pack)
 }
 
+// Handles the /updatepackage endpoint. Takes an already created package and updates its values
 func handlePackageUpdate(w http.ResponseWriter, r *http.Request) {
 	building, ok := getBuilding(r)
 	if !ok {
@@ -186,6 +192,7 @@ func handlePackageUpdate(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/pages/main.html", http.StatusFound)
 }
 
+// Handles the /createslips endpoint. Takes created packages and sends back as a PDF
 func handleCreateSlips(w http.ResponseWriter, r *http.Request) {
 
 	building, ok := getBuilding(r)
@@ -236,6 +243,7 @@ func handleCreateSlips(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// Handles the /ocr endpoint. Takes an image and sends back the text contained in it
 func handleOcr(w http.ResponseWriter, r *http.Request) {
 	_, ok := getBuilding(r)
 	if !ok {
@@ -267,6 +275,8 @@ func handleOcr(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "OCR Output: %s", output)
 }
 
+// Handles the /checkarchive endpoint. Takes a name and room, and returns all of the packages that
+// they have picked up, along with their signatures.
 func handleCheckArchive(w http.ResponseWriter, r *http.Request) {
 
 	building, ok := getBuilding(r)
