@@ -63,8 +63,8 @@ func Atosn(src string) SortingNumber {
 	val.Letter = unicode.ToUpper([]rune(src)[0])
 	conv, _ := strconv.Atoi(src[1:])
 	val.Number = uint16(conv)
-	if val.Letter == "V" {
-		val.Letter = "U"
+	if val.Letter == 'V' {
+		val.Letter = 'U'
 	}
 	return val
 }
