@@ -24,14 +24,10 @@
             <input type="text" name="room" id="room"><br/>
             <label for="carrier">Package Carrier:</label><br/>
             <select name="carrier" id="carrier">
-                <option value="USPS" {{if eq .Carrier
-                "USPS"}}selected="selected"{{end}}>USPS</option>
-                <option value="UPS" {{if eq .Carrier
-                "UPS"}}selected="selected"{{end}}>UPS</option>
-                <option value="FedEx" {{if eq .Carrier
-                "FedEx"}}selected="selected"{{end}}>FedEx</option>
-                <option value="Other" {{if eq .Carrier
-                "Other"}}selected="selected"{{end}}>Other</option>
+                <option value="USPS" {{if eq .Carrier "USPS"}}selected="selected"{{end}}>USPS</option>
+                <option value="UPS" {{if eq .Carrier "UPS"}}selected="selected"{{end}}>UPS</option>
+                <option value="FedEx" {{if eq .Carrier "FedEx"}}selected="selected"{{end}}>FedEx</option>
+                <option value="Other" {{if eq .Carrier "Other"}}selected="selected"{{end}}>Other</option>
             </select><br/>
             <label for="type">Package Type:</label><br/>
             <select name="type" id="type">
