@@ -1,44 +1,46 @@
 <!-- Form handles the addition of packages from the database -->
 <head>
-  <title>Slipper|Add Package</title>
-  <link rel = "stylesheet" type = "text/css" href = "css/style.css">
-  <script src = "js/cropper_upd.js"></script>
+    <title>Slipper|Add Package</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <script src="js/cropper_upd.js"></script>
 </head>
 <body>
-	<center>
-	<div id = "header">
-		<a href = "main.html"><img class = "headimg" src = "res/logo.png" alt = "Go Back"></a>
-	</div>
-	</center>
+<center>
+    <div id="header">
+        <a href="main.html"><img class="headimg" src="res/logo.png" alt="Go Back"></a>
+    </div>
 
-	<div id = "add" class = "add content">
-		<center>
-		<!--
-			<iframe src = "upload-cropped-image-to-server.html" class = "iframe"></iframe><br />
-		-->
+    <div id="add" class="add content">
+        <!--
+            <iframe src = "upload-cropped-image-to-server.html" class = "iframe"></iframe><br />
+        -->
 
-		<!-- Add package adds a package to the database -->
-		<form action = "/addpackage" method = "post">
-			<!-- Req: Name, Building Name, Room Num, Package Carrier-->
-			<label for = "name">Name:</label><br />
-			<input type = "text" name = "name"><br />
-			<label for = "room">Room Number:</label><br />
-			<input type = "text" name = "room"><br />
-			<label for = "carrier">Package Carrier:</label><br />
-			<select name = "carrier">
-				<option value = "USPS" {{if eq .Carrier "USPS"}}selected="selected"{{end}}>USPS</option>
-				<option value = "UPS" {{if eq .Carrier "UPS"}}selected="selected"{{end}}>UPS</option>
-				<option value = "FedEx" {{if eq .Carrier "FedEx"}}selected="selected"{{end}}>FedEx</option>
-				<option value = "Other" {{if eq .Carrier "Other"}}selected="selected"{{end}}>Other</option>
-			</select><br />
-			<label for = "type">Package Type:</label><br />
-			<select name = "type">
-				<option value = "Package">Package</option>
-				<option value = "LargeEnvelope">Large Envelope</option>
-				<option value = "Other">Other</option>
-			</select><br /><br />
-			<input type = "submit" value = "Submit">
-		</form>
-		</center>
-	</div>
+        <!-- Add package adds a package to the database -->
+        <form action="/addpackage" method="post">
+            <!-- Req: Name, Building Name, Room Num, Package Carrier-->
+            <label for="name">Name:</label><br/>
+            <input type="text" name="name" id="name"><br/>
+            <label for="room">Room Number:</label><br/>
+            <input type="text" name="room" id="room"><br/>
+            <label for="carrier">Package Carrier:</label><br/>
+            <select name="carrier" id="carrier">
+                <option value="USPS" {{if eq .Carrier
+                "USPS"}}selected="selected"{{end}}>USPS</option>
+                <option value="UPS" {{if eq .Carrier
+                "UPS"}}selected="selected"{{end}}>UPS</option>
+                <option value="FedEx" {{if eq .Carrier
+                "FedEx"}}selected="selected"{{end}}>FedEx</option>
+                <option value="Other" {{if eq .Carrier
+                "Other"}}selected="selected"{{end}}>Other</option>
+            </select><br/>
+            <label for="type">Package Type:</label><br/>
+            <select name="type" id="type">
+                <option value="Package">Package</option>
+                <option value="LargeEnvelope">Large Envelope</option>
+                <option value="Other">Other</option>
+            </select><br/><br/>
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+</center>
 </body>

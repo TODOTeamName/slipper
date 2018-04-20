@@ -1,23 +1,21 @@
 <!-- Form handles the updating of packages within the database -->
 <head>
-	<title>Slipper|Get Package</title>
-	<link rel = "stylesheet" type = "text/css" href = "css/style.css">
+    <title>Slipper|Get Package</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <body>
-	<center>
-	<div id = "header">
-		<a href = "main.html"><img class = "headimg" src = "res/logo.png" alt = "Go Back"></a>
-	</div>
-	</center>
-	<div id = "upd" class = "upd content">
-		<center>
-		<!-- Get package gets a package by sorting number to update it -->
-		<form action = "/getpackage" method = "post">
-			<!-- Req: Sorting Number -->
-			<label for = "number">Sorting Number:</label><br />
-			<input type = "text" name = "number"><br /><br />
-			<input type = "submit" value = "Submit">
-		</form>
-		</center>
-	</div>
+<center>
+    <div id="header">
+        <a href="main.html"><img class="headimg" src="res/logo.png" alt="Go Back"></a>
+    </div>
+    <div id="upd" class="upd content">
+        <!-- Get package gets a package by sorting number to update it -->
+        <form action="/getpackage" method="post">
+            <!-- Req: Sorting Number -->
+            <label for="number">Sorting Number:</label><br/>
+            <input type="text" name="number" id="number"><br/><br/>
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+</center>
 </body>

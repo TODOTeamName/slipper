@@ -8,34 +8,32 @@
     <div id="header">
         <a href="/pages/main.html"><img class="headimg" src="/pages/res/logo.png" alt="Go Back"></a>
     </div>
+    <div id="info" class="content">
+        {{if .Packages}}
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Room</th>
+                <th>Carrier</th>
+                <th>Package Type</th>
+                <th>Picked Up</th>
+                <th>Signature</th>
+            </tr>
+            {{range .Packages}}
+            <tr>
+                <td>{{.Name}}</td>
+                <td>{{.Room}}</td>
+                <td>{{.Carrier}}</td>
+                <td>{{.PackageType}}</td>
+                <td>{{.DatePickedUp}}</td>
+                <td><img src="{{.Signature}}" width="200px"/></td>
+            </tr>
+            {{end}}
+        </table>
+        {{else}}
+        <p>No packages for that name/room number</p>
+        {{end}}
+    </div>
 </center>
 
-<div id="info" class="content">
-<center>
-{{if .Packages}}
-    <table>
-        <tr>
-            <th>Name</th>
-            <th>Room</th>
-            <th>Carrier</th>
-            <th>Package Type</th>
-            <th>Picked Up</th>
-            <th>Signature</th>
-        </tr>
-    {{range .Packages}}
-        <tr>
-            <td>{{.Name}}</td>
-            <td>{{.Room}}</td>
-            <td>{{.Carrier}}</td>
-            <td>{{.PackageType}}</td>
-            <td>{{.DatePickedUp}}</td>
-            <td><img src="{{.Signature}}" width="200px"/></td>
-        </tr>
-    {{end}}
-    </table>
-{{else}}
-    <p>No packages for that name/room number</p>
-{{end}}
-</center>
-</div>
 </body>
